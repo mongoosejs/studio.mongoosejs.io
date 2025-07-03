@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 require('../../src/movies-demo/movies.model');
 
-const handler = require('@mongoosejs/studio/backend/netlify')({
+const handler = require('@mongoosejs/studio/backend/netlify')(mongoose.connection, {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY
 }).handler;
 
