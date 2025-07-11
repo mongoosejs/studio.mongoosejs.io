@@ -1,7 +1,7 @@
 {
   "name": "studio.mongoosejs.io",
   "dependencies": {
-    "@mongoosejs/studio": "0.0.99",
+    "@mongoosejs/studio": "0.0.101",
     "tailwindcss": "3.x"
   },
   "devDependencies": {
