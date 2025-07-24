@@ -1,13 +1,14 @@
 <html>
   <head>
     <link rel="apple-touch-icon" sizes="180x180" href="logo.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="logo.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.svg">
 
-  <title>Mongoose Studio</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Mongoose Studio</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" href="tw.css">
+    <link rel="stylesheet" href="tw.css">
+    <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -75,8 +76,8 @@
         </div>
         <div class="mx-auto max-w-5xl py-32 sm:py-16 lg:py-32">
           <div class="text-center">
-            <h1 class="text-5xl font-semibold text-gray-900 sm:text-7xl">The MongoDB UI Built for Developers</h1>
-            <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">A sleek, powerful MongoDB UI with built-in dashboarding and auth—seamlessly integrated with your Express, Vercel, or Netlify app.</p>
+            <h1 class="text-5xl font-semibold text-gray-900 sm:text-7xl">A Modern, AI-First MongoDB UI in Your Browser</h1>
+            <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">A powerful MongoDB UI with built-in dashboards, secure production access, and an AI-powered chat assistant—all in one seamless web interface.</p>
             <div class="mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="https://npmjs.com/package/@mongoosejs/studio"
@@ -103,14 +104,38 @@
       </div>
     </div>
 
+    <div class="bg-white py-16 flex justify-center items-center">
+      <video
+        id="my-video"
+        class="video-js"
+        preload="auto"
+        width="862"
+        height="774"
+        autoplay
+        muted
+        data-setup="{}"
+      >
+        <source src="https://res.cloudinary.com/drfhhq8wu/video/upload/v1753386389/studio-ai-demo_ll2ih6.mp4" type="video/mp4" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+    </div>
+
     <div class="bg-white py-24 sm:py-32 mt-16">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
           <div class="mx-auto w-full max-w-xl lg:mx-0">
             <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Built for Developers, Trusted by Teams</h2>
-            <p class="mt-6 text-lg/8 text-gray-600">Mongoose Studio is more than just a database viewer—it's a full-featured MongoDB UI designed to streamline your workflow. Whether you're in local development or managing production data, Mongoose Studio makes it easy to query, visualize, and share insights from your MongoDB collections.</p>
+            <p class="mt-6 text-lg/8 text-gray-600">
+              Mongoose Studio makes it effortless to explore, query, and visualize your MongoDB data, whether you're in local dev or working with live production data. Run it as a sidecar to your Express, Vercel, or Netlify app, and you're up and running in seconds.
+            </p>
             <div class="mt-8 flex items-center gap-x-6 justify-center lg:justify-start">
-              <a href="https://www.npmjs.com/package/@mongoosejs/studio" target="_blank" class="rounded-md bg-red-berry-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">View on npm</a>
+              <a href="/imdb" target="_blank" class="rounded-md bg-red-berry-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Try it Out</a>
             </div>
           </div>
           <div class="mx-auto grid w-full max-w-xl grid-cols-1 lg:grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
@@ -346,5 +371,6 @@
       </div>
     </footer>
 
+    <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
   </body>
 </html>
