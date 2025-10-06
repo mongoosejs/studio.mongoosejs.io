@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" href="/tw.css" />
+    <style>
+      body {
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      main :is(h2, h3, h4) {
+        margin-top: 2rem;
+        font-weight: 600;
+      }
+      main p {
+        margin-top: 1rem;
+        line-height: 1.65;
+      }
+      main ul {
+        margin-top: 1rem;
+        padding-left: 1.5rem;
+        list-style: disc;
+      }
+      main li + li {
+        margin-top: 0.5rem;
+      }
+      a {
+        color: #2563eb;
+      }
+      a:hover {
+        color: #1d4ed8;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+    <header class="bg-white border-b border-slate-200">
+      <div class="max-w-4xl mx-auto px-6 py-6 flex items-center justify-between">
+        <a href="/" class="text-xl font-semibold tracking-tight">Mongoose Studio</a>
+        <nav class="flex items-center gap-6 text-sm font-medium text-slate-600">
+          <a href="/changelog/index.html" class="hover:text-slate-900 transition">Changelog</a>
+          <a href="https://mongoosejs.com/" class="hover:text-slate-900 transition">Docs</a>
+        </nav>
+      </div>
+    </header>
+    <main class="flex-1">
+      <div class="max-w-4xl mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900" data-slot="heading"></h1>
+        <div class="mt-8 text-base text-slate-700 leading-relaxed" data-slot="content"></div>
+      </div>
+    </main>
+    <footer class="bg-white border-t border-slate-200">
+      <div class="max-w-4xl mx-auto px-6 py-6 text-sm text-slate-500">
+        &copy; 2024 Mongoose. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
