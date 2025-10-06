@@ -108,18 +108,6 @@ function renderIndex(entries) {
             </h3>
             ${summary}
           </div>
-          <div class="relative mt-8 flex items-center gap-x-4">
-            <img src="/logo.svg" alt="Mongoose Studio" class="size-10 rounded-full bg-gray-50 dark:bg-gray-800" />
-            <div class="text-sm/6">
-              <p class="font-semibold text-gray-900 dark:text-white">
-                <a href="/">
-                  <span class="absolute inset-0"></span>
-                  Mongoose Team
-                </a>
-              </p>
-              <p class="text-gray-600 dark:text-gray-300">Mongoose Studio</p>
-            </div>
-          </div>
         </article>
       `;
     })
@@ -145,7 +133,7 @@ function renderEntryPage(entry) {
     <section class="bg-white py-24 sm:py-32 dark:bg-gray-900">
       <div class="mx-auto max-w-4xl px-6 lg:px-8">
         <div class="flex flex-col gap-4 border-b border-gray-200 pb-10 dark:border-gray-700">
-          <span class="text-sm font-medium uppercase tracking-wide text-indigo-600 dark:text-indigo-400">Release Notes</span>
+          <span class="text-sm font-medium uppercase tracking-wide text-red-berry-600">Release Notes</span>
           <h1 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white">Mongoose Studio ${escapeHtml(entry.displayVersion)}</h1>
           <time datetime="${entry.publishedAtISO}" class="text-sm text-gray-500 dark:text-gray-400">Released ${entry.publishedAtLabel}</time>
         </div>

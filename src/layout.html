@@ -30,47 +30,40 @@
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-gray-950 dark:text-white">
     <header>
-      <nav class="relative bg-white shadow dark:bg-gray-900/70 dark:shadow-none dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div class="relative flex h-16 justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              <button type="button" command="--toggle" commandfor="mobile-menu" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:hover:bg-white/5 dark:hover:text-white dark:focus:ring-white">
-                <span class="absolute -inset-0.5"></span>
-                <span class="sr-only">Open main menu</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 [[aria-expanded='true']_&]:hidden">
-                  <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 [&:not([aria-expanded='true']_*)]:hidden">
-                  <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+      <nav class="relative bg-white shadow dark:bg-gray-800/50 dark:shadow-none dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex h-16 justify-between">
+            <div class="flex">
+              <div class="-ml-2 mr-2 flex items-center md:hidden">
+                <!-- Mobile menu button -->
+                <button type="button" command="--toggle" commandfor="mobile-menu" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:hover:bg-white/5 dark:hover:text-white dark:focus:ring-white">
+                  <span class="absolute -inset-0.5"></span>
+                  <span class="sr-only">Open main menu</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 [[aria-expanded='true']_&]:hidden">
+                    <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 [&:not([aria-expanded='true']_*)]:hidden">
+                    <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
               <div class="flex shrink-0 items-center">
-                <a href="/" class="flex items-center gap-3">
-                  <img src="/logo.svg" alt="Mongoose Studio" class="h-8 w-auto dark:hidden" />
-                  <img src="/logo.svg" alt="Mongoose Studio" class="hidden h-8 w-auto dark:block" />
-                  <span class="hidden text-base font-semibold tracking-tight text-gray-900 dark:text-white sm:inline">Mongoose Studio</span>
-                </a>
-              </div>
-              <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <a href="/changelog/index.html" class="inline-flex items-center border-b-2 border-indigo-600 px-1 pt-1 text-sm font-medium text-gray-900 dark:border-indigo-500 dark:text-white">Changelog</a>
-                <a href="/" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Home</a>
-                <a href="https://mongoosejs.com/docs/studio/" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Docs</a>
+                <img src="/logo.svg" alt="Mongoose Studio" class="h-8 w-auto dark:hidden" />
               </div>
             </div>
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <a href="https://npmjs.com/package/@mongoosejs/studio" class="relative inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Get Studio
-              </a>
+            <div class="hidden md:ml-6 md:flex md:space-x-8 items-center">
+              <!-- Current: "border-indigo-600 text-gray-900 dark:border-indigo-500 dark:text-white", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white" -->
+              <a href="/" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-white">Home</a>
+              <a href="/changelog" class="h-full inline-flex items-center border-b-2 border-red-berry-600 px-1 pt-1 text-sm font-medium text-gray-900 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Changelog</a>
             </div>
           </div>
         </div>
-        <el-disclosure id="mobile-menu" hidden class="sm:hidden [&:not([hidden])]:block">
-          <div class="space-y-1 pb-4 pt-2">
-            <a href="/changelog/index.html" class="block border-l-4 border-indigo-600 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700 dark:border-indigo-500 dark:bg-indigo-600/10 dark:text-indigo-400">Changelog</a>
-            <a href="/" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg-white/5 dark:hover:text-white">Home</a>
-            <a href="https://mongoosejs.com/docs/studio/" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:bg-white/5 dark:hover:text-white">Docs</a>
+
+        <el-disclosure id="mobile-menu" hidden class="md:hidden [&:not([hidden])]:block">
+          <div class="space-y-1 pb-3 pt-2">
+            <!-- Match desktop navigation colors and elements -->
+            <a href="/" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 dark:text-white">Home</a>
+            <a href="/changelog" class="block border-b-2 border-red-berry-600 px-1 pt-1 text-base font-medium text-gray-900 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Changelog</a>
           </div>
         </el-disclosure>
       </nav>
@@ -80,7 +73,7 @@
     </main>
     <footer class="bg-white border-t border-slate-200 dark:border-gray-800 dark:bg-gray-900">
       <div class="mx-auto max-w-7xl px-6 py-8 text-sm text-slate-500 dark:text-gray-400">
-        &copy; 2024 Mongoose. All rights reserved.
+        &copy; 2025 MeanIT Software Inc. All rights reserved.
       </div>
     </footer>
   </body>
