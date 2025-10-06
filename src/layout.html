@@ -5,7 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
     <link rel="stylesheet" href="/tw.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"
+    ></script>
+    <script defer>
+      window.Prism = window.Prism || {};
+      window.Prism.plugins = window.Prism.plugins || {};
+      if (window.Prism.plugins.autoloader) {
+        window.Prism.plugins.autoloader.languages_path =
+          'https://cdn.jsdelivr.net/npm/prismjs@1/components/';
+      }
+    </script>
     <style>
       body {
         font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -25,6 +42,11 @@
       }
       main li + li {
         margin-top: 0.5rem;
+      }
+      main pre {
+        margin-top: 1.5rem;
+        overflow-x: auto;
+        border-radius: 0.75rem;
       }
     </style>
   </head>
