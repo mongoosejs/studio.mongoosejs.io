@@ -4,6 +4,33 @@ const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 const { marked } = require('marked');
+const Prism = require('prismjs');
+const loadLanguages = require('prismjs/components/index.js');
+
+const FALLBACK_LANGUAGE = 'plaintext';
+const LANGUAGE_ALIASES = {
+  js: 'javascript',
+  jsx: 'jsx',
+  ts: 'typescript',
+  tsx: 'tsx',
+  shell: 'bash',
+  sh: 'bash',
+  bash: 'bash',
+  shellsession: 'bash',
+  console: 'bash',
+  yml: 'yaml',
+  plain: FALLBACK_LANGUAGE,
+  text: FALLBACK_LANGUAGE
+};
+
+loadLanguages([FALLBACK_LANGUAGE]);
+
+marked.setOptions({
+  langPrefix: 'language-',
+  highlight(code, lang) {
+    return highlightCodeBlock(code, lang);
+  }
+});
 
 const opts = {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY
@@ -84,6 +111,30 @@ function buildChangelog() {
   fs.writeFileSync(path.join(outputDir, 'index.html'), index, 'utf8');
 
   console.log(`Built ${entries.length} changelog entr${entries.length === 1 ? 'y' : 'ies'}.`);
+}
+
+function highlightCodeBlock(code, language) {
+  const normalized = normalizeLanguage(language);
+
+  if (normalized && !Prism.languages[normalized]) {
+    try {
+      loadLanguages([normalized]);
+    } catch (err) {
+      return Prism.highlight(code, Prism.languages[FALLBACK_LANGUAGE], FALLBACK_LANGUAGE);
+    }
+  }
+
+  const grammar = Prism.languages[normalized] || Prism.languages[FALLBACK_LANGUAGE];
+  return Prism.highlight(code, grammar, normalized || FALLBACK_LANGUAGE);
+}
+
+function normalizeLanguage(language) {
+  if (!language) {
+    return FALLBACK_LANGUAGE;
+  }
+
+  const lower = language.toLowerCase();
+  return LANGUAGE_ALIASES[lower] || lower;
 }
 
 function renderIndex(entries) {
