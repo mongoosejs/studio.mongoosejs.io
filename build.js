@@ -7,32 +7,23 @@ const { marked } = require('marked');
 const Prism = require('prismjs');
 const loadLanguages = require('prismjs/components/index.js');
 
-const FALLBACK_LANGUAGE = 'plaintext';
-const LANGUAGE_ALIASES = {
+const SUPPORTED_LANGUAGES = {
   js: 'javascript',
-  jsx: 'jsx',
+  javascript: 'javascript',
   ts: 'typescript',
-  tsx: 'tsx',
-  shell: 'bash',
-  sh: 'bash',
-  bash: 'bash',
-  shellsession: 'bash',
-  console: 'bash',
-  yml: 'yaml',
-  plain: FALLBACK_LANGUAGE,
-  text: FALLBACK_LANGUAGE
+  typescript: 'typescript'
 };
 
-loadLanguages([FALLBACK_LANGUAGE]);
+loadLanguages(['javascript', 'typescript']);
 
 const renderer = new marked.Renderer();
 
 renderer.code = function renderCode(code, infostring, escaped) {
   const language = normalizeLanguage(infostring);
   const highlighted = highlightCodeBlock(code, language);
-  const className = `language-${language || FALLBACK_LANGUAGE}`;
+  const className = language ? ` class="language-${language}"` : '';
 
-  return `<pre class="${className}"><code class="${className}">${highlighted}\n</code></pre>\n`;
+  return `<pre${className}><code${className}>${highlighted}\n</code></pre>\n`;
 };
 
 marked.use({
@@ -124,27 +115,21 @@ function buildChangelog() {
 }
 
 function highlightCodeBlock(code, language) {
-  const normalized = normalizeLanguage(language);
-
-  if (normalized && !Prism.languages[normalized]) {
-    try {
-      loadLanguages([normalized]);
-    } catch (err) {
-      return Prism.highlight(code, Prism.languages[FALLBACK_LANGUAGE], FALLBACK_LANGUAGE);
-    }
+  if (!language) {
+    return escapeHtml(code);
   }
 
-  const grammar = Prism.languages[normalized] || Prism.languages[FALLBACK_LANGUAGE];
-  return Prism.highlight(code, grammar, normalized || FALLBACK_LANGUAGE);
+  const grammar = Prism.languages[language];
+  return grammar ? Prism.highlight(code, grammar, language) : escapeHtml(code);
 }
 
 function normalizeLanguage(language) {
   if (!language) {
-    return FALLBACK_LANGUAGE;
+    return null;
   }
 
   const lower = language.toLowerCase().replace(/^language-/, '');
-  return LANGUAGE_ALIASES[lower] || lower;
+  return SUPPORTED_LANGUAGES[lower] || null;
 }
 
 function renderIndex(entries) {
