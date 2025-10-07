@@ -25,10 +25,20 @@ const LANGUAGE_ALIASES = {
 
 loadLanguages([FALLBACK_LANGUAGE]);
 
-marked.setOptions({
-  langPrefix: 'language-',
-  highlight(code, lang) {
-    return highlightCodeBlock(code, lang);
+const renderer = new marked.Renderer();
+
+renderer.code = function renderCode(code, infostring, escaped) {
+  const language = normalizeLanguage(infostring);
+  const highlighted = highlightCodeBlock(code, language);
+  const className = `language-${language || FALLBACK_LANGUAGE}`;
+
+  return `<pre class="${className}"><code class="${className}">${highlighted}\n</code></pre>\n`;
+};
+
+marked.use({
+  renderer,
+  options: {
+    langPrefix: 'language-'
   }
 });
 
@@ -133,7 +143,7 @@ function normalizeLanguage(language) {
     return FALLBACK_LANGUAGE;
   }
 
-  const lower = language.toLowerCase();
+  const lower = language.toLowerCase().replace(/^language-/, '');
   return LANGUAGE_ALIASES[lower] || lower;
 }
 
