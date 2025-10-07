@@ -4,6 +4,34 @@ const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 const { marked } = require('marked');
+const Prism = require('prismjs');
+const loadLanguages = require('prismjs/components/index.js');
+
+const SUPPORTED_LANGUAGES = {
+  js: 'javascript',
+  javascript: 'javascript',
+  ts: 'typescript',
+  typescript: 'typescript'
+};
+
+loadLanguages(['javascript', 'typescript']);
+
+const renderer = new marked.Renderer();
+
+renderer.code = function renderCode(code, infostring, escaped) {
+  const language = normalizeLanguage(infostring);
+  const highlighted = highlightCodeBlock(code, language);
+  const className = language ? ` class="language-${language}"` : '';
+
+  return `<pre${className}><code${className}>${highlighted}\n</code></pre>\n`;
+};
+
+marked.use({
+  renderer,
+  options: {
+    langPrefix: 'language-'
+  }
+});
 
 const opts = {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY
@@ -84,6 +112,24 @@ function buildChangelog() {
   fs.writeFileSync(path.join(outputDir, 'index.html'), index, 'utf8');
 
   console.log(`Built ${entries.length} changelog entr${entries.length === 1 ? 'y' : 'ies'}.`);
+}
+
+function highlightCodeBlock(code, language) {
+  if (!language) {
+    return escapeHtml(code);
+  }
+
+  const grammar = Prism.languages[language];
+  return grammar ? Prism.highlight(code, grammar, language) : escapeHtml(code);
+}
+
+function normalizeLanguage(language) {
+  if (!language) {
+    return null;
+  }
+
+  const lower = language.toLowerCase().replace(/^language-/, '');
+  return SUPPORTED_LANGUAGES[lower] || null;
 }
 
 function renderIndex(entries) {
