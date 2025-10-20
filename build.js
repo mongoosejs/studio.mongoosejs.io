@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 const { marked } = require('marked');
+const matter = require('gray-matter');
 const Prism = require('prismjs');
 const loadLanguages = require('prismjs/components/index.js');
 
@@ -39,6 +40,15 @@ const opts = {
 
 console.log('Creating Mongoose studio', opts);
 
+const layoutPath = path.join(__dirname, 'src', 'layout.html');
+const layout = fs.existsSync(layoutPath)
+  ? fs.readFileSync(layoutPath, 'utf8')
+  : null;
+
+if (!layout) {
+  console.warn('Missing layout at src/layout.html, static page builds will be skipped.');
+}
+
 require('@mongoosejs/studio/frontend')(`/.netlify/functions/studio`, true, opts)
   .then(() => {
     execSync(
@@ -48,6 +58,7 @@ require('@mongoosejs/studio/frontend')(`/.netlify/functions/studio`, true, opts)
       `
     );
     buildChangelog();
+    buildDocs();
   })
   .catch(err => {
     console.error('Failed to build Mongoose Studio frontend', err);
@@ -61,13 +72,11 @@ function buildChangelog() {
     return;
   }
 
-  const layoutPath = path.join(__dirname, 'src', 'layout.html');
-  if (!fs.existsSync(layoutPath)) {
-    console.warn('Missing layout at src/layout.html, skipping changelog build.');
+  if (!layout) {
+    console.warn('Skipping changelog build because the shared layout is unavailable.');
     return;
   }
 
-  const layout = fs.readFileSync(layoutPath, 'utf8');
   const outputDir = path.join(__dirname, 'public', 'changelog');
   fs.mkdirSync(outputDir, { recursive: true });
 
@@ -112,6 +121,88 @@ function buildChangelog() {
   fs.writeFileSync(path.join(outputDir, 'index.html'), index, 'utf8');
 
   console.log(`Built ${entries.length} changelog entr${entries.length === 1 ? 'y' : 'ies'}.`);
+}
+
+function buildDocs() {
+  const docsDir = path.join(__dirname, 'src', 'docs');
+  if (!fs.existsSync(docsDir)) {
+    console.log('No docs found, skipping docs build.');
+    return;
+  }
+
+  if (!layout) {
+    console.warn('Skipping docs build because the shared layout is unavailable.');
+    return;
+  }
+
+  const outputDir = path.join(__dirname, 'public', 'docs');
+  fs.mkdirSync(outputDir, { recursive: true });
+
+  const files = collectMarkdownFiles(docsDir);
+
+  files.forEach(filePath => {
+    const relative = path.relative(docsDir, filePath);
+    const { data, content } = matter(fs.readFileSync(filePath, 'utf8'));
+    if (!data.title) {
+      throw new Error(`Missing required frontmatter property "title" in ${relative}`);
+    }
+
+    const html = marked.parse(content);
+    const title = data.title;
+    const description = data.description || '';
+
+    const page = applyTemplate(layout, {
+      pageTitle: title ? `${title} - Mongoose Studio Documentation` : 'Mongoose Studio Documentation',
+      content: renderDocPage({ title, description, html })
+    });
+
+    const outputPath = path
+      .join(outputDir, relative)
+      .replace(/\.md$/i, '.html');
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, page, 'utf8');
+  });
+
+  console.log(`Built ${files.length} documentation page${files.length === 1 ? '' : 's'}.`);
+}
+
+function collectMarkdownFiles(rootDir) {
+  const files = [];
+
+  for (const entry of fs.readdirSync(rootDir, { withFileTypes: true })) {
+    const fullPath = path.join(rootDir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectMarkdownFiles(fullPath));
+      continue;
+    }
+
+    if (entry.isFile() && entry.name.toLowerCase().endsWith('.md')) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+}
+
+function renderDocPage(doc) {
+  const description = doc.description
+    ? `<p class="text-base text-gray-600 dark:text-gray-300">${escapeHtml(doc.description)}</p>`
+    : '';
+
+  return `
+    <section class="bg-white py-24 sm:py-32 dark:bg-gray-900">
+      <div class="mx-auto max-w-4xl px-6 lg:px-8">
+        <div class="flex flex-col gap-4 border-b border-gray-200 pb-10 dark:border-gray-700">
+          <span class="text-sm font-medium uppercase tracking-wide text-red-berry-600">Documentation</span>
+          <h1 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white">${escapeHtml(doc.title)}</h1>
+          ${description}
+        </div>
+        <article class="mt-12 space-y-6 text-base leading-relaxed text-slate-700 dark:text-gray-300">
+          ${doc.html}
+        </article>
+      </div>
+    </section>
+  `;
 }
 
 function highlightCodeBlock(code, language) {
