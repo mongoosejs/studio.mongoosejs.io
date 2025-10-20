@@ -2,6 +2,7 @@
   "name": "studio.mongoosejs.io",
   "dependencies": {
     "cheerio": "1.0.0-rc.12",
+    "gray-matter": "4.0.3",
     "marked": "9.1.6",
     "@mongoosejs/studio": "0.0.131",
     "prismjs": "1.29.0",

@@ -33,6 +33,13 @@
         overflow-x: auto;
         border-radius: 0.75rem;
       }
+      code {
+        color: #1d4ed8;
+        background-color: #f7f7f7;
+      }
+      a {
+        color: rgb(190 0 0);
+      }
     </style>
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-gray-950 dark:text-white">
@@ -60,8 +67,27 @@
             </div>
             <div class="hidden md:ml-6 md:flex md:space-x-8 items-center">
               <!-- Current: "border-indigo-600 text-gray-900 dark:border-indigo-500 dark:text-white", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white" -->
-              <a href="/" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-white">Home</a>
-              <a href="/changelog" class="h-full inline-flex items-center border-b-2 border-red-berry-600 px-1 pt-1 text-sm font-medium text-gray-900 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Changelog</a>
+              <a id="nav-home" href="/" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-white">Home</a>
+              <a id="nav-docs" href="/docs" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Docs</a>
+              <a id="nav-changelog" href="/changelog" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Changelog</a>
+              <script>
+                (function() {
+                  const path = window.location.pathname;
+                  function activateTab(tabId) {
+                    const tab = document.getElementById(tabId);
+                    if (!tab) return;
+                    tab.classList.remove("border-transparent", "text-gray-500");
+                    tab.classList.add("border-red-berry-600", "text-gray-900");
+                  }
+                  if (path.startsWith("/docs")) {
+                    activateTab("nav-docs");
+                  } else if (path.startsWith("/changelog")) {
+                    activateTab("nav-changelog");
+                  } else {
+                    activateTab("nav-home");
+                  }
+                })();
+              </script>
             </div>
           </div>
         </div>
@@ -70,6 +96,7 @@
           <div class="space-y-1 pb-3 pt-2">
             <!-- Match desktop navigation colors and elements -->
             <a href="/" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 dark:text-white">Home</a>
+            <a href="/docs" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Docs</a>
             <a href="/changelog" class="block border-b-2 border-red-berry-600 px-1 pt-1 text-base font-medium text-gray-900 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Changelog</a>
           </div>
         </el-disclosure>
