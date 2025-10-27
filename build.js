@@ -57,6 +57,7 @@ require('@mongoosejs/studio/frontend')(`/.netlify/functions/studio`, true, opts)
       cp -r ./node_modules/@mongoosejs/studio/frontend/public/* ./public/imdb/
       `
     );
+    console.log('Built Mongoose Studio frontend');
     buildChangelog();
     buildDocs();
   })
