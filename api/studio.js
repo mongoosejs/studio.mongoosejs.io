@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-require('../../src/movies-demo/movies.model');
+require('../src/movies-demo/movies.model');
 
 const studio = require('@mongoosejs/studio/backend/next');
 
