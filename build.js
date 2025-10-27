@@ -49,7 +49,7 @@ if (!layout) {
   console.warn('Missing layout at src/layout.html, static page builds will be skipped.');
 }
 
-require('@mongoosejs/studio/frontend')(`/api/studio`, true, opts)
+require('@mongoosejs/studio/frontend')(`/.netlify/functions/studio`, true, opts)
   .then(() => {
     execSync(
       `
