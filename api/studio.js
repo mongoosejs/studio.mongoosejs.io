@@ -1,8 +1,10 @@
-import mongoose from 'mongoose';
+'use strict';
 
-import '../../src/movies-demo/movies.model';
+const mongoose = require('mongoose');
 
-import studio from '@mongoosejs/studio/backend/next';
+require('../../src/movies-demo/movies.model');
+
+const studio = require('@mongoosejs/studio/backend/next');
 
 const handler = studio({
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY
@@ -10,7 +12,7 @@ const handler = studio({
 
 let conn = null;
 
-async function handler(...args) {
+async function handlerWrapper(...args) {
   if (conn == null) {
     conn = await mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { serverSelectionTimeoutMS: 3000 });
   }
@@ -18,4 +20,4 @@ async function handler(...args) {
   return handler.apply(null, args);
 }
 
-export default handler;
+module.exports = handlerWrapper;
