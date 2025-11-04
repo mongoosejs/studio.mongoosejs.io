@@ -164,6 +164,7 @@ function buildDocs() {
     const page = applyTemplate(layout, {
       pageTitle: title ? `${title} - Mongoose Studio Documentation` : 'Mongoose Studio Documentation',
       content: renderDocPage({ title, description, html }),
+      description,
       meta
     });
 
@@ -335,7 +336,7 @@ function formatDate(date) {
   return `${month} ${day}, ${year}`;
 }
 
-function applyTemplate(template, { pageTitle, heading, content, meta = {} }) {
+function applyTemplate(template, { pageTitle, heading, content, description, meta = {} }) {
   const $ = cheerio.load(template);
 
   if (pageTitle) {
@@ -352,24 +353,17 @@ function applyTemplate(template, { pageTitle, heading, content, meta = {} }) {
 
   if (meta.ogImage) {
     const ogImageTag = $('meta[property="og:image"]').first();
-    if (ogImageTag.length) {
-      ogImageTag.attr('content', meta.ogImage);
-    }
-  }
-
-  if (meta.twitterImage) {
-    const twitterImageTag = $('meta[name="twitter:image"]').first();
-    if (twitterImageTag.length) {
-      twitterImageTag.attr('content', meta.twitterImage);
-    }
+    ogImageTag.attr('content', meta.ogImage);
   }
 
   if (meta.twitterCard) {
     const twitterCardTag = $('meta[name="twitter:card"]').first();
-    if (twitterCardTag.length) {
-      twitterCardTag.attr('content', meta.twitterCard);
-    }
+    twitterCardTag.attr('content', meta.twitterCard);
   }
+
+  $('meta[name="twitter:image"]').attr('content', meta.twitterImage);
+  $('meta[name="twitter:title"]').attr('content', pageTitle);
+  $('meta[name="twitter:description"]').attr('content', description);
 
   return $.html();
 }
