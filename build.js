@@ -152,9 +152,19 @@ function buildDocs() {
     const title = data.title;
     const description = data.description || '';
 
+    const socialImage = resolveSocialImage(data.image);
+    const meta = {};
+
+    if (socialImage) {
+      meta.ogImage = socialImage;
+      meta.twitterImage = socialImage;
+      meta.twitterCard = 'summary_large_image';
+    }
+
     const page = applyTemplate(layout, {
       pageTitle: title ? `${title} - Mongoose Studio Documentation` : 'Mongoose Studio Documentation',
-      content: renderDocPage({ title, description, html })
+      content: renderDocPage({ title, description, html }),
+      meta
     });
 
     const outputPath = path
@@ -325,7 +335,7 @@ function formatDate(date) {
   return `${month} ${day}, ${year}`;
 }
 
-function applyTemplate(template, { pageTitle, heading, content }) {
+function applyTemplate(template, { pageTitle, heading, content, meta = {} }) {
   const $ = cheerio.load(template);
 
   if (pageTitle) {
@@ -340,5 +350,42 @@ function applyTemplate(template, { pageTitle, heading, content }) {
     $('[data-slot="content"]').first().html(content);
   }
 
+  if (meta.ogImage) {
+    const ogImageTag = $('meta[property="og:image"]').first();
+    if (ogImageTag.length) {
+      ogImageTag.attr('content', meta.ogImage);
+    }
+  }
+
+  if (meta.twitterImage) {
+    const twitterImageTag = $('meta[name="twitter:image"]').first();
+    if (twitterImageTag.length) {
+      twitterImageTag.attr('content', meta.twitterImage);
+    }
+  }
+
+  if (meta.twitterCard) {
+    const twitterCardTag = $('meta[name="twitter:card"]').first();
+    if (twitterCardTag.length) {
+      twitterCardTag.attr('content', meta.twitterCard);
+    }
+  }
+
   return $.html();
+}
+
+function resolveSocialImage(imagePath) {
+  if (!imagePath || typeof imagePath !== 'string') {
+    return null;
+  }
+
+  if (/^https?:\/\//i.test(imagePath)) {
+    return imagePath;
+  }
+
+  const baseUrl = process.env.SITE_BASE_URL || 'https://studio.mongoosejs.io';
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+
+  return `${normalizedBase}${normalizedPath}`;
 }
