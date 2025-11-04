@@ -1,7 +1,7 @@
 ---
 title: Dashboards
 description: Explore what is available in Mongoose Studio's dashboarding framework.
-image: /studio-dashboard.png
+image: https://res.cloudinary.com/drfhhq8wu/image/upload/v1762287799/studio-dashboarding_t03ywd.jpg
 ---
 
 # Dashboard scripting reference

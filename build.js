@@ -376,16 +376,8 @@ function applyTemplate(template, { pageTitle, heading, content, meta = {} }) {
 
 function resolveSocialImage(imagePath) {
   if (!imagePath || typeof imagePath !== 'string') {
-    return null;
+    return 'https://res.cloudinary.com/drfhhq8wu/image/upload/v1762288188/68af798b31f5a1432aaec547_lvw406.png';
   }
 
-  if (/^https?:\/\//i.test(imagePath)) {
-    return imagePath;
-  }
-
-  const baseUrl = process.env.SITE_BASE_URL || 'https://studio.mongoosejs.io';
-  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
-
-  return `${normalizedBase}${normalizedPath}`;
+  return imagePath;
 }
