@@ -19,7 +19,7 @@ async function handlerWrapper(req, res) {
 
   console.log('Handler', handler.toString());
 
-  return handler.apply(null, [req, res]).catch(err => {
+  await handler.apply(null, [req, res]).catch(err => {
     console.log(err);
     throw err;
   });
