@@ -12,14 +12,14 @@ const handler = studio({
 
 let conn = null;
 
-async function handlerWrapper(...args) {
+async function handlerWrapper(req, res) {
   if (conn == null) {
     conn = await mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { serverSelectionTimeoutMS: 3000 });
   }
 
   console.log('Handler', handler.toString());
 
-  return handler.apply(null, args).catch(err => {
+  return handler.apply(null, [req, res]).catch(err => {
     console.log(err);
     throw err;
   });
