@@ -17,7 +17,12 @@ async function handlerWrapper(...args) {
     conn = await mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { serverSelectionTimeoutMS: 3000 });
   }
 
-  return handler.apply(null, args);
+  console.log('Handler', handler.toString());
+
+  return handler.apply(null, args).catch(err => {
+    console.log(err);
+    throw err;
+  });
 }
 
 module.exports = handlerWrapper;
