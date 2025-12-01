@@ -86,13 +86,29 @@ function buildChangelog() {
     .filter(file => file.endsWith('.md'))
     .map(file => {
       const filePath = path.join(changelogDir, file);
-      const markdown = fs.readFileSync(filePath, 'utf8');
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      const parsed = matter(fileContent);
+      const markdown = parsed.content;
+      const data = parsed.data || {};
+
       const html = marked.parse(markdown);
       const slug = path.basename(file, '.md');
       const summaryText = extractFirstParagraph(markdown);
       const displayVersion = slug.startsWith('v') ? slug : `v${slug}`;
-      const stats = fs.statSync(filePath);
-      const publishedAt = stats.mtime;
+
+      // Handle publishedAt - can be a string or Date in frontmatter, else fallback to file mtime
+      let publishedAt;
+      if (data.publishedAt) {
+        // Try to parse as date string, fallback to Date if already a Date
+        publishedAt = typeof data.publishedAt === 'string'
+          ? new Date(data.publishedAt)
+          : data.publishedAt;
+      }
+      if (!publishedAt || isNaN(publishedAt.getTime())) {
+        const stats = fs.statSync(filePath);
+        publishedAt = stats.mtime;
+      }
+
       return {
         slug,
         displayVersion,
@@ -100,10 +116,16 @@ function buildChangelog() {
         summary: summaryText,
         publishedAt,
         publishedAtISO: publishedAt.toISOString().split('T')[0],
-        publishedAtLabel: formatDate(publishedAt)
+        publishedAtLabel: formatDate(publishedAt),
+        image: data.image
       };
     })
-    .sort((a, b) => b.slug.localeCompare(a.slug, 'en', { numeric: true, sensitivity: 'base' }));
+    .sort((a, b) => {
+      // Sort descending by publishedAt, fallback to slug
+      if (b.publishedAt > a.publishedAt) return 1;
+      if (a.publishedAt > b.publishedAt) return -1;
+      return b.slug.localeCompare(a.slug, 'en', { numeric: true, sensitivity: 'base' });
+    });
 
   entries.forEach(entry => {
     const page = applyTemplate(layout, {
