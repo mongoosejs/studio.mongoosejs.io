@@ -133,8 +133,8 @@ function buildChangelog() {
       content: renderEntryPage(entry),
       description: entry.description,
       meta: {
-        ogImage: data.image,
-        twitterImage: data.image,
+        ogImage: entry.image,
+        twitterImage: entry.image,
         twitterCard: 'summary_large_image'
       }
     });
