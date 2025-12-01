@@ -110,14 +110,14 @@ function buildChangelog() {
       }
 
       return {
+        ...data,
         slug,
         displayVersion,
         html,
         summary: summaryText,
         publishedAt,
         publishedAtISO: publishedAt.toISOString().split('T')[0],
-        publishedAtLabel: formatDate(publishedAt),
-        image: data.image
+        publishedAtLabel: formatDate(publishedAt)
       };
     })
     .sort((a, b) => {
@@ -130,7 +130,13 @@ function buildChangelog() {
   entries.forEach(entry => {
     const page = applyTemplate(layout, {
       pageTitle: `Mongoose Studio Changelog - ${entry.displayVersion}`,
-      content: renderEntryPage(entry)
+      content: renderEntryPage(entry),
+      description: entry.description,
+      meta: {
+        ogImage: data.image,
+        twitterImage: data.image,
+        twitterCard: 'summary_large_image'
+      }
     });
 
     fs.writeFileSync(path.join(outputDir, `${entry.slug}.html`), page, 'utf8');
