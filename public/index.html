@@ -13,26 +13,51 @@
 
   <body>
     <div class="bg-white">
-      <header class="absolute inset-x-0 top-0 z-50">
+      <header class="absolute inset-x-0 top-0 z-50 bg-white/80 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
           <a href="/" class="flex items-center gap-3 text-lg font-semibold text-gray-900">
             <img class="h-9 w-auto" src="logo.svg" alt="Mongoose Studio">
           </a>
-          <nav class="flex items-center gap-4 text-sm font-semibold text-gray-900">
-            <a href="/docs/index.html" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">Docs</a>
-            <a href="/changelog/index.html" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">Changelog</a>
-            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 flex items-center gap-1">
-              <svg class="h-[1.5em] mr-2" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
+          <div class="flex items-center gap-4">
+            <button
+              id="mobile-menu-button"
+              type="button"
+              aria-expanded="false"
+              class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800 lg:hidden"
+            >
+              <svg data-icon="open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
-              GitHub
-            </a>
-            <a href="/imdb" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 flex items-center gap-1">
-              Demo
-            </a>
-          </nav>
+              <svg data-icon="close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden h-6 w-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+              <span class="sr-only">Toggle navigation</span>
+            </button>
+            <nav class="hidden items-center gap-4 text-sm font-semibold text-gray-900 lg:flex">
+              <a href="/docs/index.html" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">Docs</a>
+              <a href="/changelog/index.html" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">Changelog</a>
+              <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 flex items-center gap-1">
+                <svg class="h-[1.5em] mr-2" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.51 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
+                </svg>
+                GitHub
+              </a>
+              <a href="/imdb" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 flex items-center gap-1">
+                Demo
+              </a>
+            </nav>
+          </div>
+        </div>
+        <div id="mobile-nav" class="hidden border-t border-gray-200 bg-white/95 px-6 pb-6 shadow-lg backdrop-blur lg:hidden">
+          <div class="mx-auto flex max-w-7xl flex-col gap-3 pt-4 text-sm font-semibold text-gray-900">
+            <a href="/docs/index.html" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">Docs</a>
+            <a href="/changelog/index.html" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">Changelog</a>
+            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">GitHub</a>
+            <a href="/imdb" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">Demo</a>
+          </div>
         </div>
       </header>
+
 
       <div class="relative isolate px-6 pt-14 lg:px-8">
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
@@ -340,5 +365,35 @@
     </footer>
 
     <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
+    <script>
+      (() => {
+        const menu = document.getElementById('mobile-nav');
+        const button = document.getElementById('mobile-menu-button');
+        if (!menu || !button) return;
+
+        const icons = {
+          open: button.querySelector('[data-icon="open"]'),
+          close: button.querySelector('[data-icon="close"]')
+        };
+
+        function setState(open) {
+          menu.classList.toggle('hidden', !open);
+          button.setAttribute('aria-expanded', open.toString());
+          if (icons.open && icons.close) {
+            icons.open.classList.toggle('hidden', open);
+            icons.close.classList.toggle('hidden', !open);
+          }
+        }
+
+        button.addEventListener('click', () => {
+          const isOpen = menu.classList.contains('hidden');
+          setState(isOpen);
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => setState(false));
+        });
+      })();
+    </script>
   </body>
 </html>
