@@ -11,6 +11,9 @@ const handler = studio(mongoose, null, {
   openAIAPIKey: process.env.OPENAI_API_KEY
 });
 
+console.log('Using Mongoose Studio API Key:', process.env.MONGOOSE_STUDIO_API_KEY);
+console.log('Using OpenAI API Key:', process.env.OPENAI_API_KEY);
+
 let conn = null;
 
 async function handlerWrapper(req, res) {
