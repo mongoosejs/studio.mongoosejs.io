@@ -6,7 +6,7 @@ require('../src/movies-demo/movies.model');
 
 const studio = require('@mongoosejs/studio/backend/next');
 
-const handler = studio({
+const handler = studio(mongoose, null, {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY
 });
 
