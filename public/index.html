@@ -143,54 +143,65 @@
       <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 class="text-center text-base/7 font-semibold text-red-berry-800">Ship faster</h2>
         <p class="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight text-gray-950 sm:text-5xl">Effortless, Secure Data Management</p>
-        <div class="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
-          <div class="relative lg:col-span-3">
-            <div class="absolute inset-px rounded-lg bg-white lg:rounded-l-[2rem]"></div>
-            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+
+        <div class="mt-10 space-y-4 sm:mt-16">
+          <!-- Row 1 -->
+          <div class="relative">
+            <div class="absolute inset-px rounded-lg bg-white"></div>
+            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
               <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
                 <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Instant Access to Your Data</p>
                 <p class="mt-2 text-sm/6 text-gray-600 max-lg:text-center">Mongoose Studio is a Node.js app that can run as a sidecar to your Node.js application. If your app runs on app.acme.com, your data is at app.acme.com/studio. No more juggling local, development, and production connection strings.</p>
               </div>
               <div class="px-8 mt-4 overflow-hidden mb-4">
-                <img class="w-full max-w-[900px] object-cover object-top max-h-[800px] mx-auto rounded-lg" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768927958/Screenshot_from_2026-01-20_11-46-33_on7z2n.webp" alt="">
+                <img
+                  class="w-full max-w-[900px] object-cover object-top max-h-[800px] mx-auto rounded-lg"
+                  src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768941267/Screenshot_from_2026-01-20_15-34-17_siccod.webp"
+                  alt=""
+                >
               </div>
             </div>
-            <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 lg:rounded-l-[2rem]"></div>
-          </div>
-          <div class="relative lg:row-span-2 lg:col-span-1">
-            <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-t-[2rem]"></div>
-            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
-              <div class="px-8 pt-8 sm:px-10 sm:pt-10">
-                <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Production-Ready Security</p>
-                <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Stop copying connection strings and giving everyone admin access to production. Log in via GitHub OAuth and use role-based access control for secure access to production data.</p>
-              </div>
-              <div class="flex flex-1 items-center justify-center px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2">
-                <img class="w-full max-lg:max-w-xs" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768929638/Screenshot_from_2026-01-20_12-20-24_w5s4ka.webp" alt="">
-              </div>
-            </div>
-            <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-t-[2rem]"></div>
+            <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"></div>
           </div>
 
-          <div class="relative lg:col-span-2">
-            <div class="absolute inset-px rounded-lg bg-white max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
-            <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
-              <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
-                <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Charts and Dashboards Built In</p>
-                <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Transform raw data into actionable dashboards—all within the same sleek UI.</p>
+          <!-- Row 2 (1/3 + 2/3) -->
+          <div class="flex flex-col gap-4 md:flex-row">
+            <div class="relative md:w-1/3">
+              <div class="absolute inset-px rounded-lg bg-white"></div>
+              <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                <div class="px-8 pt-8 sm:px-10 sm:pt-10">
+                  <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Production-Ready Security</p>
+                  <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Stop copying connection strings and giving everyone admin access to production. Log in via GitHub OAuth and use role-based access control for secure access to production data.</p>
+                </div>
+                <div class="flex flex-1 items-center justify-center px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2">
+                  <img class="w-full max-lg:max-w-xs" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768929638/Screenshot_from_2026-01-20_12-20-24_w5s4ka.webp" alt="">
+                </div>
               </div>
-              <div class="flex px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2">
-                <img class="w-full" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768940872/Screenshot_from_2026-01-20_15-26-44_hs9mrf.webp" alt="">
-              </div>
+              <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"></div>
             </div>
-            <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+
+            <div class="relative md:w-2/3">
+              <div class="absolute inset-px rounded-lg bg-white"></div>
+              <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
+                  <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Charts and Dashboards Built In</p>
+                  <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Transform raw data into actionable dashboards—all within the same sleek UI.</p>
+                </div>
+                <div class="flex px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2">
+                  <img class="w-full" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768940872/Screenshot_from_2026-01-20_15-26-44_hs9mrf.webp" alt="Mongoose Studio charts and dashboards interface">
+                </div>
+              </div>
+              <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5"></div>
+            </div>
           </div>
 
-          <div class="relative lg:col-span-3">
+          <!-- Row 3 -->
+          <div class="relative">
             <div class="absolute inset-px rounded-lg bg-white"></div>
             <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
               <div class="px-8 pt-8 sm:px-10 sm:pt-10">
                 <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Collaboration Made Easy</p>
-                <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Share queries, dashboards, and documents with your team via links. No screenshots, no friction.</p>
+                <p class="mt-2 text-sm/6 text-gray-600 max-lg:text-center">Share queries, dashboards, and documents with your team via links. No screenshots, no friction.</p>
               </div>
               <div class="flex flex-1 px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2 overflow-hidden">
                 <img class="max-w-[1200px] w-full object-top" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768928412/Screenshot_from_2026-01-20_12-00-03_pcdqvr.webp" alt="">
