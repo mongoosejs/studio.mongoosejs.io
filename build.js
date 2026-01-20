@@ -35,7 +35,8 @@ marked.use({
 });
 
 const opts = {
-  apiKey: process.env.MONGOOSE_STUDIO_API_KEY
+  apiKey: process.env.MONGOOSE_STUDIO_API_KEY,
+  openAIAPIKey: process.env.OPENAI_API_KEY
 };
 
 console.log('Creating Mongoose studio', opts);
