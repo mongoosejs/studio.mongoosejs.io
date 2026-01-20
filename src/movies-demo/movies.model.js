@@ -3,12 +3,12 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
+  title: String,
+  cast: [String],
   plot: String,
   genres: [String],
   runtime: Number,
-  cast: [String],
   poster: String,
-  title: String,
   fullplot: String,
   languages: [String],
   released: Date,
