@@ -6,13 +6,10 @@ require('../src/movies-demo/movies.model');
 
 const studio = require('@mongoosejs/studio/backend/next');
 
-const handler = studio(mongoose, null, {
+const handler = studio(mongoose, {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY,
   openAIAPIKey: process.env.OPENAI_API_KEY
 });
-
-console.log('Using Mongoose Studio API Key:', process.env.MONGOOSE_STUDIO_API_KEY);
-console.log('Using OpenAI API Key:', process.env.OPENAI_API_KEY);
 
 let conn = null;
 
@@ -21,6 +18,8 @@ async function handlerWrapper(req, res) {
     conn = await mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { serverSelectionTimeoutMS: 3000 });
   }
 
+  console.log('Using Mongoose Studio API Key:', process.env.MONGOOSE_STUDIO_API_KEY);
+  console.log('Using OpenAI API Key:', process.env.OPENAI_API_KEY);
   console.log('Handler', handler.toString());
 
   await handler.apply(null, [req, res]).catch(err => {
