@@ -14,7 +14,7 @@
   "scripts": {
     "build": "node ./build",
     "postinstall": "npm run tailwind",
-    "start": "serve ./public",
+    "start": "serve -p 5559 ./public",
     "tailwind": "tailwindcss -o ./public/tw.css",
     "tailwind:watch": "tailwindcss -o ./public/tw.css --watch"
   }
