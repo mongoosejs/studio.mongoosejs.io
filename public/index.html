@@ -1,7 +1,7 @@
 <html>
   <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/mongoose-studio.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mongoose-studio.svg">
 
     <title>Mongoose Studio</title>
     <meta charset="utf-8">
@@ -9,6 +9,9 @@
 
     <link rel="stylesheet" href="tw.css">
     <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
       window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments) }
     </script>
@@ -17,10 +20,14 @@
 
   <body>
     <div class="bg-white">
-      <header class="absolute inset-x-0 top-0 z-50 bg-white/80 backdrop-blur">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
-          <a href="/" class="flex items-center gap-3 text-lg font-semibold text-gray-900">
-            <img class="h-9 w-auto" src="logo.svg" alt="Mongoose Studio">
+      <header class="absolute inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-50">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-8">
+          <a href="/" class="flex items-center gap-3 text-xl font-semibold text-gray-900">
+            <img class="h-16 w-auto" src="/mongoose-studio.svg" alt="Mongoose Studio">
+            <div>
+              <span class="text-red-berry-900">Mongoose</span>
+              <div>Studio</div>
+            </div>
           </a>
           <div class="flex items-center gap-4">
             <button
@@ -38,15 +45,16 @@
               <span class="sr-only">Toggle navigation</span>
             </button>
             <nav class="hidden items-center gap-4 text-sm font-semibold text-gray-900 lg:flex">
-              <a href="/docs/index.html" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">Docs</a>
-              <a href="/changelog/index.html" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">Changelog</a>
-              <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 flex items-center gap-1">
+              <a href="/" data-nav="home" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Home</a>
+              <a href="/docs" data-nav="docs" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Docs</a>
+              <a href="/changelog" data-nav="changelog" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Changelog</a>
+              <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
                 <svg class="h-[1.5em] mr-2" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.51 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
                 </svg>
                 GitHub
               </a>
-              <a href="/imdb" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 flex items-center gap-1">
+              <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
                 Demo
               </a>
             </nav>
@@ -54,39 +62,74 @@
         </div>
         <div id="mobile-nav" class="hidden border-t border-gray-200 bg-white/95 px-6 pb-6 shadow-lg backdrop-blur lg:hidden">
           <div class="mx-auto flex max-w-7xl flex-col gap-3 pt-4 text-sm font-semibold text-gray-900">
-            <a href="/docs/index.html" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">Docs</a>
-            <a href="/changelog/index.html" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">Changelog</a>
-            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">GitHub</a>
-            <a href="/imdb" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-gray-50">Demo</a>
+            <a href="/" data-nav="home" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Home</a>
+            <a href="/docs" data-nav="docs" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Docs</a>
+            <a href="/changelog" data-nav="changelog" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Changelog</a>
+            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">GitHub</a>
+            <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
           </div>
         </div>
       </header>
+
 
 
       <div class="relative isolate px-6 pt-14 lg:px-8">
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
           <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
         </div>
-        <div class="mx-auto max-w-5xl py-32 sm:py-16 lg:py-32">
-          <div class="text-center">
-            <h1 class="text-5xl font-semibold text-gray-900 sm:text-7xl">A Modern, AI-First MongoDB UI in Your Browser</h1>
-            <p class="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">A powerful MongoDB UI with built-in dashboards, secure production access, and an AI-powered chat assistant—all in one seamless web interface.</p>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="https://npmjs.com/package/@mongoosejs/studio"
-                target="_blank"
-                class="rounded-md flex items-center bg-red-berry-800 border-2 border-red-berry-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" class="h-[1.5em] inline mr-2"><defs><style>.cls-1{fill:white;}.cls-2{fill:#cb3837;}</style></defs><path class="cls-1" d="M0,.2H150v150H0Z" transform="translate(0 -0.2)"/><path class="cls-2" d="M16.78,16.67V134.59H134.7V16.67Zm98.15,98.16H95.16V56.2H75.39v58.63H36.54V36.44h78.39Z" transform="translate(0 -0.2)"/></svg>
-                Get Started
-              </a>
-              <a
-                href="/imdb"
-                target="_blank"
-                class="font-semibold text-gray-900 flex items-center align-middle border-2 rounded-md border-gray-400 hover:bg-gray-100 px-3.5 py-2.5 text-sm">
-                Try It Now
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368" class="ml-1"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
-              </a>
-
+        <div class="mx-auto max-w-7xl py-24 sm:py-16 lg:py-28">
+          <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+            <div>
+              <span class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700">
+                <span class="rounded-full bg-gray-100 px-2 py-0.5 text-gray-900">New</span>
+                AI Query Assistant
+                <span class="text-gray-400">·</span>
+                Dashboards
+                <span class="text-gray-400">·</span>
+                Team Access
+              </span>
+              <h1 class="mt-6 text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">A Developer-First MongoDB GUI</h1>
+              <p class="mt-6 text-2xl leading-tight text-gray-700 sm:text-4xl sm:leading-tight">Browser-based, model-aware, and AI-assisted MongoDB interface for building and managing applications.</p>
+              <div class="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href="https://npmjs.com/package/@mongoosejs/studio"
+                  target="_blank"
+                  class="rounded-md flex items-center bg-red-berry-800 border-2 border-red-berry-800 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" class="h-[1.25em] inline mr-2"><defs><style>.cls-1{fill:white;}.cls-2{fill:#cb3837;}</style></defs><path class="cls-1" d="M0,.2H150v150H0Z" transform="translate(0 -0.2)"/><path class="cls-2" d="M16.78,16.67V134.59H134.7V16.67Zm98.15,98.16H95.16V56.2H75.39v58.63H36.54V36.44h78.39Z" transform="translate(0 -0.2)"/></svg>
+                  Start Free
+                </a>
+                <a
+                  href="/imdb"
+                  target="_blank"
+                  class="font-semibold text-gray-900 flex items-center border-2 rounded-md border-gray-300 bg-white hover:bg-gray-100 px-5 py-3 text-sm shadow-sm">
+                  View Live Demo
+                </a>
+              </div>
+              <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-gray-600">
+                <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Open source</span>
+                <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Free for local dev</span>
+                <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Deployed via Express middleware or Vercel</span>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="rounded-3xl border border-gray-200 bg-white p-4 shadow-2xl">
+                <video
+                  id="my-video"
+                  class="block w-full aspect-[16/10] object-contain rounded-2xl bg-slate-50"
+                  preload="auto"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                >
+                  <source src="https://res.cloudinary.com/drfhhq8wu/video/upload/v1768947919/studio-ai-demo-q1-2026_nasty6.mp4" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a
+                    web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>.
+                  </p>
+                </video>
+              </div>
             </div>
           </div>
         </div>
@@ -96,52 +139,52 @@
       </div>
     </div>
 
-    <div class="bg-white py-16 flex justify-center items-center">
-      <video
-        id="my-video"
-        class="video-js"
-        preload="auto"
-        width="862"
-        height="774"
-        autoplay
-        muted
-        data-setup="{}"
-      >
-        <source src="https://res.cloudinary.com/drfhhq8wu/video/upload/v1768947919/studio-ai-demo-q1-2026_nasty6.mp4" type="video/mp4" />
-        <p class="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a
-          web browser that
-          <a href="https://videojs.com/html5-video-support/" target="_blank"
-            >supports HTML5 video</a
-          >
-        </p>
-      </video>
-    </div>
-
-    <div class="bg-white py-24 sm:py-32 mt-16">
+    <section class="bg-white py-20 sm:py-24 border-t border-gray-100">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
-          <div class="mx-auto w-full max-w-xl lg:mx-0">
-            <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Built for Developers, Trusted by Teams</h2>
-            <p class="mt-6 text-lg/8 text-gray-600">
-              Mongoose Studio makes it effortless to explore, query, and visualize your MongoDB data, whether you're in local dev or working with live production data. Run it as a sidecar to your Express, Vercel, or Netlify app, and you're up and running in seconds.
-            </p>
-            <div class="mt-8 flex items-center gap-x-6 justify-center lg:justify-start">
-              <a href="/imdb" target="_blank" class="rounded-md bg-red-berry-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Try it Out</a>
-              <a
-                href="/docs"
-                class="font-semibold text-gray-900 flex items-center align-middle border-2 rounded-md border-gray-400 hover:bg-gray-100 px-3.5 py-2.5 text-sm">
-                  Learn More
-              </a>
-            </div>
+        <h2 class="text-center text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Everything You Need to Ship with MongoDB</h2>
+        <p class="mx-auto mt-4 max-w-3xl text-center text-lg text-gray-600">Model-aware workflows, AI-assisted querying, dashboards, and map-native tools in one developer-focused UI.</p>
+        <div class="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div class="text-center px-4">
+            <svg class="mx-auto size-8 text-red-berry-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 10.5h7.5m-7.5 3h4.5m-7.5 6h13.5a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18.75 4.5H5.25A2.25 2.25 0 0 0 3 6.75v10.5A2.25 2.25 0 0 0 5.25 19.5Z" />
+            </svg>
+            <h3 class="mt-4 text-2xl font-semibold text-gray-900">Browse &amp; Edit</h3>
+            <p class="mt-3 text-base text-gray-600">Inspect and update documents in real time.</p>
           </div>
-          <div class="mx-auto grid w-full max-w-xl grid-cols-1 lg:grid-cols-2 items-center gap-y-12 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:pl-8">
-            <img class="max-h-12 w-full object-contain object-center mx-auto" src="https://terravera.com/images/logo.svg" alt="Terra Vera" width="105" height="48">
-            <img class="max-h-12 w-full object-contain object-center mx-auto" src="openads.png" alt="OpenAds" width="104" height="48">
+          <div class="text-center px-4">
+            <svg class="mx-auto size-8 text-red-berry-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75 13.27 7.1l3.35 1.27-3.35 1.27L12 13l-1.27-3.36L7.38 8.37l3.35-1.27L12 3.75Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 12.75 18.75 14.5 20.5 15.25 18.75 16 18 17.75 17.25 16 15.5 15.25 17.25 14.5 18 12.75Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 14.25 9 16l1.75.75L9 17.5l-.75 1.75L7.5 17.5l-1.75-.75L7.5 16l.75-1.75Z" />
+            </svg>
+            <h3 class="mt-4 text-2xl font-semibold text-gray-900">AI Querying</h3>
+            <p class="mt-3 text-base text-gray-600">Generate filters and aggregations from plain language.</p>
+          </div>
+          <div class="text-center px-4">
+            <svg class="mx-auto size-8 text-red-berry-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5h15m-12-3.75v-6m4.5 6V6.75m4.5 9v-3.75" />
+            </svg>
+            <h3 class="mt-4 text-2xl font-semibold text-gray-900">Dashboards</h3>
+            <p class="mt-3 text-base text-gray-600">Track key metrics with shareable real-time views.</p>
+          </div>
+          <div class="text-center px-4">
+            <svg class="mx-auto size-8 text-red-berry-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 7.5 12 3.75l8.25 3.75L12 11.25 3.75 7.5Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12 12 15.75 20.25 12M3.75 16.5 12 20.25 20.25 16.5" />
+            </svg>
+            <h3 class="mt-4 text-2xl font-semibold text-gray-900">Schema-Aware</h3>
+            <p class="mt-3 text-base text-gray-600">Understand data through your Mongoose models.</p>
+          </div>
+          <div class="text-center px-4">
+            <svg class="mx-auto size-8 text-red-berry-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2.25c-3.75 0-6.75 3-6.75 6.75 0 5.25 6.75 12.75 6.75 12.75S18.75 14.25 18.75 9c0-3.75-3-6.75-6.75-6.75Zm0 9a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z" />
+            </svg>
+            <h3 class="mt-4 text-2xl font-semibold text-gray-900">GeoJSON</h3>
+            <p class="mt-3 text-base text-gray-600">View GeoJSON data on a map and edit via drag and drop.</p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <div class="bg-gray-50 py-24 sm:py-32">
       <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
@@ -188,8 +231,8 @@
               <div class="absolute inset-px rounded-lg bg-white"></div>
               <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
                 <div class="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
-                  <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Charts and Dashboards Built In</p>
-                  <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Transform raw data into actionable dashboards—all within the same sleek UI.</p>
+                  <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Realtime Dashboards</p>
+                  <p class="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">Track live signals and transform raw data into actionable dashboards in the same UI.</p>
                 </div>
                 <div class="flex px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2">
                   <img class="w-full" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768940872/Screenshot_from_2026-01-20_15-26-44_hs9mrf.webp" alt="Mongoose Studio charts and dashboards interface">
@@ -204,10 +247,10 @@
             <div class="absolute inset-px rounded-lg bg-white"></div>
             <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
               <div class="px-8 pt-8 sm:px-10 sm:pt-10">
-                <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Collaboration Made Easy</p>
-                <p class="mt-2 text-sm/6 text-gray-600 max-lg:text-center">Share queries, dashboards, and documents with your team via links. No screenshots, no friction.</p>
+                <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Secure Team Collaboration</p>
+                <p class="mt-2 text-sm/6 text-gray-600 max-lg:text-center">Share queries, dashboards, and documents with your team via links and role-based access controls.</p>
               </div>
-              <div class="flex flex-1 px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2 overflow-hidden">
+              <div class="flex px-8 max-lg:pb-12 max-lg:pt-10 sm:px-10 lg:pb-2 overflow-hidden">
                 <img class="max-w-[1200px] w-full object-top" src="https://res.cloudinary.com/drfhhq8wu/image/upload/v1768928412/Screenshot_from_2026-01-20_12-00-03_pcdqvr.webp" alt="">
               </div>
             </div>
@@ -227,8 +270,8 @@
       </div>
       <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-600 sm:text-xl/8">Mongoose Studio is completely <span class="font-bold">free</span> for local development—no signups, no paywalls, just <code>npm install @mongoosejs/studio</code> and go.</p>
       <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-600 sm:text-xl/8">When you're ready to take it to production, <span class="font-bold">Mongoose Studio Pro</span> unlocks powerful features.</p>
-      <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
-        <div class="rounded-3xl rounded-t-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-bl-3xl lg:rounded-tr-none">
+      <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-6xl lg:grid-cols-3 lg:gap-x-6">
+        <div class="rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10">
           <h3 id="tier-hobby" class="text-base/7 font-semibold text-red-berry-800">Free</h3>
           <p class="mt-4 flex items-baseline gap-x-2">
             <span class="text-5xl font-semibold tracking-tight text-gray-900">$0</span>
@@ -246,13 +289,7 @@
               <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
               </svg>
-              Basic Dashboards
-            </li>
-            <li class="flex gap-x-3">
-              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-              </svg>
-              Mongoose Studio shell
+              AI Chat for Data Access
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -268,6 +305,53 @@
             </li>
           </ul>
           <a href="https://www.npmjs.com/package/@mongoosejs/studio" aria-describedby="tier-hobby" class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-berry-800 ring-1 ring-inset ring-red-berry-200 hover:ring-red-berry-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800 sm:mt-10">Get started today</a>
+        </div>
+        <div class="rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10">
+          <h3 id="tier-solo" class="text-base/7 font-semibold text-red-berry-800">Solo</h3>
+          <p class="mt-4 flex items-baseline gap-x-2">
+            <span class="text-5xl font-semibold tracking-tight text-gray-900">$5</span>
+            <span class="text-base text-gray-500">/month</span>
+          </p>
+          <p class="mt-6 text-base/7 text-gray-600">For independent developers shipping to production.</p>
+          <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600 sm:mt-10">
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Data explorer
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              AI Chat for Data Access
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Dashboards with AI features
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              GitHub+Gmail OAuth authentication
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              1 seat only (no team invites)
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              Email support
+            </li>
+          </ul>
+          <a href="https://buy.stripe.com/3csaFg8XTdd0d6U7sy" aria-describedby="tier-solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
         <div class="relative rounded-3xl bg-gray-200 p-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10">
           <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-berry-800">Pro</h3>
@@ -287,19 +371,19 @@
               <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
               </svg>
-              Dashboards with AI features
-            </li>
-            <li class="flex gap-x-3">
-              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-              </svg>
               AI Chat for Data Access
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                 <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
               </svg>
-              GitHub OAuth authentication
+              Dashboards with AI features
+            </li>
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+              GitHub+Gmail OAuth authentication
             </li>
             <li class="flex gap-x-3">
               <svg class="h-6 w-5 flex-none text-red-berry-800" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -359,6 +443,24 @@
       </div>
     </div>
 
+    <section class="bg-slate-50 border-y border-slate-100">
+      <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">Get product updates in your inbox</h2>
+          <p class="mt-4 text-lg text-gray-600">Subscribe to the Mongoose Studio newsletter for release notes, feature previews, and practical MongoDB workflow tips.</p>
+          <div class="mt-8">
+            <a
+              href="https://mongoose-studio.beehiiv.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center rounded-md bg-red-berry-800 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800">
+              Subscribe to Newsletter
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="bg-white w-full">
       <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div class="flex justify-center gap-x-6 md:order-2">
@@ -407,6 +509,22 @@
 
         menu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => setState(false));
+        });
+      })();
+    </script>
+      <script id="nav-active-state">
+      (() => {
+        const path = window.location.pathname;
+        let key = null;
+        if (path === "/" || path === "") key = "home";
+        else if (path.startsWith("/docs")) key = "docs";
+        else if (path.startsWith("/changelog")) key = "changelog";
+        else if (path.startsWith("/imdb")) key = "demo";
+
+        if (!key) return;
+        document.querySelectorAll('[data-nav="' + key + '"]').forEach(link => {
+          link.classList.remove("border-gray-200", "text-gray-900");
+          link.classList.add("border-slate-300", "bg-slate-100", "text-gray-800");
         });
       })();
     </script>
