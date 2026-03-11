@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="tw.css">
-    <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -113,22 +112,13 @@
             </div>
             <div class="relative">
               <div class="rounded-3xl border border-gray-200 bg-white p-4 shadow-2xl">
-                <video
-                  id="my-video"
-                  class="block w-full aspect-[16/10] object-contain rounded-2xl bg-slate-50"
-                  preload="auto"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                >
-                  <source src="https://res.cloudinary.com/drfhhq8wu/video/upload/v1768947919/studio-ai-demo-q1-2026_nasty6.mp4" type="video/mp4" />
-                  <p class="vjs-no-js">
-                    To view this video please enable JavaScript, and consider upgrading to a
-                    web browser that
-                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>.
-                  </p>
-                </video>
+                <iframe
+                  src="/demo-embed/"
+                  class="block w-full aspect-[16/10] rounded-2xl bg-slate-50 pointer-events-none"
+                  style="border: none;"
+                  loading="lazy"
+                  title="Mongoose Studio demo"
+                ></iframe>
               </div>
             </div>
           </div>
@@ -481,7 +471,6 @@
       </div>
     </footer>
 
-    <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
     <script>
       (() => {
         const menu = document.getElementById('mobile-nav');

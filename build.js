@@ -53,6 +53,10 @@ require('@mongoosejs/studio/frontend')(`/api/studio`, true, opts)
       `
       mkdir -p ./public/imdb
       cp -r ./node_modules/@mongoosejs/studio/frontend/public/* ./public/imdb/
+      mkdir -p ./public/demo-embed
+      cp -r ./node_modules/@mongoosejs/studio/frontend/public/app.js ./node_modules/@mongoosejs/studio/frontend/public/style.css ./node_modules/@mongoosejs/studio/frontend/public/tw.css ./node_modules/@mongoosejs/studio/frontend/public/dark-theme.css ./public/demo-embed/
+      cp -rn ./node_modules/@mongoosejs/studio/frontend/public/theme-variables.css ./public/demo-embed/ 2>/dev/null || true
+      cp -r ./node_modules/@mongoosejs/studio/frontend/public/vanillatoasts ./node_modules/@mongoosejs/studio/frontend/public/images ./public/demo-embed/
       `
     );
     console.log('Built Mongoose Studio frontend');
