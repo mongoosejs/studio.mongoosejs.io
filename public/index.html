@@ -122,6 +122,7 @@
                   id="demo"
                 ></iframe>
               </div>
+              <div id="demo-progress" class="flex gap-2 px-1 py-2"></div>
               <script>
                 const demoIframe = document.querySelector('#demo');
                 demoIframe.addEventListener('load', () => {
@@ -137,104 +138,244 @@
                   const filterInput = demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]');
                   if (!filterInput) return;
 
-                  const iframeRect = demoIframe.getBoundingClientRect();
-                  const inputRect = filterInput.getBoundingClientRect();
-
-                  const tipCenterX = iframeRect.left + inputRect.left + inputRect.width / 2;
-                  const tipTop = iframeRect.top + inputRect.bottom + 10;
-
-                  const indicator = document.createElement('div');
-                  indicator.id = 'demo-filter-indicator';
-                  indicator.style.cssText = [
-                    'position: fixed',
-                    `top: ${tipTop}px`,
-                    `left: ${tipCenterX}px`,
-                    'transform: translateX(-50%)',
-                    'background: white',
-                    'border: 1px solid #e2e8f0',
-                    'border-radius: 10px',
-                    'box-shadow: 0 8px 24px rgba(0,0,0,0.12)',
-                    'padding: 12px 16px',
-                    'max-width: 300px',
-                    'font-size: 16px',
-                    'line-height: 1.5',
-                    'color: #1e293b',
-                    'z-index: 100',
-                    'pointer-events: none',
-                  ].join(';');
-
-                  indicator.innerHTML = `
-                    <div style="
-                      position: absolute;
-                      top: -5px;
-                      left: 50%;
-                      transform: translateX(-50%) rotate(45deg);
-                      width: 10px;
-                      height: 10px;
-                      background: white;
-                      border-top: 1px solid #e2e8f0;
-                      border-left: 1px solid #e2e8f0;
-                    "></div>
-                    <div style="font-weight: 600; margin-bottom: 4px; color: #7f1d1d;">Filter documents</div>
-                    <div>Filter using Mongoose query syntax.</div>
-                  `;
-
-                  document.body.appendChild(indicator);
-
-                  // Let the indicator be visible for 250ms, then start the typing demo
-                  await new Promise(resolve => setTimeout(resolve, 250));
-
                   const pageState = demoIframe.contentWindow.pageState;
                   const docSearch = pageState.$refs.documentSearch;
                   const nextTick = demoIframe.contentWindow.Vue.nextTick;
 
-                  async function typeStep(text, cursorPos, delay = 110) {
+                  let backdrop, indicator;
+                  let abortController = new AbortController();
+                  const allDocuments = pageState.documents.slice();
+                  const allNumDocuments = pageState.numDocuments;
+
+                  function sleep(ms) {
+                    return new Promise((resolve, reject) => {
+                      const id = setTimeout(resolve, ms);
+                      abortController.signal.addEventListener('abort', () => {
+                        clearTimeout(id);
+                        reject(new DOMException('Aborted', 'AbortError'));
+                      });
+                    });
+                  }
+
+                  function cleanup() {
+                    demoIframe.contentDocument.getElementById('demo-backdrop')?.remove();
+                    demoIframe.contentDocument.getElementById('demo-filter-indicator')?.remove();
+                    docSearch.searchText = '';
+                    pageState.documents = allDocuments;
+                    pageState.numDocuments = allNumDocuments;
+                  }
+
+                  async function type(text, cursorPos) {
                     docSearch.searchText = text;
                     await nextTick();
                     docSearch.$refs.searchInput.setSelectionRange(cursorPos, cursorPos);
                     docSearch.updateAutocomplete();
-                    await new Promise(r => setTimeout(r, delay));
                   }
 
-                  // Show the empty object brace first
-                  await typeStep('{}', 1, 300);
+                  const steps = [
+                    {
+                      duration: 9600,
+                      fn: async () => {
+                        // Show filter indicator with backdrop
+                        const inputRect = filterInput.getBoundingClientRect();
+                        const tipCenterX = inputRect.left + inputRect.width / 2;
+                        const tipTop = inputRect.bottom + 10;
 
-                  // Type out "{ stat" character by character
-                  for (const [text, cur] of [['{ s', 3], ['{ st', 4], ['{ sta', 5], ['{ stat', 6]]) {
-                    await typeStep(text, cur);
+                        indicator = demoIframe.contentDocument.createElement('div');
+                        indicator.id = 'demo-filter-indicator';
+                        indicator.style.cssText = [
+                          'position: fixed',
+                          `top: ${tipTop}px`,
+                          `left: ${tipCenterX}px`,
+                          'transform: translateX(-50%)',
+                          'background: white',
+                          'border: 1px solid #e2e8f0',
+                          'border-radius: 10px',
+                          'box-shadow: 0 8px 24px rgba(0,0,0,0.12)',
+                          'padding: 12px 16px',
+                          'max-width: 300px',
+                          'font-size: 16px',
+                          'line-height: 1.5',
+                          'color: #1e293b',
+                          'z-index: 100',
+                          'pointer-events: none',
+                        ].join(';');
+                        indicator.innerHTML = `
+                          <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:white;border-top:1px solid #e2e8f0;border-left:1px solid #e2e8f0;"></div>
+                          <div style="font-weight:600;margin-bottom:4px;color:#7f1d1d;">Filter documents</div>
+                          <div>Filter using Mongoose query syntax.</div>
+                        `;
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(indicator);
+
+                        await sleep(4000);
+                        backdrop.remove();
+                        indicator.remove();
+
+                        // Type the filter query
+                        await type('{}', 1);              await sleep(300);
+                        await type('{ s', 3);             await sleep(110);
+                        await type('{ st', 4);            await sleep(110);
+                        await type('{ sta', 5);           await sleep(110);
+                        await type('{ stat', 6);          await sleep(450);
+                        docSearch.$refs.searchInput.setSelectionRange(6, 6);
+                        docSearch.applySuggestion(0);
+                        await nextTick();                 await sleep(280);
+                        await type('{ status: ',           10); await sleep(85);
+                        await type("{ status: '",          11); await sleep(85);
+                        await type("{ status: 'c",         12); await sleep(85);
+                        await type("{ status: 'co",        13); await sleep(85);
+                        await type("{ status: 'com",       14); await sleep(85);
+                        await type("{ status: 'comp",      15); await sleep(85);
+                        await type("{ status: 'compl",     16); await sleep(85);
+                        await type("{ status: 'comple",    17); await sleep(85);
+                        await type("{ status: 'complet",   18); await sleep(85);
+                        await type("{ status: 'complete",  19); await sleep(85);
+                        await type("{ status: 'completed", 20); await sleep(85);
+                        await type("{ status: 'completed'",21); await sleep(85);
+                        await type("{ status: 'completed' }",23);
+
+                        pageState.documents = allDocuments.filter(d => d.status === 'completed');
+                        pageState.numDocuments = pageState.documents.length;
+                        await sleep(3000);
+                        docSearch.searchText = '';
+                        pageState.documents = allDocuments;
+                        pageState.numDocuments = allNumDocuments;
+                      }
+                    },
+                    {
+                      duration: 11000,
+                      fn: async () => {
+                        // Show filter indicator with backdrop
+                        const inputRect = filterInput.getBoundingClientRect();
+                        const tipCenterX = inputRect.left + inputRect.width / 2;
+                        const tipTop = inputRect.bottom + 10;
+
+                        indicator = demoIframe.contentDocument.createElement('div');
+                        indicator.id = 'demo-filter-indicator';
+                        indicator.style.cssText = [
+                          'position: fixed',
+                          `top: ${tipTop}px`,
+                          `left: ${tipCenterX}px`,
+                          'transform: translateX(-50%)',
+                          'background: white',
+                          'border: 1px solid #e2e8f0',
+                          'border-radius: 10px',
+                          'box-shadow: 0 8px 24px rgba(0,0,0,0.12)',
+                          'padding: 12px 16px',
+                          'max-width: 300px',
+                          'font-size: 16px',
+                          'line-height: 1.5',
+                          'color: #1e293b',
+                          'z-index: 100',
+                          'pointer-events: none',
+                        ].join(';');
+                        indicator.innerHTML = `
+                          <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:white;border-top:1px solid #e2e8f0;border-left:1px solid #e2e8f0;"></div>
+                          <div style="font-weight:600;margin-bottom:4px;color:#7f1d1d;">Schema-aware Queries</div>
+                          <div>Mongoose Studio casts values automatically according to your schemas.</div>
+                        `;
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(indicator);
+
+                        await sleep(4000);
+                        backdrop.remove();
+                        indicator.remove();
+
+                        // Type the filter query
+                        await type('{}', 1);                             await sleep(300);
+                        await type('{ c', 3);                            await sleep(110);
+                        await type('{ cr', 4);                           await sleep(110);
+                        await type('{ cre', 5);                          await sleep(110);
+                        await type('{ crea', 6);                         await sleep(110);
+                        await type('{ creat', 7);                        await sleep(110);
+                        await type('{ create', 8);                       await sleep(110);
+                        await type('{ created', 9);                      await sleep(110);
+                        await type('{ createdA', 10);                    await sleep(110);
+                        await type('{ createdAt', 11);                   await sleep(450);
+                        docSearch.$refs.searchInput.setSelectionRange(11, 11);
+                        docSearch.applySuggestion(0);
+                        await nextTick();                                await sleep(280);
+                        await type('{ createdAt: ', 14);                 await sleep(85);
+                        await type('{ createdAt: {', 15);                await sleep(85);
+                        await type('{ createdAt: { ', 16);               await sleep(85);
+                        await type('{ createdAt: { $', 17);              await sleep(85);
+                        await type('{ createdAt: { $g', 18);             await sleep(85);
+                        await type('{ createdAt: { $gt', 19);            await sleep(85);
+                        await type('{ createdAt: { $gt:', 20);           await sleep(85);
+                        await type('{ createdAt: { $gt: ', 21);          await sleep(85);
+                        await type("{ createdAt: { $gt: '", 22);         await sleep(85);
+                        await type("{ createdAt: { $gt: '2", 23);        await sleep(85);
+                        await type("{ createdAt: { $gt: '20", 24);       await sleep(85);
+                        await type("{ createdAt: { $gt: '202", 25);      await sleep(85);
+                        await type("{ createdAt: { $gt: '2026", 26);     await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-", 27);    await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-0", 28);   await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02", 29);  await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-", 30); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-1", 31); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10", 32); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10'", 33); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10' }", 35); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10' } }", 37);
+
+                        pageState.documents = allDocuments.filter(d => d.createdAt > '2026-02-10');
+                        pageState.numDocuments = pageState.documents.length;
+                        await sleep(3000);
+                        docSearch.searchText = '';
+                        pageState.documents = allDocuments;
+                        pageState.numDocuments = allNumDocuments;
+                      }
+                    }
+                  ];
+
+                  // Build progress bar segments, widths proportional to duration
+                  const progressContainer = document.getElementById('demo-progress');
+                  const totalDuration = steps.reduce((sum, s) => sum + s.duration, 0);
+                  const fills = steps.map((step, idx) => {
+                    const seg = document.createElement('div');
+                    seg.style.cssText = `flex: ${step.duration / totalDuration}; height: 4px; border-radius: 2px; background: #e2e8f0; overflow: hidden; cursor: pointer;`;
+                    seg.addEventListener('click', () => {
+                      abortController.abort();
+                      abortController = new AbortController();
+                      cleanup();
+                      runFrom(idx);
+                    });
+                    const fill = document.createElement('div');
+                    fill.style.cssText = 'height: 100%; width: 0%; background: #3b82f6; pointer-events: none;';
+                    seg.appendChild(fill);
+                    progressContainer.appendChild(seg);
+                    return fill;
+                  });
+
+                  async function runFrom(startIndex) {
+                    for (let i = 0; i < fills.length; i++) {
+                      fills[i].style.transition = 'none';
+                      fills[i].style.width = i < startIndex ? '100%' : '0%';
+                    }
+                    for (let i = startIndex; i < steps.length; i++) {
+                      const step = steps[i];
+                      fills[i].getBoundingClientRect(); // force reflow
+                      fills[i].style.transition = `width ${step.duration}ms linear`;
+                      fills[i].style.width = '100%';
+                      try {
+                        await step.fn();
+                      } catch (e) {
+                        if (e.name === 'AbortError') return;
+                        throw e;
+                      }
+                      fills[i].style.transition = 'none';
+                      fills[i].style.width = '100%';
+                    }
                   }
 
-                  // Pause so the autocomplete dropdown is visible
-                  await new Promise(r => setTimeout(r, 450));
-
-                  // Apply the first autocomplete suggestion ("status"), giving "{ status:"
-                  docSearch.$refs.searchInput.setSelectionRange(6, 6);
-                  docSearch.applySuggestion(0);
-                  await nextTick();
-                  await new Promise(r => setTimeout(r, 280));
-
-                  // Type the value character by character
-                  for (const [text, cur] of [
-                    ['{ status: ',        10],
-                    ["{ status: '",       11],
-                    ["{ status: 'c",      12],
-                    ["{ status: 'co",     13],
-                    ["{ status: 'com",    14],
-                    ["{ status: 'comp",   15],
-                    ["{ status: 'compl",  16],
-                    ["{ status: 'comple", 17],
-                    ["{ status: 'complet",18],
-                    ["{ status: 'complete",19],
-                    ["{ status: 'completed",20],
-                    ["{ status: 'completed'",21],
-                    ["{ status: 'completed' }",23],
-                  ]) {
-                    await typeStep(text, cur, 85);
-                  }
-
-                  // Pre-filter the docs so the mock returns only matching results
-                  const filtered = pageState.documents.filter(d => d.status === 'completed');
-                  pageState.documents = filtered;
+                  runFrom(0);
                 }
               </script>
             </div>
