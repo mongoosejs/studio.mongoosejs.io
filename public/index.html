@@ -123,13 +123,119 @@
                 ></iframe>
               </div>
               <script>
-              const demoIframe = document.querySelector('#demo');
-              demoIframe.addEventListener('load', () => {
-                setTimeout(() => {
-                  demoIframe.contentWindow.pageState.outputType = 'json';
-                  startDemo();
-                }, 50);
-              }, { once: true });
+                const demoIframe = document.querySelector('#demo');
+                demoIframe.addEventListener('load', () => {
+                  setTimeout(() => {
+                    demoIframe.contentWindow.pageState.setOutputType('json');
+                    startDemo();
+                  }, 50);
+                }, { once: true });
+
+                async function startDemo() {
+                  await new Promise(resolve => setTimeout(resolve, 100));
+
+                  const filterInput = demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]');
+                  if (!filterInput) return;
+
+                  const iframeRect = demoIframe.getBoundingClientRect();
+                  const inputRect = filterInput.getBoundingClientRect();
+
+                  const tipCenterX = iframeRect.left + inputRect.left + inputRect.width / 2;
+                  const tipTop = iframeRect.top + inputRect.bottom + 10;
+
+                  const indicator = document.createElement('div');
+                  indicator.id = 'demo-filter-indicator';
+                  indicator.style.cssText = [
+                    'position: fixed',
+                    `top: ${tipTop}px`,
+                    `left: ${tipCenterX}px`,
+                    'transform: translateX(-50%)',
+                    'background: white',
+                    'border: 1px solid #e2e8f0',
+                    'border-radius: 10px',
+                    'box-shadow: 0 8px 24px rgba(0,0,0,0.12)',
+                    'padding: 12px 16px',
+                    'max-width: 300px',
+                    'font-size: 16px',
+                    'line-height: 1.5',
+                    'color: #1e293b',
+                    'z-index: 100',
+                    'pointer-events: none',
+                  ].join(';');
+
+                  indicator.innerHTML = `
+                    <div style="
+                      position: absolute;
+                      top: -5px;
+                      left: 50%;
+                      transform: translateX(-50%) rotate(45deg);
+                      width: 10px;
+                      height: 10px;
+                      background: white;
+                      border-top: 1px solid #e2e8f0;
+                      border-left: 1px solid #e2e8f0;
+                    "></div>
+                    <div style="font-weight: 600; margin-bottom: 4px; color: #7f1d1d;">Filter documents</div>
+                    <div>Filter using Mongoose query syntax.</div>
+                  `;
+
+                  document.body.appendChild(indicator);
+
+                  // Let the indicator be visible for 250ms, then start the typing demo
+                  await new Promise(resolve => setTimeout(resolve, 250));
+
+                  const pageState = demoIframe.contentWindow.pageState;
+                  const docSearch = pageState.$refs.documentSearch;
+                  const nextTick = demoIframe.contentWindow.Vue.nextTick;
+
+                  async function typeStep(text, cursorPos, delay = 110) {
+                    docSearch.searchText = text;
+                    await nextTick();
+                    docSearch.$refs.searchInput.setSelectionRange(cursorPos, cursorPos);
+                    docSearch.updateAutocomplete();
+                    await new Promise(r => setTimeout(r, delay));
+                  }
+
+                  // Show the empty object brace first
+                  await typeStep('{}', 1, 300);
+
+                  // Type out "{ stat" character by character
+                  for (const [text, cur] of [['{ s', 3], ['{ st', 4], ['{ sta', 5], ['{ stat', 6]]) {
+                    await typeStep(text, cur);
+                  }
+
+                  // Pause so the autocomplete dropdown is visible
+                  await new Promise(r => setTimeout(r, 450));
+
+                  // Apply the first autocomplete suggestion ("status"), giving "{ status:"
+                  docSearch.$refs.searchInput.setSelectionRange(6, 6);
+                  docSearch.applySuggestion(0);
+                  await nextTick();
+                  await new Promise(r => setTimeout(r, 280));
+
+                  // Type the value character by character
+                  for (const [text, cur] of [
+                    ['{ status: ',        10],
+                    ["{ status: '",       11],
+                    ["{ status: 'c",      12],
+                    ["{ status: 'co",     13],
+                    ["{ status: 'com",    14],
+                    ["{ status: 'comp",   15],
+                    ["{ status: 'compl",  16],
+                    ["{ status: 'comple", 17],
+                    ["{ status: 'complet",18],
+                    ["{ status: 'complete",19],
+                    ["{ status: 'completed",20],
+                    ["{ status: 'completed'",21],
+                    ["{ status: 'completed' }",23],
+                  ]) {
+                    await typeStep(text, cur, 85);
+                  }
+
+                  // Pre-filter the docs so the mock returns only matching results
+                  const filtered = pageState.documents.filter(d => d.status === 'completed');
+                  pageState.documents = filtered;
+                }
               </script>
             </div>
           </div>

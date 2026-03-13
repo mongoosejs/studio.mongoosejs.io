@@ -107,6 +107,14 @@
     Task: tasks
   };
 
+  // ---- One-shot call overrides ----
+
+  var _nextCallOverrides = {};
+
+  window.overrideNextCall = function (action, data) {
+    _nextCallOverrides[action] = data;
+  };
+
   // ---- Action handlers ----
 
   var handlers = {
@@ -235,6 +243,11 @@
       responseData = { ok: true };
     }
 
+    if (_nextCallOverrides[action]) {
+      responseData = Object.assign({}, responseData, _nextCallOverrides[action]);
+      delete _nextCallOverrides[action];
+    }
+
     var json = JSON.stringify(responseData);
 
     setTimeout(function () {
@@ -282,13 +295,20 @@
       if (action === 'Model.getDocumentsStream') {
         var model = qParams.model;
         var docs = docsByModel[model] || [];
+        var numDocs = docs.length;
         var sp = modelSchemaPaths[model] || {};
+        if (_nextCallOverrides['Model.getDocuments']) {
+          var override = _nextCallOverrides['Model.getDocuments'];
+          if (override.docs !== undefined) docs = override.docs;
+          if (override.numDocs !== undefined) numDocs = override.numDocs;
+          delete _nextCallOverrides['Model.getDocuments'];
+        }
         var events = [];
         events.push('data: ' + JSON.stringify({ schemaPaths: sp }) + '\n\n');
         for (var i = 0; i < docs.length; i++) {
           events.push('data: ' + JSON.stringify({ document: docs[i] }) + '\n\n');
         }
-        events.push('data: ' + JSON.stringify({ numDocs: docs.length }) + '\n\n');
+        events.push('data: ' + JSON.stringify({ numDocs: numDocs }) + '\n\n');
         var sseBody = events.join('');
 
         return Promise.resolve(new Response(sseBody, {
