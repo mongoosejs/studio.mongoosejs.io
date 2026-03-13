@@ -122,6 +122,15 @@
                   id="demo"
                 ></iframe>
               </div>
+              <script>
+              const demoIframe = document.querySelector('#demo');
+              demoIframe.addEventListener('load', () => {
+                setTimeout(() => {
+                  demoIframe.contentWindow.pageState.outputType = 'json';
+                  startDemo();
+                }, 50);
+              }, { once: true });
+              </script>
             </div>
           </div>
         </div>
