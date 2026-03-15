@@ -183,6 +183,33 @@
                     docSearch.updateAutocomplete();
                   }
 
+                  // Mouse cursor indicator
+                  const cursor = demoIframe.contentDocument.createElement('div');
+                  cursor.id = 'demo-cursor';
+                  cursor.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="-1 -1 20 20"><path d="M0,0 L0,14 L3.5,10.5 L6,17 L8.2,16.2 L5.7,9.7 L10,9.7 Z" fill="white" stroke="#1e293b" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
+                  cursor.style.cssText = 'position:fixed;z-index:200;pointer-events:none;left:-40px;top:-40px;transition:left 0.5s cubic-bezier(0.4,0,0.2,1),top 0.5s cubic-bezier(0.4,0,0.2,1);filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));';
+                  demoIframe.contentDocument.body.appendChild(cursor);
+
+                  async function moveCursorTo(x, y, ms = 500) {
+                    cursor.style.transition = `left ${ms}ms cubic-bezier(0.4,0,0.2,1), top ${ms}ms cubic-bezier(0.4,0,0.2,1)`;
+                    cursor.style.left = x + 'px';
+                    cursor.style.top = y + 'px';
+                    await sleep(ms + 30);
+                  }
+
+                  async function clickCursor() {
+                    const x = parseFloat(cursor.style.left);
+                    const y = parseFloat(cursor.style.top);
+                    const ripple = demoIframe.contentDocument.createElement('div');
+                    ripple.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:28px;height:28px;border-radius:50%;border:2px solid rgba(59,130,246,0.7);transform:translate(-6px,-6px) scale(0.2);opacity:1;transition:transform 0.28s ease-out,opacity 0.28s ease-out;z-index:199;pointer-events:none;`;
+                    demoIframe.contentDocument.body.appendChild(ripple);
+                    ripple.getBoundingClientRect();
+                    ripple.style.transform = 'translate(-6px,-6px) scale(1.4)';
+                    ripple.style.opacity = '0';
+                    await sleep(320);
+                    ripple.remove();
+                  }
+
                   const steps = [
                     {
                       duration: 9600,
@@ -226,12 +253,25 @@
                         backdrop.remove();
                         indicator.remove();
 
+                        // Move cursor to filter input and click
+                        const inputRect2 = filterInput.getBoundingClientRect();
+                        await moveCursorTo(inputRect2.left + 24, inputRect2.top + inputRect2.height / 2 - 2);
+                        await clickCursor();
+                        await sleep(150);
+
                         // Type the filter query
                         await type('{}', 1);              await sleep(300);
                         await type('{ s }', 3);             await sleep(110);
                         await type('{ st }', 4);            await sleep(110);
                         await type('{ sta }', 5);           await sleep(110);
-                        await type('{ stat }', 6);          await sleep(450);
+                        await type('{ stat }', 6);          await sleep(180);
+                        await nextTick();
+                        const suggEl1 = demoIframe.contentDocument.querySelector('.documents-menu ul li');
+                        if (suggEl1) {
+                          const sr1 = suggEl1.getBoundingClientRect();
+                          await moveCursorTo(sr1.left + 12, sr1.top + sr1.height / 2 - 1, 350);
+                          await clickCursor();
+                        }
                         docSearch.$refs.searchInput.setSelectionRange(6, 6);
                         docSearch.applySuggestion(0);
                         await nextTick();                 await sleep(280);
@@ -298,6 +338,12 @@
                         backdrop.remove();
                         indicator.remove();
 
+                        // Move cursor to filter input and click
+                        const inputRect3 = filterInput.getBoundingClientRect();
+                        await moveCursorTo(inputRect3.left + 24, inputRect3.top + inputRect3.height / 2 - 2);
+                        await clickCursor();
+                        await sleep(150);
+
                         // Type the filter query
                         await type('{}', 1);                             await sleep(300);
                         await type('{ c }', 3);                            await sleep(110);
@@ -308,7 +354,14 @@
                         await type('{ create }', 8);                       await sleep(110);
                         await type('{ created }', 9);                      await sleep(110);
                         await type('{ createdA }', 10);                    await sleep(110);
-                        await type('{ createdAt }', 11);                   await sleep(450);
+                        await type('{ createdAt }', 11);                   await sleep(180);
+                        await nextTick();
+                        const suggEl2 = demoIframe.contentDocument.querySelector('.documents-menu ul li');
+                        if (suggEl2) {
+                          const sr2 = suggEl2.getBoundingClientRect();
+                          await moveCursorTo(sr2.left + 12, sr2.top + sr2.height / 2 - 1, 350);
+                          await clickCursor();
+                        }
                         docSearch.$refs.searchInput.setSelectionRange(11, 11);
                         docSearch.applySuggestion(0);
                         await nextTick();                                await sleep(280);
@@ -363,7 +416,23 @@
                     return fill;
                   });
 
+                  // Find a stable home position (logo / top-left of app)
+                  function getCursorHomePos() {
+                    const logoEl = demoIframe.contentDocument.querySelector('img, a svg, header, nav');
+                    if (logoEl) {
+                      const r = logoEl.getBoundingClientRect();
+                      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+                    }
+                    return { x: 24, y: 24 };
+                  }
+
                   async function runFrom(startIndex) {
+                    // Snap cursor to home position instantly before each run
+                    const home = getCursorHomePos();
+                    cursor.style.transition = 'none';
+                    cursor.style.left = home.x + 'px';
+                    cursor.style.top = home.y + 'px';
+
                     for (let i = 0; i < fills.length; i++) {
                       fills[i].style.transition = 'none';
                       fills[i].style.width = i < startIndex ? '100%' : '0%';
