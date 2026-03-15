@@ -105,6 +105,17 @@
                   View Live Demo
                 </a>
               </div>
+              <div class="mt-4 inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm">
+                <code id="hero-install-command" class="font-semibold text-gray-900">npm install @mongoosejs/studio</code>
+                <button
+                  id="copy-hero-install-command"
+                  type="button"
+                  class="rounded-md border border-gray-300 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700 transition hover:bg-gray-100"
+                  aria-label="Copy install command"
+                >
+                  Copy
+                </button>
+              </div>
               <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-gray-600">
                 <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Open source</span>
                 <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Free for local dev</span>
@@ -484,6 +495,23 @@
     <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
     <script>
       (() => {
+        const copyButton = document.getElementById('copy-hero-install-command');
+        const installCommand = document.getElementById('hero-install-command');
+        if (copyButton && installCommand) {
+          copyButton.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(installCommand.textContent || '');
+              copyButton.textContent = 'Copied!';
+            } catch (error) {
+              copyButton.textContent = 'Copy failed';
+            }
+
+            setTimeout(() => {
+              copyButton.textContent = 'Copy';
+            }, 1500);
+          });
+        }
+
         const menu = document.getElementById('mobile-nav');
         const button = document.getElementById('mobile-menu-button');
         if (!menu || !button) return;
