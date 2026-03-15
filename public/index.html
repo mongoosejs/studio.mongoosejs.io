@@ -497,6 +497,7 @@
       (() => {
         const copyButton = document.getElementById('copy-hero-install-command');
         const installCommand = document.getElementById('hero-install-command');
+        let copyResetTimeoutId = null;
         if (copyButton && installCommand) {
           copyButton.addEventListener('click', async () => {
             try {
@@ -506,8 +507,10 @@
               copyButton.textContent = 'Copy failed';
             }
 
-            setTimeout(() => {
+            if (copyResetTimeoutId) clearTimeout(copyResetTimeoutId);
+            copyResetTimeoutId = setTimeout(() => {
               copyButton.textContent = 'Copy';
+              copyResetTimeoutId = null;
             }, 1500);
           });
         }
