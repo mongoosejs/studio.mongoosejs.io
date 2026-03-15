@@ -103,6 +103,17 @@
                 View Live Demo
               </a>
             </div>
+            <div class="mt-4 inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm">
+              <code id="hero-install-command" class="font-semibold text-gray-900">npm install @mongoosejs/studio</code>
+              <button
+                id="copy-hero-install-command"
+                type="button"
+                class="rounded-md border border-gray-300 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700 transition hover:bg-gray-100"
+                aria-label="Copy install command"
+              >
+                Copy
+              </button>
+            </div>
             <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium text-gray-600">
               <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Open source</span>
               <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Free for local dev</span>
@@ -434,6 +445,21 @@
       </div>
     </section>
 
+    <section class="bg-white py-20 sm:py-24 border-t border-gray-100">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 class="text-center text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Built by the Maintainers of Mongoose</h2>
+        <p class="mx-auto mt-4 max-w-5xl text-center text-lg text-gray-600">
+          Mongoose Studio is built by <span class="font-semibold">Valeri Karpov</span>, lead maintainer of <a href="https://www.npmjs.com/package/mongoose" target="_blank" class="text-red-berry-700">Mongoose</a> - the most widely used MongoDB ODM for Node.js.
+        </p>
+        <p class="mx-auto mt-4 max-w-5xl text-center text-lg text-gray-600">
+          Mongoose has powered production MongoDB applications for over 15 years and is downloaded 4+ million times per week on npm, making it one of the most widely used libraries in the MongoDB ecosystem.
+        </p>
+        <p class="mx-auto mt-4 max-w-5xl text-center text-lg text-gray-600">
+          After years of maintaining Mongoose and working closely with MongoDB developers, Mongoose Studio was created to provide a <span class="font-semibold">modern, developer-friendly browser-based GUI for MongoDB</span> - built by the people who know the ecosystem best.</span>
+        </p>
+      </div>
+    </section>
+
     <div class="bg-gray-50 py-24 sm:py-32">
       <div class="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 class="text-center text-base/7 font-semibold text-red-berry-800">Ship faster</h2>
@@ -691,6 +717,78 @@
       </div>
     </div>
 
+    <section class="bg-white border-y border-slate-100">
+      <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">The MongoDB GUI Built for Application Developers</h2>
+          <p class="mt-4 text-lg text-gray-600">Traditional MongoDB tools focus on the database.<br>Mongoose Studio focuses on the application.<br>It runs inside your stack and understands your models.</p>
+        </div>
+
+        <div class="mx-auto mt-10 max-w-5xl overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <table class="min-w-full divide-y divide-slate-200 text-center">
+            <thead class="bg-slate-50">
+              <tr>
+                <th scope="col" class="px-6 py-4 text-sm font-semibold text-gray-900">Feature</th>
+                <th scope="col" class="px-6 py-4 text-sm font-semibold text-gray-900">Mongoose Studio</th>
+                <th scope="col" class="px-6 py-4 text-sm font-semibold text-gray-900">MongoDB Compass</th>
+                <th scope="col" class="px-6 py-4 text-sm font-semibold text-gray-900">Studio 3T</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white">
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">Data explorer</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">Aggregation pipeline builder</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="limited support">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">Schema-aware queries</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">Visual GeoJSON Editor</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">AI query generation</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">✅</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">AI generated charts and maps</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">Built-in dashboards</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+                <td class="px-6 py-4 text-3xl" aria-label="limited support">❌</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 text-base text-gray-900">Share dashboards with team</td>
+                <td class="px-6 py-4 text-3xl" aria-label="supported">✅</td>
+                <td class="px-6 py-4 text-3xl" aria-label="not supported">❌</td>
+                <td class="px-6 py-4 text-3xl" aria-label="limited support">❌</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="bg-slate-50 border-y border-slate-100">
       <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
@@ -731,6 +829,26 @@
 
     <script>
       (() => {
+        const copyButton = document.getElementById('copy-hero-install-command');
+        const installCommand = document.getElementById('hero-install-command');
+        let copyResetTimeoutId = null;
+        if (copyButton && installCommand) {
+          copyButton.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(installCommand.textContent || '');
+              copyButton.textContent = 'Copied!';
+            } catch (error) {
+              copyButton.textContent = 'Copy failed';
+            }
+
+            if (copyResetTimeoutId) clearTimeout(copyResetTimeoutId);
+            copyResetTimeoutId = setTimeout(() => {
+              copyButton.textContent = 'Copy';
+              copyResetTimeoutId = null;
+            }, 1500);
+          });
+        }
+
         const menu = document.getElementById('mobile-nav');
         const button = document.getElementById('mobile-menu-button');
         if (!menu || !button) return;
