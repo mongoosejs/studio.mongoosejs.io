@@ -360,6 +360,7 @@
                           <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-top:1px solid #bfdbfe;border-left:1px solid #bfdbfe;"></div>
                           <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Schema-aware Queries</div>
                           <div>Mongoose Studio casts values automatically according to your schemas.</div>
+                          <div>For example, createdAt is a date, but you can pass in a string and Mongoose will cast it for you.</div>
                         `;
                         backdrop = demoIframe.contentDocument.createElement('div');
                         backdrop.id = 'demo-backdrop';
@@ -493,6 +494,70 @@
 
                         // Restore cursor for next steps
                         cursor.style.display = '';
+                      }
+                    },
+                    {
+                      duration: 10000,
+                      fn: async () => {
+                        await ensureRoute('Project');
+                        await waitForReady();
+                        demoIframe.contentWindow.pageState.setOutputType('json');
+                        await nextTick();
+                        await sleep(500);
+
+                        // Find the first ref link ("owner" field links to User)
+                        const refLink = demoIframe.contentDocument.querySelector('.inline-flex.items-baseline.group a');
+                        const refContainer = refLink && refLink.closest('.inline-flex.items-baseline.group');
+                        if (refContainer) {
+                          // Highlight the ref link with an indicator
+                          const rr = refContainer.getBoundingClientRect();
+                          indicator = demoIframe.contentDocument.createElement('div');
+                          indicator.id = 'demo-filter-indicator';
+                          indicator.style.cssText = [
+                            'position: fixed',
+                            `top: ${rr.bottom + 10}px`,
+                            `left: ${rr.left + rr.width / 2}px`,
+                            'transform: translateX(-50%)',
+                            'background: #eff6ff',
+                            'border: 1px solid #bfdbfe',
+                            'border-radius: 10px',
+                            'box-shadow: 0 8px 24px rgba(59,130,246,0.15)',
+                            'padding: 12px 16px',
+                            'max-width: 320px',
+                            'font-size: 16px',
+                            'line-height: 1.5',
+                            'color: #1e293b',
+                            'z-index: 100',
+                            'pointer-events: none',
+                          ].join(';');
+                          indicator.innerHTML = `
+                            <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-top:1px solid #bfdbfe;border-left:1px solid #bfdbfe;"></div>
+                            <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Reference Links</div>
+                            <div>Click any ref to jump straight to the referenced document.</div>
+                          `;
+                          backdrop = demoIframe.contentDocument.createElement('div');
+                          backdrop.id = 'demo-backdrop';
+                          backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                          demoIframe.contentDocument.body.appendChild(backdrop);
+                          demoIframe.contentDocument.body.appendChild(indicator);
+
+                          await sleep(4000);
+                          backdrop.remove();
+                          indicator.remove();
+
+                          // Force "View Document" link visible (CSS :hover can't be triggered programmatically)
+                          refLink.style.opacity = '1';
+                          await sleep(200);
+
+                          // Move cursor to the ref link and click it
+                          const lr = refLink.getBoundingClientRect();
+                          await moveCursorTo(lr.left + lr.width / 2, lr.top + lr.height / 2);
+                          await clickCursor();
+                          refLink.style.opacity = '';
+                          refLink.click();
+                          await nextTick();
+                          await sleep(3000);
+                        }
                       }
                     }
                   ];
