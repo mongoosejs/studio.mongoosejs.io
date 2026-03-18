@@ -162,7 +162,33 @@
       return { indexes: [{ v: 2, key: { _id: 1 }, name: '_id_' }] };
     },
     'Dashboard.getDashboards': function () {
-      return { dashboards: [] };
+      return { dashboards: window._demoDashboards || [] };
+    },
+    'Dashboard.createDashboard': function (params) {
+      var db = { _id: 'demo-dash-' + Date.now(), title: params.title || 'Untitled', code: params.code || '', description: '', createdAt: new Date().toISOString() };
+      if (!window._demoDashboards) window._demoDashboards = [];
+      window._demoDashboards.unshift(db);
+      window._lastDemoDashboard = db;
+      return { dashboard: db };
+    },
+    'Dashboard.getDashboard': function () {
+      var db = window._lastDemoDashboard || { _id: 'demo-dash', title: 'Demo', code: '', description: '', createdAt: new Date().toISOString() };
+      return {
+        dashboard: db,
+        dashboardResults: [{
+          finishedEvaluatingAt: new Date().toISOString(),
+          result: {
+            $table: {
+              columns: ['Title', 'Assignee'],
+              rows: [
+                ['Implement auth flow', 'Bob Martinez'],
+                ['Configure CI runners', 'Dan Okafor'],
+                ['Responsive nav component', 'Grace Kim']
+              ]
+            }
+          }
+        }]
+      };
     },
     'ChatThread.listChatThreads': function () {
       return { chatThreads: window._demoChatThreads || [] };

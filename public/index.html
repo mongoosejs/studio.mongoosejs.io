@@ -685,6 +685,157 @@
 
                         await sleep(3000);
                       }
+                    },
+                    {
+                      duration: 14000,
+                      fn: async () => {
+                        // Navigate to chat with the table query already executed
+                        demoIframe.contentWindow.pageState.$router.push('/chat');
+                        await nextTick();
+                        await sleep(600);
+
+                        const chatState = demoIframe.contentWindow.pageState;
+                        const scriptContent2 = `const tasks = await Task.find({ status: 'in_progress' });\nreturn {\n  $table: {\n    columns: ['Title', 'Assignee'],\n    rows: await Promise.all(tasks.map(async t => {\n      const user = await User.findById(t.assignee);\n      return [t.title, user?.name || 'Unassigned'];\n    }))\n  }\n};`;
+                        const fullResponse2 = 'Here\'s a table of in-progress tasks with their assignees:\n\n```javascript\n' + scriptContent2 + '\n```';
+
+                        // Preload chat with the question, response, and executed result
+                        chatState.status = 'loaded';
+                        chatState.chatThreadId = 'demo-thread-dash';
+                        chatState.chatThreads = [{ _id: 'demo-thread-dash', title: 'In progress tasks', createdAt: new Date().toISOString() }];
+                        chatState.chatMessages = [
+                          {
+                            _id: 'demo-user-dash',
+                            content: 'Create a table of in progress tasks showing title and assignee',
+                            role: 'user'
+                          },
+                          {
+                            _id: 'demo-asst-dash',
+                            content: fullResponse2,
+                            role: 'assistant',
+                            script: scriptContent2,
+                            executionResult: {
+                              output: {
+                                $table: {
+                                  columns: ['Title', 'Assignee'],
+                                  rows: [
+                                    ['Implement auth flow', 'Bob Martinez'],
+                                    ['Configure CI runners', 'Dan Okafor'],
+                                    ['Responsive nav component', 'Grace Kim']
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ];
+                        await nextTick();
+                        await sleep(300);
+
+                        // Switch to Output tab to show the table
+                        const outputTab2 = Array.from(demoIframe.contentDocument.querySelectorAll('.chat-message-script button'))
+                          .find(b => b.textContent.trim() === 'Output');
+                        if (outputTab2) outputTab2.click();
+                        await nextTick();
+                        await sleep(1500);
+
+                        // Click the "..." dropdown menu
+                        const dropdownBtn = demoIframe.contentDocument.querySelector('.chat-message-script .relative button');
+                        if (dropdownBtn) {
+                          const dr = dropdownBtn.getBoundingClientRect();
+                          await moveCursorTo(dr.left + dr.width / 2, dr.top + dr.height / 2, 350);
+                          await clickCursor();
+                          dropdownBtn.click();
+                          await nextTick();
+                          await sleep(400);
+
+                          // Highlight "Create Dashboard" with backdrop + indicator
+                          const createDashBtn = Array.from(demoIframe.contentDocument.querySelectorAll('.chat-message-script button'))
+                            .find(b => b.textContent.trim() === 'Create Dashboard');
+                          if (createDashBtn) {
+                            const cdr = createDashBtn.getBoundingClientRect();
+
+                            backdrop = demoIframe.contentDocument.createElement('div');
+                            backdrop.id = 'demo-backdrop';
+                            backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10000;pointer-events:none;';
+                            indicator = demoIframe.contentDocument.createElement('div');
+                            indicator.id = 'demo-filter-indicator';
+                            indicator.style.cssText = [
+                              'position: fixed',
+                              `top: ${cdr.top + cdr.height / 2}px`,
+                              `left: ${cdr.left - 16}px`,
+                              'transform: translateX(-100%) translateY(-50%)',
+                              'background: #eff6ff',
+                              'border: 1px solid #bfdbfe',
+                              'border-radius: 10px',
+                              'box-shadow: 0 8px 24px rgba(59,130,246,0.15)',
+                              'padding: 12px 16px',
+                              'max-width: 260px',
+                              'font-size: 16px',
+                              'line-height: 1.5',
+                              'color: #1e293b',
+                              'z-index: 10001',
+                              'pointer-events: none',
+                            ].join(';');
+                            indicator.innerHTML = `
+                              <div style="position:absolute;top:50%;right:-5px;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-right:1px solid #bfdbfe;border-top:1px solid #bfdbfe;"></div>
+                              <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Save as Dashboard</div>
+                              <div>Turn any chat result into a live, auto-refreshing dashboard.</div>
+                            `;
+                            // Make the dropdown float above the backdrop
+                            const dropdownMenu = createDashBtn.closest('.absolute');
+                            if (dropdownMenu) dropdownMenu.style.zIndex = '10002';
+                            demoIframe.contentDocument.body.appendChild(backdrop);
+                            demoIframe.contentDocument.body.appendChild(indicator);
+                            await sleep(3000);
+                            backdrop.remove();
+                            indicator.remove();
+                            if (dropdownMenu) dropdownMenu.style.zIndex = '';
+
+                            // Click "Create Dashboard"
+                            await moveCursorTo(cdr.left + cdr.width / 2, cdr.top + cdr.height / 2, 300);
+                            await clickCursor();
+                            createDashBtn.click();
+                            await nextTick();
+                            await sleep(500);
+                          }
+                        }
+
+                        // Type dashboard title in the modal
+                        const titleInput = demoIframe.contentDocument.querySelector('input[placeholder*="Dashboard"], .modal input[type="text"]');
+                        if (titleInput) {
+                          const tir = titleInput.getBoundingClientRect();
+                          await moveCursorTo(tir.left + 30, tir.top + tir.height / 2, 350);
+                          await clickCursor();
+                          await sleep(200);
+
+                          const dashTitle = 'In Progress Tasks';
+                          function setNativeInput(input, val) {
+                            const nativeSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+                            nativeSetter.call(input, val);
+                            input.dispatchEvent(new Event('input', { bubbles: true }));
+                          }
+                          for (let i = 0; i < dashTitle.length; i++) {
+                            setNativeInput(titleInput, dashTitle.slice(0, i + 1));
+                            await nextTick();
+                            await sleep(40);
+                          }
+                          await sleep(300);
+                        }
+
+                        // Click Submit — creates dashboard and auto-navigates
+                        const submitBtn = Array.from(demoIframe.contentDocument.querySelectorAll('button'))
+                          .find(b => b.textContent.trim() === 'Submit');
+                        if (submitBtn) {
+                          const sbr = submitBtn.getBoundingClientRect();
+                          await moveCursorTo(sbr.left + sbr.width / 2, sbr.top + sbr.height / 2, 300);
+                          await clickCursor();
+                          submitBtn.click();
+                          await nextTick();
+                          await sleep(1000);
+                        }
+
+                        // Wait to show the dashboard with the table result
+                        await sleep(3000);
+                      }
                     }
                   ];
 
