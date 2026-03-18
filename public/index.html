@@ -429,7 +429,7 @@
                       }
                     },
                     {
-                      duration: 12000,
+                      duration: 6000,
                       fn: async () => {
                         // Hide cursor for this keyboard-only step
                         cursor.style.display = 'none';
@@ -470,7 +470,7 @@
                         // Open model switcher
                         demoIframe.contentWindow.pageState.openModelSwitcher();
                         await nextTick();
-                        await sleep(400);
+                        await sleep(500);
 
                         // Type "User" in the model switcher search via native input events
                         const switcherInput = demoIframe.contentDocument.querySelector('.fixed input[placeholder*="model name"]');
