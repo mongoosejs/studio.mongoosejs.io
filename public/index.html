@@ -235,7 +235,7 @@
 
                   const steps = [
                     {
-                      duration: 9600,
+                      duration: 10600,
                       fn: async () => {
                         await ensureRoute('Project');
                         await waitForReady();
@@ -277,7 +277,7 @@
                         demoIframe.contentDocument.body.appendChild(backdrop);
                         demoIframe.contentDocument.body.appendChild(indicator);
 
-                        await sleep(4000);
+                        await sleep(5000);
                         backdrop.remove();
                         indicator.remove();
 
@@ -325,7 +325,7 @@
                       }
                     },
                     {
-                      duration: 11000,
+                      duration: 12000,
                       fn: async () => {
                         await ensureRoute('Project');
                         await waitForReady();
@@ -368,7 +368,7 @@
                         demoIframe.contentDocument.body.appendChild(backdrop);
                         demoIframe.contentDocument.body.appendChild(indicator);
 
-                        await sleep(4000);
+                        await sleep(5000);
                         backdrop.remove();
                         indicator.remove();
 
@@ -558,6 +558,132 @@
                           await nextTick();
                           await sleep(3000);
                         }
+                      }
+                    },
+                    {
+                      duration: 20000,
+                      fn: async () => {
+                        // Navigate to chat tab
+                        demoIframe.contentWindow.pageState.$router.push('/chat');
+                        await nextTick();
+                        await sleep(600);
+
+                        const chatState = demoIframe.contentWindow.pageState;
+                        chatState.status = 'loaded';
+
+                        // Show indicator about AI chat
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10000;pointer-events:none;';
+                        indicator = demoIframe.contentDocument.createElement('div');
+                        indicator.id = 'demo-filter-indicator';
+                        indicator.style.cssText = 'position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);z-index:10001;pointer-events:none;text-align:center;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;box-shadow:0 8px 24px rgba(59,130,246,0.15);padding:16px 24px;max-width:340px;font-size:16px;line-height:1.5;color:#1e293b;';
+                        indicator.innerHTML = `
+                          <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">AI Chat</div>
+                          <div>Ask questions about your data and get charts, queries, and insights.</div>
+                        `;
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(indicator);
+                        await sleep(5000);
+                        backdrop.remove();
+                        indicator.remove();
+
+                        // Find and click the textarea, then type the question
+                        const textarea = demoIframe.contentDocument.querySelector('textarea[placeholder*="Ask"]');
+                        if (textarea) {
+                          const tr = textarea.getBoundingClientRect();
+                          await moveCursorTo(tr.left + 40, tr.top + tr.height / 2);
+                          await clickCursor();
+                          await sleep(200);
+                        }
+
+                        const question = 'Draw a bar chart of tasks created by day of the week';
+                        for (let i = 0; i < question.length; i++) {
+                          chatState.newMessage = question.slice(0, i + 1);
+                          await nextTick();
+                          await sleep(30);
+                        }
+                        await sleep(300);
+
+                        // Click send button
+                        const sendBtn = demoIframe.contentDocument.querySelector('button[class*="bg-primary"]');
+                        if (sendBtn && sendBtn.textContent.trim() === 'Send') {
+                          const sr = sendBtn.getBoundingClientRect();
+                          await moveCursorTo(sr.left + sr.width / 2, sr.top + sr.height / 2, 300);
+                          await clickCursor();
+                        }
+
+                        // Add user message directly
+                        chatState.chatMessages.push({
+                          _id: 'demo-user-' + Date.now(),
+                          content: question,
+                          role: 'user'
+                        });
+                        chatState.newMessage = '';
+                        await nextTick();
+                        await sleep(400);
+
+                        // Stream assistant response with typing effect
+                        const scriptContent = `const tasks = await Task.find({});\nconst dayCounts = {};\nconst days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];\nfor (const t of tasks) {\n  const d = days[new Date(t.createdAt).getDay()];\n  dayCounts[d] = (dayCounts[d] || 0) + 1;\n}\nreturn {\n  $chart: {\n    type: 'bar',\n    data: {\n      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],\n      datasets: [{ label: 'Tasks Created', data: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d => dayCounts[d] || 0), backgroundColor: 'rgba(59,130,246,0.6)' }]\n    }\n  }\n};`;
+                        const fullResponse = 'Here\'s a script that creates a bar chart of tasks created by day of the week:\n\n```javascript\n' + scriptContent + '\n```';
+
+                        chatState.chatMessages.push({
+                          _id: 'demo-asst-' + Date.now(),
+                          content: '',
+                          role: 'assistant'
+                        });
+                        const asstIdx = chatState.chatMessages.length - 1;
+                        await nextTick();
+
+                        // Stream text in chunks
+                        for (let i = 0; i < fullResponse.length; i += 3) {
+                          chatState.chatMessages[asstIdx].content = fullResponse.slice(0, Math.min(i + 3, fullResponse.length));
+                          await nextTick();
+                          // Scroll to bottom
+                          const mc = demoIframe.contentDocument.querySelector('[ref="messagesContainer"], .overflow-y-auto.p-6');
+                          if (mc) mc.scrollTop = mc.scrollHeight;
+                          await sleep(18);
+                        }
+                        chatState.chatMessages[asstIdx].content = fullResponse;
+                        await nextTick();
+                        await sleep(500);
+
+                        // Click "Run" button on the code block — sets result and switches to Output
+                        const runBtn = Array.from(demoIframe.contentDocument.querySelectorAll('button, .chat-message-script button'))
+                          .find(b => b.textContent.trim() === 'Run');
+                        if (runBtn) {
+                          const rr = runBtn.getBoundingClientRect();
+                          await moveCursorTo(rr.left + rr.width / 2, rr.top + rr.height / 2, 400);
+                          await clickCursor();
+                          // Set execution result and script directly
+                          chatState.chatMessages[asstIdx].executionResult = {
+                            output: {
+                              $chart: {
+                                type: 'bar',
+                                data: {
+                                  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                  datasets: [{
+                                    label: 'Tasks Created',
+                                    data: [3, 5, 2, 8, 4, 1, 6],
+                                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                                    borderColor: 'rgba(59, 130, 246, 1)',
+                                    borderWidth: 1
+                                  }]
+                                },
+                                options: { plugins: { title: { display: true, text: 'Tasks Created by Day of Week' } } }
+                              }
+                            }
+                          };
+                          chatState.chatMessages[asstIdx].script = scriptContent;
+                          await nextTick();
+                          // Switch to Output tab immediately
+                          const outputTab = Array.from(demoIframe.contentDocument.querySelectorAll('.chat-message-script button'))
+                            .find(b => b.textContent.trim() === 'Output');
+                          if (outputTab) outputTab.click();
+                          await nextTick();
+                        }
+
+                        await sleep(3000);
                       }
                     }
                   ];

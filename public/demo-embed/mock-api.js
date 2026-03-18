@@ -165,7 +165,42 @@
       return { dashboards: [] };
     },
     'ChatThread.listChatThreads': function () {
-      return { chatThreads: [] };
+      return { chatThreads: window._demoChatThreads || [] };
+    },
+    'ChatThread.createChatThread': function (params) {
+      var thread = { _id: 'demo-thread-' + Date.now(), title: params.firstMessage || 'Demo', createdAt: new Date().toISOString() };
+      if (!window._demoChatThreads) window._demoChatThreads = [];
+      window._demoChatThreads.unshift(thread);
+      return { chatThread: thread };
+    },
+    'ChatThread.getChatThread': function () {
+      return { chatThread: (window._demoChatThreads && window._demoChatThreads[0]) || { _id: 'demo-thread', title: 'Demo', chatMessages: [], createdAt: new Date().toISOString() } };
+    },
+    'ChatMessage.executeScript': function (params) {
+      return {
+        chatMessage: {
+          executionResult: {
+            output: {
+              $chart: {
+                type: 'bar',
+                data: {
+                  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                  datasets: [{
+                    label: 'Tasks Created',
+                    data: [3, 5, 2, 8, 4, 1, 6],
+                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 1
+                  }]
+                },
+                options: { plugins: { title: { display: true, text: 'Tasks Created by Day of Week' } } }
+              }
+            }
+          },
+          script: params.script || '',
+          content: ''
+        }
+      };
     },
     'Task.getTasks': function () {
       return { tasks: [] };
@@ -312,6 +347,18 @@
         var sseBody = events.join('');
 
         return Promise.resolve(new Response(sseBody, {
+          status: 200,
+          headers: { 'Content-Type': 'text/event-stream' }
+        }));
+      }
+
+      // Handle streamChatMessage as SSE
+      if (action === 'ChatThread.streamChatMessage') {
+        // Return empty stream — the demo step handles streaming via direct state manipulation
+        var chatEvents = [];
+        chatEvents.push('data: ' + JSON.stringify({ chatMessage: { _id: 'msg-user-' + Date.now(), role: 'user', content: qParams.message || '' } }) + '\n\n');
+        chatEvents.push('data: ' + JSON.stringify({ chatMessage: { _id: 'msg-asst-' + Date.now(), role: 'assistant', content: '' } }) + '\n\n');
+        return Promise.resolve(new Response(chatEvents.join(''), {
           status: 200,
           headers: { 'Content-Type': 'text/event-stream' }
         }));
