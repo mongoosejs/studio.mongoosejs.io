@@ -146,17 +146,35 @@
                 async function startDemo() {
                   await new Promise(resolve => setTimeout(resolve, 100));
 
-                  const filterInput = demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]');
-                  if (!filterInput) return;
+                  if (!demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]')) return;
 
-                  const pageState = demoIframe.contentWindow.pageState;
-                  const docSearch = pageState.$refs.documentSearch;
                   const nextTick = demoIframe.contentWindow.Vue.nextTick;
 
                   let backdrop, indicator;
                   let abortController = new AbortController();
-                  const allDocuments = pageState.documents.slice();
-                  const allNumDocuments = pageState.numDocuments;
+                  const allDocuments = demoIframe.contentWindow.pageState.documents.slice();
+                  const allNumDocuments = demoIframe.contentWindow.pageState.numDocuments;
+
+                  function getFilterInput() {
+                    return demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]');
+                  }
+                  function getDocSearch() {
+                    return demoIframe.contentWindow.pageState.$refs.documentSearch;
+                  }
+                  async function waitForReady() {
+                    while (!getFilterInput() || !getDocSearch()) {
+                      await sleep(50);
+                    }
+                    await nextTick();
+                    await sleep(100);
+                  }
+                  async function ensureRoute(model) {
+                    if (demoIframe.contentWindow.pageState.currentModel !== model) {
+                      demoIframe.contentWindow.pageState.$router.push('/model/' + model);
+                      await nextTick();
+                      await sleep(400);
+                    }
+                  }
 
                   function sleep(ms) {
                     return new Promise((resolve, reject) => {
@@ -171,16 +189,22 @@
                   function cleanup() {
                     demoIframe.contentDocument.getElementById('demo-backdrop')?.remove();
                     demoIframe.contentDocument.getElementById('demo-filter-indicator')?.remove();
-                    docSearch.searchText = '';
-                    pageState.documents = allDocuments;
-                    pageState.numDocuments = allNumDocuments;
+                    demoIframe.contentDocument.getElementById('demo-kbd-indicator')?.remove();
+                    const ds = getDocSearch();
+                    if (ds) ds.searchText = '';
+                    demoIframe.contentWindow.pageState.showModelSwitcher = false;
+                    demoIframe.contentWindow.pageState.documents = allDocuments;
+                    demoIframe.contentWindow.pageState.numDocuments = allNumDocuments;
+                    demoIframe.contentWindow.pageState.setOutputType('json');
+                    cursor.style.display = '';
                   }
 
                   async function type(text, cursorPos) {
-                    docSearch.searchText = text;
+                    const ds = getDocSearch();
+                    ds.searchText = text;
                     await nextTick();
-                    docSearch.$refs.searchInput.setSelectionRange(cursorPos, cursorPos);
-                    docSearch.updateAutocomplete();
+                    ds.$refs.searchInput.setSelectionRange(cursorPos, cursorPos);
+                    ds.updateAutocomplete();
                   }
 
                   // Mouse cursor indicator
@@ -213,8 +237,13 @@
                     {
                       duration: 9600,
                       fn: async () => {
+                        await ensureRoute('Project');
+                        await waitForReady();
+                        const fi = getFilterInput();
+                        const ds = getDocSearch();
+
                         // Show filter indicator with backdrop
-                        const inputRect = filterInput.getBoundingClientRect();
+                        const inputRect = fi.getBoundingClientRect();
                         const tipCenterX = inputRect.left + inputRect.width / 2;
                         const tipTop = inputRect.bottom + 10;
 
@@ -253,7 +282,7 @@
                         indicator.remove();
 
                         // Move cursor to filter input and click
-                        const inputRect2 = filterInput.getBoundingClientRect();
+                        const inputRect2 = fi.getBoundingClientRect();
                         await moveCursorTo(inputRect2.left + 24, inputRect2.top + inputRect2.height / 2 - 2);
                         await clickCursor();
                         await sleep(150);
@@ -271,8 +300,8 @@
                           await moveCursorTo(sr1.left + 12, sr1.top + sr1.height / 2 - 1, 350);
                           await clickCursor();
                         }
-                        docSearch.$refs.searchInput.setSelectionRange(6, 6);
-                        docSearch.applySuggestion(0);
+                        ds.$refs.searchInput.setSelectionRange(6, 6);
+                        ds.applySuggestion(0);
                         await nextTick();                 await sleep(280);
                         await type('{ status: }',           10); await sleep(85);
                         await type("{ status: ' }",          11); await sleep(85);
@@ -287,19 +316,24 @@
                         await type("{ status: 'completed }", 20); await sleep(85);
                         await type("{ status: 'completed' }",21); await sleep(85);
 
-                        pageState.documents = allDocuments.filter(d => d.status === 'completed');
-                        pageState.numDocuments = pageState.documents.length;
+                        demoIframe.contentWindow.pageState.documents = allDocuments.filter(d => d.status === 'completed');
+                        demoIframe.contentWindow.pageState.numDocuments = demoIframe.contentWindow.pageState.documents.length;
                         await sleep(3000);
-                        docSearch.searchText = '';
-                        pageState.documents = allDocuments;
-                        pageState.numDocuments = allNumDocuments;
+                        ds.searchText = '';
+                        demoIframe.contentWindow.pageState.documents = allDocuments;
+                        demoIframe.contentWindow.pageState.numDocuments = allNumDocuments;
                       }
                     },
                     {
                       duration: 11000,
                       fn: async () => {
+                        await ensureRoute('Project');
+                        await waitForReady();
+                        const fi = getFilterInput();
+                        const ds = getDocSearch();
+
                         // Show filter indicator with backdrop
-                        const inputRect = filterInput.getBoundingClientRect();
+                        const inputRect = fi.getBoundingClientRect();
                         const tipCenterX = inputRect.left + inputRect.width / 2;
                         const tipTop = inputRect.bottom + 10;
 
@@ -338,7 +372,7 @@
                         indicator.remove();
 
                         // Move cursor to filter input and click
-                        const inputRect3 = filterInput.getBoundingClientRect();
+                        const inputRect3 = fi.getBoundingClientRect();
                         await moveCursorTo(inputRect3.left + 24, inputRect3.top + inputRect3.height / 2 - 2);
                         await clickCursor();
                         await sleep(150);
@@ -361,8 +395,8 @@
                           await moveCursorTo(sr2.left + 12, sr2.top + sr2.height / 2 - 1, 350);
                           await clickCursor();
                         }
-                        docSearch.$refs.searchInput.setSelectionRange(11, 11);
-                        docSearch.applySuggestion(0);
+                        ds.$refs.searchInput.setSelectionRange(11, 11);
+                        ds.applySuggestion(0);
                         await nextTick();                                await sleep(280);
                         await type('{ createdAt: }', 14);                 await sleep(85);
                         await type('{ createdAt: { }', 15);                await sleep(85);
@@ -386,12 +420,79 @@
                         await type("{ createdAt: { $gt: '2026-02-10' }", 33); await sleep(85);
                         await type("{ createdAt: { $gt: '2026-02-10' } }", 35); await sleep(85);
 
-                        pageState.documents = allDocuments.filter(d => d.createdAt > '2026-02-10');
-                        pageState.numDocuments = pageState.documents.length;
+                        demoIframe.contentWindow.pageState.documents = allDocuments.filter(d => d.createdAt > '2026-02-10');
+                        demoIframe.contentWindow.pageState.numDocuments = demoIframe.contentWindow.pageState.documents.length;
                         await sleep(3000);
-                        docSearch.searchText = '';
-                        pageState.documents = allDocuments;
-                        pageState.numDocuments = allNumDocuments;
+                        ds.searchText = '';
+                        demoIframe.contentWindow.pageState.documents = allDocuments;
+                        demoIframe.contentWindow.pageState.numDocuments = allNumDocuments;
+                      }
+                    },
+                    {
+                      duration: 12000,
+                      fn: async () => {
+                        // Hide cursor for this keyboard-only step
+                        cursor.style.display = 'none';
+
+                        await ensureRoute('Project');
+
+                        // Switch to Task model via sidebar
+                        const sidebarLinks = demoIframe.contentDocument.querySelectorAll('nav a, aside a, ul[role="list"] a');
+                        const taskLink = Array.from(sidebarLinks).find(a => a.textContent.trim() === 'Task');
+                        if (taskLink) {
+                          taskLink.click();
+                          await nextTick();
+                          await sleep(800);
+                        }
+
+                        // Show backdrop with Ctrl+P keyboard shortcut
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                        const kbd = demoIframe.contentDocument.createElement('div');
+                        kbd.id = 'demo-kbd-indicator';
+                        kbd.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;pointer-events:none;text-align:center;';
+                        kbd.innerHTML = `
+                          <div style="display:inline-flex;align-items:center;gap:8px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px 28px;box-shadow:0 8px 24px rgba(59,130,246,0.15);">
+                            <kbd style="display:inline-block;padding:6px 12px;background:white;border:1px solid #d1d5db;border-radius:6px;font-family:inherit;font-size:18px;font-weight:600;color:#1d4ed8;box-shadow:0 1px 2px rgba(0,0,0,0.1);">Ctrl</kbd>
+                            <span style="font-size:20px;color:#64748b;font-weight:500;">+</span>
+                            <kbd style="display:inline-block;padding:6px 14px;background:white;border:1px solid #d1d5db;border-radius:6px;font-family:inherit;font-size:18px;font-weight:600;color:#1d4ed8;box-shadow:0 1px 2px rgba(0,0,0,0.1);">P</kbd>
+                          </div>
+                          <div style="margin-top:12px;font-size:15px;color:white;font-weight:500;">Quick switch between models</div>
+                        `;
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(kbd);
+
+                        await sleep(3000);
+                        backdrop.remove();
+                        kbd.remove();
+
+                        // Open model switcher
+                        demoIframe.contentWindow.pageState.openModelSwitcher();
+                        await nextTick();
+                        await sleep(400);
+
+                        // Type "User" in the model switcher search via native input events
+                        const switcherInput = demoIframe.contentDocument.querySelector('.fixed input[placeholder*="model name"]');
+                        function setInputValue(input, val) {
+                          const nativeSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+                          nativeSetter.call(input, val);
+                          input.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (switcherInput) {
+                          setInputValue(switcherInput, 'U');    await nextTick(); await sleep(100);
+                          setInputValue(switcherInput, 'Us');   await nextTick(); await sleep(100);
+                          setInputValue(switcherInput, 'Use');  await nextTick(); await sleep(100);
+                          setInputValue(switcherInput, 'User'); await nextTick(); await sleep(300);
+                        }
+
+                        // Select User via Enter key
+                        demoIframe.contentWindow.pageState.selectSwitcherModel('User');
+                        await nextTick();
+                        await sleep(2500);
+
+                        // Restore cursor for next steps
+                        cursor.style.display = '';
                       }
                     }
                   ];
