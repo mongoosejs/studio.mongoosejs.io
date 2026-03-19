@@ -144,9 +144,7 @@
                 }, { once: true });
 
                 async function startDemo() {
-                  await new Promise(resolve => setTimeout(resolve, 100));
-
-                  if (!demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]')) return;
+                  await waitForReady();
 
                   const nextTick = demoIframe.contentWindow.Vue.nextTick;
 
@@ -165,7 +163,7 @@
                     while (!getFilterInput() || !getDocSearch()) {
                       await sleep(50);
                     }
-                    await nextTick();
+                    await demoIframe.contentWindow.Vue.nextTick();
                     await sleep(100);
                   }
                   async function ensureRoute(model) {
