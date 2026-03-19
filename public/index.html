@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="tw.css">
-    <link href="https://vjs.zencdn.net/8.23.3/video-js.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -77,70 +76,828 @@
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
           <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
         </div>
-        <div class="mx-auto max-w-7xl py-24 sm:py-16 lg:py-28">
-          <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div>
-              <span class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700">
+        <div class="mx-auto max-w-7xl py-20 sm:py-14 lg:py-20">
+          <div class="mx-auto max-w-4xl text-center">
+            <span class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700">
                 <span class="rounded-full bg-gray-100 px-2 py-0.5 text-gray-900">New</span>
                 AI Query Assistant
                 <span class="text-gray-400">·</span>
                 Dashboards
                 <span class="text-gray-400">·</span>
                 Team Access
-              </span>
-              <h1 class="mt-6 text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">A Developer-First MongoDB GUI</h1>
-              <p class="mt-6 text-2xl leading-tight text-gray-700 sm:text-4xl sm:leading-tight">Browser-based, model-aware, and AI-assisted MongoDB interface for building and managing applications.</p>
-              <div class="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href="https://npmjs.com/package/@mongoosejs/studio"
-                  target="_blank"
-                  class="rounded-md flex items-center bg-red-berry-800 border-2 border-red-berry-800 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" class="h-[1.25em] inline mr-2"><defs><style>.cls-1{fill:white;}.cls-2{fill:#cb3837;}</style></defs><path class="cls-1" d="M0,.2H150v150H0Z" transform="translate(0 -0.2)"/><path class="cls-2" d="M16.78,16.67V134.59H134.7V16.67Zm98.15,98.16H95.16V56.2H75.39v58.63H36.54V36.44h78.39Z" transform="translate(0 -0.2)"/></svg>
-                  Start Free
-                </a>
-                <a
-                  href="/imdb"
-                  target="_blank"
-                  class="font-semibold text-gray-900 flex items-center border-2 rounded-md border-gray-300 bg-white hover:bg-gray-100 px-5 py-3 text-sm shadow-sm">
-                  View Live Demo
-                </a>
-              </div>
-              <div class="mt-4 inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm">
-                <code id="hero-install-command" class="font-semibold text-gray-900">npm install @mongoosejs/studio</code>
-                <button
-                  id="copy-hero-install-command"
-                  type="button"
-                  class="rounded-md border border-gray-300 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700 transition hover:bg-gray-100"
-                  aria-label="Copy install command"
-                >
-                  Copy
-                </button>
-              </div>
-              <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-gray-600">
-                <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Open source</span>
-                <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Free for local dev</span>
-                <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Deployed via Express middleware or Vercel</span>
-              </div>
+            </span>
+            <h1 class="mt-5 text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">A Developer-First MongoDB GUI</h1>
+            <p class="mt-5 text-xl leading-tight text-gray-700 sm:text-3xl sm:leading-tight">Browser-based, model-aware, and AI-assisted MongoDB interface for building and managing applications.</p>
+            <div class="mt-7 flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="https://npmjs.com/package/@mongoosejs/studio"
+                target="_blank"
+                class="rounded-md flex items-center bg-red-berry-800 border-2 border-red-berry-800 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" class="h-[1.25em] inline mr-2"><defs><style>.cls-1{fill:white;}.cls-2{fill:#cb3837;}</style></defs><path class="cls-1" d="M0,.2H150v150H0Z" transform="translate(0 -0.2)"/><path class="cls-2" d="M16.78,16.67V134.59H134.7V16.67Zm98.15,98.16H95.16V56.2H75.39v58.63H36.54V36.44h78.39Z" transform="translate(0 -0.2)"/></svg>
+                Start Free
+              </a>
+              <a
+                href="/imdb"
+                target="_blank"
+                class="font-semibold text-gray-900 flex items-center border-2 rounded-md border-gray-300 bg-white hover:bg-gray-100 px-5 py-3 text-sm shadow-sm">
+                View Live Demo
+              </a>
             </div>
-            <div class="relative">
-              <div class="rounded-3xl border border-gray-200 bg-white p-4 shadow-2xl">
-                <video
-                  id="my-video"
-                  class="block w-full aspect-[16/10] object-contain rounded-2xl bg-slate-50"
-                  preload="auto"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                >
-                  <source src="https://res.cloudinary.com/drfhhq8wu/video/upload/v1768947919/studio-ai-demo-q1-2026_nasty6.mp4" type="video/mp4" />
-                  <p class="vjs-no-js">
-                    To view this video please enable JavaScript, and consider upgrading to a
-                    web browser that
-                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>.
-                  </p>
-                </video>
+            <div class="mt-4 inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm">
+              <code id="hero-install-command" class="font-semibold text-gray-900">npm install @mongoosejs/studio</code>
+              <button
+                id="copy-hero-install-command"
+                type="button"
+                class="rounded-md border border-gray-300 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700 transition hover:bg-gray-100"
+                aria-label="Copy install command"
+              >
+                Copy
+              </button>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium text-gray-600">
+              <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Open source</span>
+              <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Free for local dev</span>
+              <span class="inline-flex items-center gap-2"><span class="text-green-700">✓</span>Deployed via Express middleware or Vercel</span>
+            </div>
+          </div>
+          <div class="mx-auto mt-10 max-w-7xl">
+            <div class="relative rounded-3xl border border-gray-200 bg-white p-2 shadow-2xl sm:p-3 lg:p-3">
+              <div class="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent"></div>
+              <div class="rounded-2xl bg-slate-50 p-2 sm:p-3">
+                <iframe
+                  src="/demo-embed/"
+                  class="block w-full aspect-[16/10] rounded-xl bg-slate-50 pointer-events-none lg:aspect-[16/9]"
+                  style="border: none;"
+                  loading="lazy"
+                  title="Mongoose Studio demo"
+                  id="demo"
+                ></iframe>
               </div>
+              <div id="demo-progress" class="flex gap-2 px-1 py-2"></div>
+              <script>
+                const demoIframe = document.querySelector('#demo');
+                demoIframe.addEventListener('load', () => {
+                  setTimeout(() => {
+                    demoIframe.contentWindow.pageState.setOutputType('json');
+                    startDemo();
+                  }, 50);
+                }, { once: true });
+
+                async function startDemo() {
+                let abortController = new AbortController();
+                  await waitForReady();
+
+                  const nextTick = demoIframe.contentWindow.Vue.nextTick;
+
+                  let backdrop, indicator;
+                  const allDocuments = demoIframe.contentWindow.pageState.documents.slice();
+                  const allNumDocuments = demoIframe.contentWindow.pageState.numDocuments;
+
+                  function getFilterInput() {
+                    return demoIframe.contentDocument.querySelector('.documents-menu input[type="text"]');
+                  }
+                  function getDocSearch() {
+                    return demoIframe.contentWindow.pageState.$refs.documentSearch;
+                  }
+                  async function waitForReady() {
+                    while (!getFilterInput() || !getDocSearch()) {
+                      await sleep(50);
+                    }
+                    await demoIframe.contentWindow.Vue.nextTick();
+                    await sleep(100);
+                  }
+                  async function ensureRoute(model) {
+                    if (demoIframe.contentWindow.pageState.currentModel !== model) {
+                      demoIframe.contentWindow.pageState.$router.push('/model/' + model);
+                      await nextTick();
+                      await sleep(400);
+                    }
+                  }
+
+                  function sleep(ms) {
+                    return new Promise((resolve, reject) => {
+                      const id = setTimeout(resolve, ms);
+                      abortController.signal.addEventListener('abort', () => {
+                        clearTimeout(id);
+                        reject(new DOMException('Aborted', 'AbortError'));
+                      });
+                    });
+                  }
+
+                  function cleanup() {
+                    demoIframe.contentDocument.getElementById('demo-backdrop')?.remove();
+                    demoIframe.contentDocument.getElementById('demo-filter-indicator')?.remove();
+                    demoIframe.contentDocument.getElementById('demo-kbd-indicator')?.remove();
+                    const ds = getDocSearch();
+                    if (ds) ds.searchText = '';
+                    demoIframe.contentWindow.pageState.showModelSwitcher = false;
+                    demoIframe.contentWindow.pageState.documents = allDocuments;
+                    demoIframe.contentWindow.pageState.numDocuments = allNumDocuments;
+                    demoIframe.contentWindow.pageState.setOutputType('json');
+                    cursor.style.display = '';
+                  }
+
+                  async function type(text, cursorPos) {
+                    const ds = getDocSearch();
+                    ds.searchText = text;
+                    await nextTick();
+                    ds.$refs.searchInput.setSelectionRange(cursorPos, cursorPos);
+                    ds.updateAutocomplete();
+                  }
+
+                  // Mouse cursor indicator
+                  const cursor = demoIframe.contentDocument.createElement('div');
+                  cursor.id = 'demo-cursor';
+                  cursor.style.cssText = 'position:fixed;z-index:200;pointer-events:none;left:-40px;top:-40px;width:16px;height:16px;border-radius:50%;background:rgba(59,130,246,0.85);box-shadow:0 0 0 3px rgba(59,130,246,0.25),0 1px 4px rgba(0,0,0,0.2);transform:translate(-50%,-50%);transition:left 0.5s cubic-bezier(0.4,0,0.2,1),top 0.5s cubic-bezier(0.4,0,0.2,1);';
+                  demoIframe.contentDocument.body.appendChild(cursor);
+
+                  async function moveCursorTo(x, y, ms = 500) {
+                    cursor.style.transition = `left ${ms}ms cubic-bezier(0.4,0,0.2,1), top ${ms}ms cubic-bezier(0.4,0,0.2,1)`;
+                    cursor.style.left = x + 'px';
+                    cursor.style.top = y + 'px';
+                    await sleep(ms + 30);
+                  }
+
+                  async function clickCursor() {
+                    const x = parseFloat(cursor.style.left);
+                    const y = parseFloat(cursor.style.top);
+                    const ripple = demoIframe.contentDocument.createElement('div');
+                    ripple.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:44px;height:44px;border-radius:50%;border:3px solid rgba(59,130,246,0.8);background:rgba(59,130,246,0.15);transform:translate(-50%,-50%) scale(0.2);opacity:1;transition:transform 0.35s ease-out,opacity 0.35s ease-out;z-index:199;pointer-events:none;`;
+                    demoIframe.contentDocument.body.appendChild(ripple);
+                    ripple.getBoundingClientRect();
+                    ripple.style.transform = 'translate(-50%,-50%) scale(1.5)';
+                    ripple.style.opacity = '0';
+                    await sleep(400);
+                    ripple.remove();
+                  }
+
+                  const steps = [
+                    {
+                      duration: 10600,
+                      fn: async () => {
+                        await ensureRoute('Project');
+                        await waitForReady();
+                        const fi = getFilterInput();
+                        const ds = getDocSearch();
+
+                        // Show filter indicator with backdrop
+                        const inputRect = fi.getBoundingClientRect();
+                        const tipCenterX = inputRect.left + inputRect.width / 2;
+                        const tipTop = inputRect.bottom + 10;
+
+                        indicator = demoIframe.contentDocument.createElement('div');
+                        indicator.id = 'demo-filter-indicator';
+                        indicator.style.cssText = [
+                          'position: fixed',
+                          `top: ${tipTop}px`,
+                          `left: ${tipCenterX}px`,
+                          'transform: translateX(-50%)',
+                          'background: #eff6ff',
+                          'border: 1px solid #bfdbfe',
+                          'border-radius: 10px',
+                          'box-shadow: 0 8px 24px rgba(59,130,246,0.15)',
+                          'padding: 12px 16px',
+                          'max-width: 300px',
+                          'font-size: 16px',
+                          'line-height: 1.5',
+                          'color: #1e293b',
+                          'z-index: 100',
+                          'pointer-events: none',
+                        ].join(';');
+                        indicator.innerHTML = `
+                          <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-top:1px solid #bfdbfe;border-left:1px solid #bfdbfe;"></div>
+                          <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Filter documents</div>
+                          <div>Filter using Mongoose query syntax.</div>
+                        `;
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(indicator);
+
+                        await sleep(5000);
+                        backdrop.remove();
+                        indicator.remove();
+
+                        // Move cursor to filter input and click
+                        const inputRect2 = fi.getBoundingClientRect();
+                        await moveCursorTo(inputRect2.left + 24, inputRect2.top + inputRect2.height / 2 - 2);
+                        await clickCursor();
+                        await sleep(150);
+
+                        // Type the filter query
+                        await type('{}', 1);              await sleep(300);
+                        await type('{ s }', 3);             await sleep(110);
+                        await type('{ st }', 4);            await sleep(110);
+                        await type('{ sta }', 5);           await sleep(110);
+                        await type('{ stat }', 6);          await sleep(180);
+                        await nextTick();
+                        const suggEl1 = demoIframe.contentDocument.querySelector('.documents-menu ul li');
+                        if (suggEl1) {
+                          const sr1 = suggEl1.getBoundingClientRect();
+                          await moveCursorTo(sr1.left + 12, sr1.top + sr1.height / 2 - 1, 350);
+                          await clickCursor();
+                        }
+                        ds.$refs.searchInput.setSelectionRange(6, 6);
+                        ds.applySuggestion(0);
+                        await nextTick();                 await sleep(280);
+                        await type('{ status: }',           10); await sleep(85);
+                        await type("{ status: ' }",          11); await sleep(85);
+                        await type("{ status: 'c }",         12); await sleep(85);
+                        await type("{ status: 'co }",        13); await sleep(85);
+                        await type("{ status: 'com }",       14); await sleep(85);
+                        await type("{ status: 'comp }",      15); await sleep(85);
+                        await type("{ status: 'compl }",     16); await sleep(85);
+                        await type("{ status: 'comple }",    17); await sleep(85);
+                        await type("{ status: 'complet }",   18); await sleep(85);
+                        await type("{ status: 'complete }",  19); await sleep(85);
+                        await type("{ status: 'completed }", 20); await sleep(85);
+                        await type("{ status: 'completed' }",21); await sleep(85);
+
+                        demoIframe.contentWindow.pageState.documents = allDocuments.filter(d => d.status === 'completed');
+                        demoIframe.contentWindow.pageState.numDocuments = demoIframe.contentWindow.pageState.documents.length;
+                        await sleep(3000);
+                        ds.searchText = '';
+                        demoIframe.contentWindow.pageState.documents = allDocuments;
+                        demoIframe.contentWindow.pageState.numDocuments = allNumDocuments;
+                      }
+                    },
+                    {
+                      duration: 12000,
+                      fn: async () => {
+                        await ensureRoute('Project');
+                        await waitForReady();
+                        const fi = getFilterInput();
+                        const ds = getDocSearch();
+
+                        // Show filter indicator with backdrop
+                        const inputRect = fi.getBoundingClientRect();
+                        const tipCenterX = inputRect.left + inputRect.width / 2;
+                        const tipTop = inputRect.bottom + 10;
+
+                        indicator = demoIframe.contentDocument.createElement('div');
+                        indicator.id = 'demo-filter-indicator';
+                        indicator.style.cssText = [
+                          'position: fixed',
+                          `top: ${tipTop}px`,
+                          `left: ${tipCenterX}px`,
+                          'transform: translateX(-50%)',
+                          'background: #eff6ff',
+                          'border: 1px solid #bfdbfe',
+                          'border-radius: 10px',
+                          'box-shadow: 0 8px 24px rgba(59,130,246,0.15)',
+                          'padding: 12px 16px',
+                          'max-width: 300px',
+                          'font-size: 16px',
+                          'line-height: 1.5',
+                          'color: #1e293b',
+                          'z-index: 100',
+                          'pointer-events: none',
+                        ].join(';');
+                        indicator.innerHTML = `
+                          <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-top:1px solid #bfdbfe;border-left:1px solid #bfdbfe;"></div>
+                          <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Schema-aware Queries</div>
+                          <div>Mongoose Studio casts values automatically according to your schemas.</div>
+                          <div>For example, createdAt is a date, but you can pass in a string and Mongoose will cast it for you.</div>
+                        `;
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(indicator);
+
+                        await sleep(5000);
+                        backdrop.remove();
+                        indicator.remove();
+
+                        // Move cursor to filter input and click
+                        const inputRect3 = fi.getBoundingClientRect();
+                        await moveCursorTo(inputRect3.left + 24, inputRect3.top + inputRect3.height / 2 - 2);
+                        await clickCursor();
+                        await sleep(150);
+
+                        // Type the filter query
+                        await type('{}', 1);                             await sleep(300);
+                        await type('{ c }', 3);                            await sleep(110);
+                        await type('{ cr }', 4);                           await sleep(110);
+                        await type('{ cre }', 5);                          await sleep(110);
+                        await type('{ crea }', 6);                         await sleep(110);
+                        await type('{ creat }', 7);                        await sleep(110);
+                        await type('{ create }', 8);                       await sleep(110);
+                        await type('{ created }', 9);                      await sleep(110);
+                        await type('{ createdA }', 10);                    await sleep(110);
+                        await type('{ createdAt }', 11);                   await sleep(180);
+                        await nextTick();
+                        const suggEl2 = demoIframe.contentDocument.querySelector('.documents-menu ul li');
+                        if (suggEl2) {
+                          const sr2 = suggEl2.getBoundingClientRect();
+                          await moveCursorTo(sr2.left + 12, sr2.top + sr2.height / 2 - 1, 350);
+                          await clickCursor();
+                        }
+                        ds.$refs.searchInput.setSelectionRange(11, 11);
+                        ds.applySuggestion(0);
+                        await nextTick();                                await sleep(280);
+                        await type('{ createdAt: }', 14);                 await sleep(85);
+                        await type('{ createdAt: { }', 15);                await sleep(85);
+                        await type('{ createdAt: {  }', 16);               await sleep(85);
+                        await type('{ createdAt: { $ }', 17);              await sleep(85);
+                        await type('{ createdAt: { $g }', 18);             await sleep(85);
+                        await type('{ createdAt: { $gt }', 19);            await sleep(85);
+                        await type('{ createdAt: { $gt: }', 20);           await sleep(85);
+                        await type('{ createdAt: { $gt:  }', 21);          await sleep(85);
+                        await type("{ createdAt: { $gt: ' }", 22);         await sleep(85);
+                        await type("{ createdAt: { $gt: '2 }", 23);        await sleep(85);
+                        await type("{ createdAt: { $gt: '20 }", 24);       await sleep(85);
+                        await type("{ createdAt: { $gt: '202 }", 25);      await sleep(85);
+                        await type("{ createdAt: { $gt: '2026 }", 26);     await sleep(85);
+                        await type("{ createdAt: { $gt: '2026- }", 27);    await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-0 }", 28);   await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02 }", 29);  await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02- }", 30); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-1 }", 31); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10 }", 32); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10' }", 33); await sleep(85);
+                        await type("{ createdAt: { $gt: '2026-02-10' } }", 35); await sleep(85);
+
+                        demoIframe.contentWindow.pageState.documents = allDocuments.filter(d => d.createdAt > '2026-02-10');
+                        demoIframe.contentWindow.pageState.numDocuments = demoIframe.contentWindow.pageState.documents.length;
+                        await sleep(3000);
+                        ds.searchText = '';
+                        demoIframe.contentWindow.pageState.documents = allDocuments;
+                        demoIframe.contentWindow.pageState.numDocuments = allNumDocuments;
+                      }
+                    },
+                    {
+                      duration: 6000,
+                      fn: async () => {
+                        // Hide cursor for this keyboard-only step
+                        cursor.style.display = 'none';
+
+                        await ensureRoute('Project');
+
+                        // Switch to Task model via sidebar
+                        const sidebarLinks = demoIframe.contentDocument.querySelectorAll('nav a, aside a, ul[role="list"] a');
+                        const taskLink = Array.from(sidebarLinks).find(a => a.textContent.trim() === 'Task');
+                        if (taskLink) {
+                          taskLink.click();
+                          await nextTick();
+                          await sleep(800);
+                        }
+
+                        // Show backdrop with Ctrl+P keyboard shortcut
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                        const kbd = demoIframe.contentDocument.createElement('div');
+                        kbd.id = 'demo-kbd-indicator';
+                        kbd.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;pointer-events:none;text-align:center;';
+                        kbd.innerHTML = `
+                          <div style="display:inline-flex;align-items:center;gap:8px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px 28px;box-shadow:0 8px 24px rgba(59,130,246,0.15);">
+                            <kbd style="display:inline-block;padding:6px 12px;background:white;border:1px solid #d1d5db;border-radius:6px;font-family:inherit;font-size:18px;font-weight:600;color:#1d4ed8;box-shadow:0 1px 2px rgba(0,0,0,0.1);">Ctrl</kbd>
+                            <span style="font-size:20px;color:#64748b;font-weight:500;">+</span>
+                            <kbd style="display:inline-block;padding:6px 14px;background:white;border:1px solid #d1d5db;border-radius:6px;font-family:inherit;font-size:18px;font-weight:600;color:#1d4ed8;box-shadow:0 1px 2px rgba(0,0,0,0.1);">P</kbd>
+                          </div>
+                          <div style="margin-top:12px;font-size:15px;color:white;font-weight:500;">Quick switch between models</div>
+                        `;
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(kbd);
+
+                        await sleep(3000);
+                        backdrop.remove();
+                        kbd.remove();
+
+                        // Open model switcher
+                        demoIframe.contentWindow.pageState.openModelSwitcher();
+                        await nextTick();
+                        await sleep(500);
+
+                        // Type "User" in the model switcher search via native input events
+                        const switcherInput = demoIframe.contentDocument.querySelector('.fixed input[placeholder*="model name"]');
+                        function setInputValue(input, val) {
+                          const nativeSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+                          nativeSetter.call(input, val);
+                          input.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (switcherInput) {
+                          setInputValue(switcherInput, 'U');    await nextTick(); await sleep(100);
+                          setInputValue(switcherInput, 'Us');   await nextTick(); await sleep(100);
+                          setInputValue(switcherInput, 'Use');  await nextTick(); await sleep(100);
+                          setInputValue(switcherInput, 'User'); await nextTick(); await sleep(300);
+                        }
+
+                        // Select User via Enter key
+                        demoIframe.contentWindow.pageState.selectSwitcherModel('User');
+                        await nextTick();
+                        await sleep(2500);
+
+                        // Restore cursor for next steps
+                        cursor.style.display = '';
+                      }
+                    },
+                    {
+                      duration: 10000,
+                      fn: async () => {
+                        await ensureRoute('Project');
+                        await waitForReady();
+                        demoIframe.contentWindow.pageState.setOutputType('json');
+                        await nextTick();
+                        await sleep(500);
+
+                        // Find the first ref link ("owner" field links to User)
+                        const refLink = demoIframe.contentDocument.querySelector('.inline-flex.items-baseline.group a');
+                        const refContainer = refLink && refLink.closest('.inline-flex.items-baseline.group');
+                        if (refContainer) {
+                          // Highlight the ref link with an indicator
+                          const rr = refContainer.getBoundingClientRect();
+                          indicator = demoIframe.contentDocument.createElement('div');
+                          indicator.id = 'demo-filter-indicator';
+                          indicator.style.cssText = [
+                            'position: fixed',
+                            `top: ${rr.bottom + 10}px`,
+                            `left: ${rr.left + rr.width / 2}px`,
+                            'transform: translateX(-50%)',
+                            'background: #eff6ff',
+                            'border: 1px solid #bfdbfe',
+                            'border-radius: 10px',
+                            'box-shadow: 0 8px 24px rgba(59,130,246,0.15)',
+                            'padding: 12px 16px',
+                            'max-width: 320px',
+                            'font-size: 16px',
+                            'line-height: 1.5',
+                            'color: #1e293b',
+                            'z-index: 100',
+                            'pointer-events: none',
+                          ].join(';');
+                          indicator.innerHTML = `
+                            <div style="position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-top:1px solid #bfdbfe;border-left:1px solid #bfdbfe;"></div>
+                            <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Reference Links</div>
+                            <div>Click any ref to jump straight to the referenced document.</div>
+                          `;
+                          backdrop = demoIframe.contentDocument.createElement('div');
+                          backdrop.id = 'demo-backdrop';
+                          backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:99;pointer-events:none;';
+                          demoIframe.contentDocument.body.appendChild(backdrop);
+                          demoIframe.contentDocument.body.appendChild(indicator);
+
+                          await sleep(4000);
+                          backdrop.remove();
+                          indicator.remove();
+
+                          // Force "View Document" link visible (CSS :hover can't be triggered programmatically)
+                          refLink.style.opacity = '1';
+                          await sleep(200);
+
+                          // Move cursor to the ref link and click it
+                          const lr = refLink.getBoundingClientRect();
+                          await moveCursorTo(lr.left + lr.width / 2, lr.top + lr.height / 2);
+                          await clickCursor();
+                          refLink.style.opacity = '';
+                          refLink.click();
+                          await nextTick();
+                          await sleep(3000);
+                        }
+                      }
+                    },
+                    {
+                      duration: 20000,
+                      fn: async () => {
+                        // Navigate to chat tab
+                        demoIframe.contentWindow.pageState.$router.push('/chat');
+                        await nextTick();
+                        await sleep(600);
+
+                        const chatState = demoIframe.contentWindow.pageState;
+                        chatState.status = 'loaded';
+
+                        // Show indicator about AI chat
+                        backdrop = demoIframe.contentDocument.createElement('div');
+                        backdrop.id = 'demo-backdrop';
+                        backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10000;pointer-events:none;';
+                        indicator = demoIframe.contentDocument.createElement('div');
+                        indicator.id = 'demo-filter-indicator';
+                        indicator.style.cssText = 'position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);z-index:10001;pointer-events:none;text-align:center;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;box-shadow:0 8px 24px rgba(59,130,246,0.15);padding:16px 24px;max-width:340px;font-size:16px;line-height:1.5;color:#1e293b;';
+                        indicator.innerHTML = `
+                          <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">AI Chat</div>
+                          <div>Ask questions about your data and get charts, queries, and insights.</div>
+                        `;
+                        demoIframe.contentDocument.body.appendChild(backdrop);
+                        demoIframe.contentDocument.body.appendChild(indicator);
+                        await sleep(5000);
+                        backdrop.remove();
+                        indicator.remove();
+
+                        // Find and click the textarea, then type the question
+                        const textarea = demoIframe.contentDocument.querySelector('textarea[placeholder*="Ask"]');
+                        if (textarea) {
+                          const tr = textarea.getBoundingClientRect();
+                          await moveCursorTo(tr.left + 40, tr.top + tr.height / 2);
+                          await clickCursor();
+                          await sleep(200);
+                        }
+
+                        const question = 'Draw a bar chart of tasks created by day of the week';
+                        for (let i = 0; i < question.length; i++) {
+                          chatState.newMessage = question.slice(0, i + 1);
+                          await nextTick();
+                          await sleep(30);
+                        }
+                        await sleep(300);
+
+                        // Click send button
+                        const sendBtn = demoIframe.contentDocument.querySelector('button[class*="bg-primary"]');
+                        if (sendBtn && sendBtn.textContent.trim() === 'Send') {
+                          const sr = sendBtn.getBoundingClientRect();
+                          await moveCursorTo(sr.left + sr.width / 2, sr.top + sr.height / 2, 300);
+                          await clickCursor();
+                        }
+
+                        // Add user message directly
+                        chatState.chatMessages.push({
+                          _id: 'demo-user-' + Date.now(),
+                          content: question,
+                          role: 'user'
+                        });
+                        chatState.newMessage = '';
+                        await nextTick();
+                        await sleep(400);
+
+                        // Stream assistant response with typing effect
+                        const scriptContent = `const tasks = await Task.find({});\nconst dayCounts = {};\nconst days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];\nfor (const t of tasks) {\n  const d = days[new Date(t.createdAt).getDay()];\n  dayCounts[d] = (dayCounts[d] || 0) + 1;\n}\nreturn {\n  $chart: {\n    type: 'bar',\n    data: {\n      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],\n      datasets: [{ label: 'Tasks Created', data: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d => dayCounts[d] || 0), backgroundColor: 'rgba(59,130,246,0.6)' }]\n    }\n  }\n};`;
+                        const fullResponse = 'Here\'s a script that creates a bar chart of tasks created by day of the week:\n\n```javascript\n' + scriptContent + '\n```';
+
+                        chatState.chatMessages.push({
+                          _id: 'demo-asst-' + Date.now(),
+                          content: '',
+                          role: 'assistant'
+                        });
+                        const asstIdx = chatState.chatMessages.length - 1;
+                        await nextTick();
+
+                        // Stream text in chunks
+                        for (let i = 0; i < fullResponse.length; i += 3) {
+                          chatState.chatMessages[asstIdx].content = fullResponse.slice(0, Math.min(i + 3, fullResponse.length));
+                          await nextTick();
+                          // Scroll to bottom
+                          const mc = demoIframe.contentDocument.querySelector('[ref="messagesContainer"], .overflow-y-auto.p-6');
+                          if (mc) mc.scrollTop = mc.scrollHeight;
+                          await sleep(18);
+                        }
+                        chatState.chatMessages[asstIdx].content = fullResponse;
+                        await nextTick();
+                        await sleep(500);
+
+                        // Click "Run" button on the code block — sets result and switches to Output
+                        const runBtn = Array.from(demoIframe.contentDocument.querySelectorAll('button, .chat-message-script button'))
+                          .find(b => b.textContent.trim() === 'Run');
+                        if (runBtn) {
+                          const rr = runBtn.getBoundingClientRect();
+                          await moveCursorTo(rr.left + rr.width / 2, rr.top + rr.height / 2, 400);
+                          await clickCursor();
+                          // Set execution result and script directly
+                          chatState.chatMessages[asstIdx].executionResult = {
+                            output: {
+                              $chart: {
+                                type: 'bar',
+                                data: {
+                                  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                                  datasets: [{
+                                    label: 'Tasks Created',
+                                    data: [3, 5, 2, 8, 4, 1, 6],
+                                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                                    borderColor: 'rgba(59, 130, 246, 1)',
+                                    borderWidth: 1
+                                  }]
+                                },
+                                options: { plugins: { title: { display: true, text: 'Tasks Created by Day of Week' } } }
+                              }
+                            }
+                          };
+                          chatState.chatMessages[asstIdx].script = scriptContent;
+                          await nextTick();
+                          // Switch to Output tab immediately
+                          const outputTab = Array.from(demoIframe.contentDocument.querySelectorAll('.chat-message-script button'))
+                            .find(b => b.textContent.trim() === 'Output');
+                          if (outputTab) outputTab.click();
+                          await nextTick();
+                        }
+
+                        await sleep(3000);
+                      }
+                    },
+                    {
+                      duration: 14000,
+                      fn: async () => {
+                        // Navigate to chat with the table query already executed
+                        demoIframe.contentWindow.pageState.$router.push('/chat');
+                        await nextTick();
+                        await sleep(600);
+
+                        const chatState = demoIframe.contentWindow.pageState;
+                        const scriptContent2 = `const tasks = await Task.find({ status: 'in_progress' });\nreturn {\n  $table: {\n    columns: ['Title', 'Assignee'],\n    rows: await Promise.all(tasks.map(async t => {\n      const user = await User.findById(t.assignee);\n      return [t.title, user?.name || 'Unassigned'];\n    }))\n  }\n};`;
+                        const fullResponse2 = 'Here\'s a table of in-progress tasks with their assignees:\n\n```javascript\n' + scriptContent2 + '\n```';
+
+                        // Preload chat with the question, response, and executed result
+                        chatState.status = 'loaded';
+                        chatState.chatThreadId = 'demo-thread-dash';
+                        chatState.chatThreads = [{ _id: 'demo-thread-dash', title: 'In progress tasks', createdAt: new Date().toISOString() }];
+                        chatState.chatMessages = [
+                          {
+                            _id: 'demo-user-dash',
+                            content: 'Create a table of in progress tasks showing title and assignee',
+                            role: 'user'
+                          },
+                          {
+                            _id: 'demo-asst-dash',
+                            content: fullResponse2,
+                            role: 'assistant',
+                            script: scriptContent2,
+                            executionResult: {
+                              output: {
+                                $table: {
+                                  columns: ['Title', 'Assignee'],
+                                  rows: [
+                                    ['Implement auth flow', 'Bob Martinez'],
+                                    ['Configure CI runners', 'Dan Okafor'],
+                                    ['Responsive nav component', 'Grace Kim']
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ];
+                        await nextTick();
+                        await sleep(300);
+
+                        // Switch to Output tab to show the table
+                        const outputTab2 = Array.from(demoIframe.contentDocument.querySelectorAll('.chat-message-script button'))
+                          .find(b => b.textContent.trim() === 'Output');
+                        if (outputTab2) outputTab2.click();
+                        await nextTick();
+                        await sleep(1500);
+
+                        // Click the "..." dropdown menu
+                        const dropdownBtn = demoIframe.contentDocument.querySelector('.chat-message-script .relative button');
+                        if (dropdownBtn) {
+                          const dr = dropdownBtn.getBoundingClientRect();
+                          await moveCursorTo(dr.left + dr.width / 2, dr.top + dr.height / 2, 350);
+                          await clickCursor();
+                          dropdownBtn.click();
+                          await nextTick();
+                          await sleep(400);
+
+                          // Highlight "Create Dashboard" with backdrop + indicator
+                          const createDashBtn = Array.from(demoIframe.contentDocument.querySelectorAll('.chat-message-script button'))
+                            .find(b => b.textContent.trim() === 'Create Dashboard');
+                          if (createDashBtn) {
+                            const cdr = createDashBtn.getBoundingClientRect();
+
+                            backdrop = demoIframe.contentDocument.createElement('div');
+                            backdrop.id = 'demo-backdrop';
+                            backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:10000;pointer-events:none;';
+                            indicator = demoIframe.contentDocument.createElement('div');
+                            indicator.id = 'demo-filter-indicator';
+                            indicator.style.cssText = [
+                              'position: fixed',
+                              `top: ${cdr.top + cdr.height / 2}px`,
+                              `left: ${cdr.left - 16}px`,
+                              'transform: translateX(-100%) translateY(-50%)',
+                              'background: #eff6ff',
+                              'border: 1px solid #bfdbfe',
+                              'border-radius: 10px',
+                              'box-shadow: 0 8px 24px rgba(59,130,246,0.15)',
+                              'padding: 12px 16px',
+                              'max-width: 260px',
+                              'font-size: 16px',
+                              'line-height: 1.5',
+                              'color: #1e293b',
+                              'z-index: 10001',
+                              'pointer-events: none',
+                            ].join(';');
+                            indicator.innerHTML = `
+                              <div style="position:absolute;top:50%;right:-5px;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:#eff6ff;border-right:1px solid #bfdbfe;border-top:1px solid #bfdbfe;"></div>
+                              <div style="font-weight:600;margin-bottom:4px;color:#1d4ed8;">Save as Dashboard</div>
+                              <div>Turn any chat result into a live, auto-refreshing dashboard.</div>
+                            `;
+                            // Make the dropdown float above the backdrop
+                            const dropdownMenu = createDashBtn.closest('.absolute');
+                            if (dropdownMenu) dropdownMenu.style.zIndex = '10002';
+                            demoIframe.contentDocument.body.appendChild(backdrop);
+                            demoIframe.contentDocument.body.appendChild(indicator);
+                            await sleep(3000);
+                            backdrop.remove();
+                            indicator.remove();
+                            if (dropdownMenu) dropdownMenu.style.zIndex = '';
+
+                            // Click "Create Dashboard"
+                            await moveCursorTo(cdr.left + cdr.width / 2, cdr.top + cdr.height / 2, 300);
+                            await clickCursor();
+                            createDashBtn.click();
+                            await nextTick();
+                            await sleep(500);
+                          }
+                        }
+
+                        // Type dashboard title in the modal
+                        const titleInput = demoIframe.contentDocument.querySelector('input[placeholder*="Dashboard"], .modal input[type="text"]');
+                        if (titleInput) {
+                          const tir = titleInput.getBoundingClientRect();
+                          await moveCursorTo(tir.left + 30, tir.top + tir.height / 2, 350);
+                          await clickCursor();
+                          await sleep(200);
+
+                          const dashTitle = 'In Progress Tasks';
+                          function setNativeInput(input, val) {
+                            const nativeSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+                            nativeSetter.call(input, val);
+                            input.dispatchEvent(new Event('input', { bubbles: true }));
+                          }
+                          for (let i = 0; i < dashTitle.length; i++) {
+                            setNativeInput(titleInput, dashTitle.slice(0, i + 1));
+                            await nextTick();
+                            await sleep(40);
+                          }
+                          await sleep(300);
+                        }
+
+                        // Click Submit — creates dashboard and auto-navigates
+                        const submitBtn = Array.from(demoIframe.contentDocument.querySelectorAll('button'))
+                          .find(b => b.textContent.trim() === 'Submit');
+                        if (submitBtn) {
+                          const sbr = submitBtn.getBoundingClientRect();
+                          await moveCursorTo(sbr.left + sbr.width / 2, sbr.top + sbr.height / 2, 300);
+                          await clickCursor();
+                          submitBtn.click();
+                          await nextTick();
+                          await sleep(1000);
+                        }
+
+                        // Wait to show the dashboard with the table result
+                        await sleep(3000);
+                      }
+                    }
+                  ];
+
+                  // Build progress bar segments, widths proportional to duration
+                  const progressContainer = document.getElementById('demo-progress');
+                  const totalDuration = steps.reduce((sum, s) => sum + s.duration, 0);
+                  const fills = steps.map((step, idx) => {
+                    const seg = document.createElement('div');
+                    seg.style.cssText = `flex: ${step.duration / totalDuration}; height: 4px; border-radius: 2px; background: #e2e8f0; overflow: hidden; cursor: pointer;`;
+                    seg.addEventListener('click', () => {
+                      abortController.abort();
+                      abortController = new AbortController();
+                      cleanup();
+                      runFrom(idx);
+                    });
+                    const fill = document.createElement('div');
+                    fill.style.cssText = 'height: 100%; width: 0%; background: #3b82f6; pointer-events: none;';
+                    seg.appendChild(fill);
+                    progressContainer.appendChild(seg);
+                    return fill;
+                  });
+
+                  // Find a stable home position (logo / top-left of app)
+                  function getCursorHomePos() {
+                    const logoEl = demoIframe.contentDocument.querySelector('img, a svg, header, nav');
+                    if (logoEl) {
+                      const r = logoEl.getBoundingClientRect();
+                      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+                    }
+                    return { x: 24, y: 24 };
+                  }
+
+                  async function runFrom(startIndex) {
+                    // Snap cursor to home position instantly before each run
+                    const home = getCursorHomePos();
+                    cursor.style.transition = 'none';
+                    cursor.style.left = home.x + 'px';
+                    cursor.style.top = home.y + 'px';
+
+                    for (let i = 0; i < fills.length; i++) {
+                      fills[i].style.transition = 'none';
+                      fills[i].style.width = i < startIndex ? '100%' : '0%';
+                    }
+                    for (let i = startIndex; i < steps.length; i++) {
+                      const step = steps[i];
+                      fills[i].getBoundingClientRect(); // force reflow
+                      fills[i].style.transition = `width ${step.duration}ms linear`;
+                      fills[i].style.width = '100%';
+                      try {
+                        await step.fn();
+                      } catch (e) {
+                        if (e.name === 'AbortError') return;
+                        throw e;
+                      }
+                      fills[i].style.transition = 'none';
+                      fills[i].style.width = '100%';
+                    }
+                    // Loop back to start
+                    runFrom(0);
+                  }
+
+                  runFrom(0);
+                }
+              </script>
             </div>
           </div>
         </div>
@@ -579,7 +1336,6 @@
       </div>
     </footer>
 
-    <script src="https://vjs.zencdn.net/8.23.3/video.min.js"></script>
     <script>
       (() => {
         const copyButton = document.getElementById('copy-hero-install-command');
