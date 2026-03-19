@@ -144,12 +144,12 @@
                 }, { once: true });
 
                 async function startDemo() {
+                let abortController = new AbortController();
                   await waitForReady();
 
                   const nextTick = demoIframe.contentWindow.Vue.nextTick;
 
                   let backdrop, indicator;
-                  let abortController = new AbortController();
                   const allDocuments = demoIframe.contentWindow.pageState.documents.slice();
                   const allNumDocuments = demoIframe.contentWindow.pageState.numDocuments;
 
