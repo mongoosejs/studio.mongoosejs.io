@@ -127,7 +127,7 @@
                 <iframe
                   src="/demo-embed/"
                   class="block w-full aspect-[16/10] rounded-xl bg-slate-50 pointer-events-none lg:aspect-[16/9]"
-                  style="border: none;"
+                  style="border: none; pointer-events: none;"
                   loading="lazy"
                   title="Mongoose Studio demo"
                   id="demo"
@@ -166,9 +166,17 @@
                     await demoIframe.contentWindow.Vue.nextTick();
                     await sleep(100);
                   }
+                  function iframePush(path) {
+                    // Lock parent scroll — iframe hash changes cause the browser to jump
+                    const y = window.scrollY, x = window.scrollX;
+                    const lock = () => window.scrollTo(x, y);
+                    window.addEventListener('scroll', lock);
+                    demoIframe.contentWindow.pageState.$router.push(path);
+                    setTimeout(() => window.removeEventListener('scroll', lock), 200);
+                  }
                   async function ensureRoute(model) {
                     if (demoIframe.contentWindow.pageState.currentModel !== model) {
-                      demoIframe.contentWindow.pageState.$router.push('/model/' + model);
+                      iframePush('/model/' + model);
                       await nextTick();
                       await sleep(400);
                     }
@@ -552,7 +560,9 @@
                           await moveCursorTo(lr.left + lr.width / 2, lr.top + lr.height / 2);
                           await clickCursor();
                           refLink.style.opacity = '';
-                          refLink.click();
+                          // Use iframePush to navigate without parent scroll jump
+                          const ownerId = demoIframe.contentWindow.pageState.documents?.[0]?.owner;
+                          if (ownerId) iframePush('/model/User/document/' + ownerId);
                           await nextTick();
                           await sleep(3000);
                         }
@@ -562,7 +572,7 @@
                       duration: 20000,
                       fn: async () => {
                         // Navigate to chat tab
-                        demoIframe.contentWindow.pageState.$router.push('/chat');
+                        iframePush('/chat');
                         await nextTick();
                         await sleep(600);
 
@@ -688,7 +698,7 @@
                       duration: 14000,
                       fn: async () => {
                         // Navigate to chat with the table query already executed
-                        demoIframe.contentWindow.pageState.$router.push('/chat');
+                        iframePush('/chat');
                         await nextTick();
                         await sleep(600);
 
