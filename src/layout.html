@@ -50,8 +50,9 @@
       window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments) }
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/tracking.js"></script>
   </head>
-  <body class="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-gray-950 dark:text-white">
+  <body class="min-h-screen bg-slate-50 text-slate-900 antialiased dark:bg-gray-950 dark:text-white" data-page-type="content">
     <header>
       <nav class="relative bg-white shadow dark:bg-gray-800/50 dark:shadow-none dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -119,5 +120,13 @@
         &copy; 2025 MeanIT Software Inc. All rights reserved.
       </div>
     </footer>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        if (window.mongooseStudioTracker) {
+          const pageType = window.location.pathname.startsWith('/docs') ? 'docs' : window.location.pathname.startsWith('/changelog') ? 'changelog' : 'content';
+          window.mongooseStudioTracker.configure({ pageType });
+        }
+      });
+    </script>
   </body>
 </html>
