@@ -1,6 +1,7 @@
 (function() {
   const TRACK_ENDPOINT = '/api/track';
   const SESSION_STORAGE_KEY = 'mongooseStudioTrackerSessionId';
+  const COMMAND_QUEUE_KEY = 'mongooseStudioTrackingQueue';
   const PAGE_VIEW_ID = generateId();
   const PAGE_START = Date.now();
   const CUSTOM_EVENTS = [];
@@ -13,7 +14,7 @@
   let latestReason = 'init';
   let lastFlushAt = 0;
   let flushTimer = null;
-  let config = { pageType: 'page', attach: null };
+  let config = { pageType: 'page' };
 
   for (const key of TRACKED_UTM_KEYS) {
     const value = URL_PARAMS.get(key);
@@ -156,14 +157,6 @@
     }, delay);
   }
 
-  function configure(nextConfig) {
-    config = { ...config, ...(nextConfig || {}) };
-    if (typeof config.attach === 'function') {
-      config.attach(publicApi);
-      config.attach = null;
-    }
-  }
-
   updateScrollDepth();
   window.addEventListener('scroll', () => {
     updateScrollDepth();
@@ -186,7 +179,11 @@
   }, 15000);
 
   const publicApi = {
-    configure,
+    setPageType(pageType) {
+      if (typeof pageType === 'string' && pageType.length > 0) {
+        config.pageType = pageType;
+      }
+    },
     flush,
     trackCustomEvent,
     getMaxScrollDepth: () => maxScrollDepth,
@@ -194,5 +191,43 @@
   };
 
   window.mongooseStudioTracker = publicApi;
+  attachCommandQueue(publicApi);
   queueFlush('page_load', 1200);
+
+  function attachCommandQueue(tracker) {
+    const queue = window[COMMAND_QUEUE_KEY] = window[COMMAND_QUEUE_KEY] || [];
+    const pending = queue.splice(0, queue.length);
+
+    queue.push = function(...items) {
+      for (const item of items) {
+        processCommand(item, tracker);
+      }
+      return 0;
+    };
+
+    for (const item of pending) {
+      processCommand(item, tracker);
+    }
+  }
+
+  function processCommand(command, tracker) {
+    if (command == null || typeof command !== 'object') {
+      return;
+    }
+
+    if (command.type === 'setPageType') {
+      tracker.setPageType(command.pageType);
+      return;
+    }
+
+    if (command.type === 'trackCustomEvent') {
+      tracker.trackCustomEvent(command.name, command.properties || {}, command.options || {});
+      return;
+    }
+
+    if (command.type === 'flush') {
+      tracker.flush(command.options || {});
+      return;
+    }
+  }
 })();

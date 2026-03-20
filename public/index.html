@@ -1152,7 +1152,7 @@
               Email support
             </li>
           </ul>
-          <a href="https://buy.stripe.com/dRmbJ28zN5ev54y6fo2ZO07" aria-describedby="tier-solo" data-track-buy-button data-plan="solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
+          <a href="https://buy.stripe.com/dRmbJ28zN5ev54y6fo2ZO07" target="_blank" aria-describedby="tier-solo" data-track-buy-button data-plan="solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
         <div class="relative rounded-3xl bg-gray-200 p-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10">
           <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-berry-800">Pro</h3>
@@ -1200,7 +1200,7 @@
               Dedicated support via Slack or Discord
             </li>
           </ul>
-          <a href="https://buy.stripe.com/3csaFg8XTdd0d6U7sy" aria-describedby="tier-enterprise" data-track-buy-button data-plan="enterprise" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
+          <a href="https://buy.stripe.com/3csaFg8XTdd0d6U7sy" target="_blank" aria-describedby="tier-enterprise" data-track-buy-button data-plan="enterprise" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
       </div>
     </div>
@@ -1403,52 +1403,93 @@
         menu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => setState(false));
         });
-      if (window.mongooseStudioTracker) {
-        window.mongooseStudioTracker.configure({
-          pageType: "home",
-          attach(tracker) {
-            const pricingSection = document.querySelector("[data-track-pricing-section]");
-            if (pricingSection && "IntersectionObserver" in window) {
-              const observer = new IntersectionObserver((entries) => {
-                for (const entry of entries) {
-                  if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
-                    tracker.trackCustomEvent("pricing_details_seen", {
-                      sectionId: pricingSection.id || "pricing",
-                      scrollDepthPercent: tracker.getMaxScrollDepth()
-                    });
-                    observer.disconnect();
-                    break;
-                  }
+      const trackingQueue = window.mongooseStudioTrackingQueue = window.mongooseStudioTrackingQueue || [];
+      trackingQueue.push({ type: "setPageType", pageType: "home" });
+
+      const getScrollDepth = () => {
+        const root = document.documentElement;
+        const body = document.body;
+        const scrollTop = window.scrollY || root.scrollTop || body.scrollTop || 0;
+        const viewportHeight = window.innerHeight || root.clientHeight || 0;
+        const scrollHeight = Math.max(
+          body.scrollHeight,
+          root.scrollHeight,
+          body.offsetHeight,
+          root.offsetHeight,
+          body.clientHeight,
+          root.clientHeight
+        );
+
+        if (scrollHeight <= viewportHeight) {
+          return 100;
+        }
+
+        return Math.min(100, Math.round(((scrollTop + viewportHeight) / scrollHeight) * 100));
+      };
+
+      const pricingSection = document.querySelector("[data-track-pricing-section]");
+      if (pricingSection && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+              trackingQueue.push({
+                type: "trackCustomEvent",
+                name: "pricing_details_seen",
+                properties: {
+                  sectionId: pricingSection.id || "pricing",
+                  scrollDepthPercent: getScrollDepth()
+                },
+                options: {
+                  onceKey: `pricing_details_seen:${pricingSection.id || "pricing"}`
                 }
-              }, { threshold: [0.35] });
-
-              observer.observe(pricingSection);
+              });
+              observer.disconnect();
+              break;
             }
-
-            document.querySelectorAll("[data-track-buy-button]").forEach((button) => {
-              const plan = button.dataset.plan || button.getAttribute("aria-describedby") || button.textContent.trim();
-              const payload = {
-                plan,
-                href: button.href,
-                label: button.textContent.trim()
-              };
-
-              button.addEventListener("mouseenter", () => {
-                tracker.trackCustomEvent("buy_button_hover", payload, { onceKey: `buy_button_hover:${plan}` });
-              });
-
-              button.addEventListener("focus", () => {
-                tracker.trackCustomEvent("buy_button_hover", payload, { onceKey: `buy_button_hover:${plan}` });
-              });
-
-              button.addEventListener("click", () => {
-                tracker.trackCustomEvent("buy_button_click", payload);
-                tracker.flush({ reason: "buy_button_click" });
-              });
-            });
           }
-        });
+        }, { threshold: [0.35] });
+
+        observer.observe(pricingSection);
       }
+
+      document.querySelectorAll("[data-track-buy-button]").forEach((button) => {
+        const plan = button.dataset.plan || button.getAttribute("aria-describedby") || button.textContent.trim();
+        const payload = {
+          plan,
+          href: button.href,
+          label: button.textContent.trim()
+        };
+
+        button.addEventListener("mouseenter", () => {
+          trackingQueue.push({
+            type: "trackCustomEvent",
+            name: "buy_button_hover",
+            properties: payload,
+            options: { onceKey: `buy_button_hover:${plan}` }
+          });
+        });
+
+        button.addEventListener("focus", () => {
+          trackingQueue.push({
+            type: "trackCustomEvent",
+            name: "buy_button_hover",
+            properties: payload,
+            options: { onceKey: `buy_button_hover:${plan}` }
+          });
+        });
+
+        button.addEventListener("click", () => {
+          trackingQueue.push({
+            type: "trackCustomEvent",
+            name: "buy_button_click",
+            properties: payload
+          });
+          trackingQueue.push({
+            type: "flush",
+            options: { reason: "buy_button_click" }
+          });
+        });
+      });
     })();
   </script>
       <script id="nav-active-state">

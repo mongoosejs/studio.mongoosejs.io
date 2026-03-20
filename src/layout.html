@@ -122,10 +122,9 @@
     </footer>
     <script>
       window.addEventListener('DOMContentLoaded', function() {
-        if (window.mongooseStudioTracker) {
-          const pageType = window.location.pathname.startsWith('/docs') ? 'docs' : window.location.pathname.startsWith('/changelog') ? 'changelog' : 'content';
-          window.mongooseStudioTracker.configure({ pageType });
-        }
+        const pageType = window.location.pathname.startsWith('/docs') ? 'docs' : window.location.pathname.startsWith('/changelog') ? 'changelog' : 'content';
+        window.mongooseStudioTrackingQueue = window.mongooseStudioTrackingQueue || [];
+        window.mongooseStudioTrackingQueue.push({ type: 'setPageType', pageType });
       });
     </script>
   </body>
