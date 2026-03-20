@@ -1,9 +1,11 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const PageView = require('../src/page-view.model');
+const pageViewSchema = require('../src/db/pageViewSchema');
 
 let conn = null;
+let pageViewConnection = null;
+let PageView = null;
 
 module.exports = async function trackHandler(req, res) {
   if (req.method !== 'POST') {
@@ -11,8 +13,8 @@ module.exports = async function trackHandler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
 
-  if (!process.env.MONGODB_CONNECTION_STRING) {
-    return res.status(500).json({ ok: false, error: 'Missing MONGODB_CONNECTION_STRING' });
+  if (!process.env.TRACK_MONGODB_CONNECTION_STRING) {
+    return res.status(500).json({ ok: false, error: 'Missing TRACK_MONGODB_CONNECTION_STRING' });
   }
 
   const payload = normalizePayload(req.body);
@@ -21,12 +23,30 @@ module.exports = async function trackHandler(req, res) {
     return res.status(400).json({ ok: false, error: 'Missing required tracking fields' });
   }
 
-  const requestMeta = getRequestMeta(req.headers);
+  const requestMeta = getRequestMeta(req);
   const now = new Date();
 
-  await ensureConnection();
+  await upsertPageView(payload, requestMeta, now);
 
-  await PageView.findOneAndUpdate(
+  return res.status(202).json({ ok: true, pageViewId: payload.pageViewId, receivedAt: now.toISOString() });
+};
+
+module.exports._test = {
+  ensureConnection,
+  getRequestMeta,
+  normalizePayload,
+  upsertPageView,
+  resetState() {
+    conn = null;
+    PageView = null;
+    pageViewConnection = null;
+  }
+};
+
+async function upsertPageView(payload, requestMeta, now) {
+  const pageViewModel = await getPageViewModel();
+
+  await pageViewModel.findOneAndUpdate(
     { pageViewId: payload.pageViewId },
     {
       $set: {
@@ -61,23 +81,41 @@ module.exports = async function trackHandler(req, res) {
       setDefaultsOnInsert: true
     }
   );
-
-  return res.status(202).json({ ok: true, pageViewId: payload.pageViewId, receivedAt: now.toISOString() });
-};
+}
 
 async function ensureConnection() {
-  if (mongoose.connection.readyState === 1) {
-    return mongoose.connection;
+  if (pageViewConnection != null && pageViewConnection.readyState === 1) {
+    return pageViewConnection;
   }
 
   if (conn == null) {
-    conn = mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { serverSelectionTimeoutMS: 3000 });
+    pageViewConnection = mongoose.createConnection(
+      process.env.TRACK_MONGODB_CONNECTION_STRING,
+      { serverSelectionTimeoutMS: 3000 }
+    );
+    conn = pageViewConnection.asPromise().then(() => pageViewConnection).catch(err => {
+      conn = null;
+      pageViewConnection = null;
+      PageView = null;
+      throw err;
+    });
   }
 
   return conn;
 }
 
-function getRequestMeta(headers) {
+async function getPageViewModel() {
+  const connection = await ensureConnection();
+
+  if (PageView == null) {
+    PageView = connection.models.PageView || connection.model('PageView', pageViewSchema);
+  }
+
+  return PageView;
+}
+
+function getRequestMeta(req) {
+  const headers = req.headers || {};
   const forwardedFor = headers['x-forwarded-for'];
   const ipAddress = Array.isArray(forwardedFor)
     ? forwardedFor[0]
@@ -86,8 +124,38 @@ function getRequestMeta(headers) {
   return {
     ipAddress,
     userAgent: headers['user-agent'] || null,
-    origin: headers.origin || null
+    origin: headers.origin || null,
+    ipGeolocation: getIpGeolocation(req)
   };
+}
+
+function getIpGeolocation(req) {
+  const headers = req.headers || {};
+  const geo = req.geo || {};
+
+  return {
+    city: firstNonEmpty(geo.city, headers['x-vercel-ip-city']),
+    country: firstNonEmpty(geo.country, headers['x-vercel-ip-country']),
+    countryRegion: firstNonEmpty(geo.countryRegion, headers['x-vercel-ip-country-region']),
+    region: firstNonEmpty(geo.region, headers['x-vercel-region']),
+    latitude: firstNonEmpty(geo.latitude, headers['x-vercel-ip-latitude']),
+    longitude: firstNonEmpty(geo.longitude, headers['x-vercel-ip-longitude']),
+    timezone: firstNonEmpty(geo.timezone, headers['x-vercel-ip-timezone'])
+  };
+}
+
+function firstNonEmpty(...values) {
+  for (const value of values) {
+    if (value == null) {
+      continue;
+    }
+    if (typeof value === 'string' && value.trim() === '') {
+      continue;
+    }
+    return value;
+  }
+
+  return null;
 }
 
 function normalizePayload(body) {

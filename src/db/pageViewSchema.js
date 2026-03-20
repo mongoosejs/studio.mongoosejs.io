@@ -35,11 +35,20 @@ const pageViewSchema = new mongoose.Schema({
   requestMeta: {
     ipAddress: { type: String, default: null },
     userAgent: { type: String, default: null },
-    origin: { type: String, default: null }
+    origin: { type: String, default: null },
+    ipGeolocation: {
+      city: { type: String, default: null },
+      country: { type: String, default: null },
+      countryRegion: { type: String, default: null },
+      region: { type: String, default: null },
+      latitude: { type: String, default: null },
+      longitude: { type: String, default: null },
+      timezone: { type: String, default: null }
+    }
   }
 }, {
   minimize: false,
   timestamps: true
 });
 
-module.exports = mongoose.models.PageView || mongoose.model('PageView', pageViewSchema);
+module.exports = pageViewSchema;
