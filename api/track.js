@@ -84,13 +84,12 @@ async function upsertPageView(payload, requestMeta, now) {
 
 async function ensureConnection() {
   if (conn == null) {
-    pageViewConnection = mongoose.createConnection(
+    conn = mongoose.createConnection(
       process.env.TRACK_MONGODB_CONNECTION_STRING,
       { serverSelectionTimeoutMS: 3000 }
     );
-    conn = pageViewConnection.asPromise().then(() => pageViewConnection).catch(err => {
+    await conn.asPromise().catch(err => {
       conn = null;
-      pageViewConnection = null;
       PageView = null;
       throw err;
     });
