@@ -15,6 +15,7 @@
       window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments) }
     </script>
     <script defer="" src="/_vercel/insights/script.js"></script>
+    <script defer src="/tracking.js"></script>
   </head>
 
   <body>
@@ -92,6 +93,8 @@
               <a
                 href="https://npmjs.com/package/@mongoosejs/studio"
                 target="_blank"
+                data-track-buy-button
+                data-plan="free"
                 class="rounded-md flex items-center bg-red-berry-800 border-2 border-red-berry-800 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" class="h-[1.25em] inline mr-2"><defs><style>.cls-1{fill:white;}.cls-2{fill:#cb3837;}</style></defs><path class="cls-1" d="M0,.2H150v150H0Z" transform="translate(0 -0.2)"/><path class="cls-2" d="M16.78,16.67V134.59H134.7V16.67Zm98.15,98.16H95.16V56.2H75.39v58.63H36.54V36.44h78.39Z" transform="translate(0 -0.2)"/></svg>
                 Start Free
@@ -1062,7 +1065,7 @@
         <div class="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
       </div>
       <div class="mx-auto max-w-4xl text-center">
-        <h2 id="pricing" class="text-base/7 font-semibold text-red-berry-800">Pricing</h2>
+        <h2 id="pricing" data-track-pricing-section class="text-base/7 font-semibold text-red-berry-800">Pricing</h2>
         <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl">Choose the right plan for you</p>
       </div>
       <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-600 sm:text-xl/8">Mongoose Studio is completely <span class="font-bold">free</span> for local development—no signups, no paywalls, just <code>npm install @mongoosejs/studio</code> and go.</p>
@@ -1101,7 +1104,7 @@
               Free forever
             </li>
           </ul>
-          <a href="https://www.npmjs.com/package/@mongoosejs/studio" aria-describedby="tier-hobby" class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-berry-800 ring-1 ring-inset ring-red-berry-200 hover:ring-red-berry-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800 sm:mt-10">Get started today</a>
+          <a href="https://www.npmjs.com/package/@mongoosejs/studio" aria-describedby="tier-hobby" data-track-buy-button data-plan="hobby" class="mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-red-berry-800 ring-1 ring-inset ring-red-berry-200 hover:ring-red-berry-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800 sm:mt-10">Get started today</a>
         </div>
         <div class="rounded-3xl bg-white/60 p-8 ring-1 ring-gray-900/10 sm:p-10">
           <h3 id="tier-solo" class="text-base/7 font-semibold text-red-berry-800">Solo</h3>
@@ -1149,7 +1152,7 @@
               Email support
             </li>
           </ul>
-          <a href="https://buy.stripe.com/dRmbJ28zN5ev54y6fo2ZO07" aria-describedby="tier-solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
+          <a href="https://buy.stripe.com/dRmbJ28zN5ev54y6fo2ZO07" aria-describedby="tier-solo" data-track-buy-button data-plan="solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
         <div class="relative rounded-3xl bg-gray-200 p-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10">
           <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-berry-800">Pro</h3>
@@ -1197,7 +1200,7 @@
               Dedicated support via Slack or Discord
             </li>
           </ul>
-          <a href="https://buy.stripe.com/3csaFg8XTdd0d6U7sy" aria-describedby="tier-enterprise" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
+          <a href="https://buy.stripe.com/3csaFg8XTdd0d6U7sy" aria-describedby="tier-enterprise" data-track-buy-button data-plan="enterprise" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
       </div>
     </div>
@@ -1400,8 +1403,54 @@
         menu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => setState(false));
         });
-      })();
-    </script>
+      if (window.mongooseStudioTracker) {
+        window.mongooseStudioTracker.configure({
+          pageType: "home",
+          attach(tracker) {
+            const pricingSection = document.querySelector("[data-track-pricing-section]");
+            if (pricingSection && "IntersectionObserver" in window) {
+              const observer = new IntersectionObserver((entries) => {
+                for (const entry of entries) {
+                  if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+                    tracker.trackCustomEvent("pricing_details_seen", {
+                      sectionId: pricingSection.id || "pricing",
+                      scrollDepthPercent: tracker.getMaxScrollDepth()
+                    });
+                    observer.disconnect();
+                    break;
+                  }
+                }
+              }, { threshold: [0.35] });
+
+              observer.observe(pricingSection);
+            }
+
+            document.querySelectorAll("[data-track-buy-button]").forEach((button) => {
+              const plan = button.dataset.plan || button.getAttribute("aria-describedby") || button.textContent.trim();
+              const payload = {
+                plan,
+                href: button.href,
+                label: button.textContent.trim()
+              };
+
+              button.addEventListener("mouseenter", () => {
+                tracker.trackCustomEvent("buy_button_hover", payload, { onceKey: `buy_button_hover:${plan}` });
+              });
+
+              button.addEventListener("focus", () => {
+                tracker.trackCustomEvent("buy_button_hover", payload, { onceKey: `buy_button_hover:${plan}` });
+              });
+
+              button.addEventListener("click", () => {
+                tracker.trackCustomEvent("buy_button_click", payload);
+                tracker.flush({ reason: "buy_button_click" });
+              });
+            });
+          }
+        });
+      }
+    })();
+  </script>
       <script id="nav-active-state">
       (() => {
         const path = window.location.pathname;
