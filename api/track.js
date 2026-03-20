@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const pageViewSchema = require('../src/db/pageViewSchema');
 
 let conn = null;
-let pageViewConnection = null;
 let PageView = null;
 
 module.exports = async function trackHandler(req, res) {
@@ -26,6 +25,7 @@ module.exports = async function trackHandler(req, res) {
   const requestMeta = getRequestMeta(req);
   const now = new Date();
 
+  await ensureConnection();
   await upsertPageView(payload, requestMeta, now);
 
   return res.status(202).json({ ok: true, pageViewId: payload.pageViewId, receivedAt: now.toISOString() });
@@ -39,12 +39,11 @@ module.exports._test = {
   resetState() {
     conn = null;
     PageView = null;
-    pageViewConnection = null;
   }
 };
 
 async function upsertPageView(payload, requestMeta, now) {
-  const pageViewModel = await getPageViewModel();
+  const pageViewModel = conn.model('PageView');
 
   await pageViewModel.findOneAndUpdate(
     { pageViewId: payload.pageViewId },
@@ -84,10 +83,6 @@ async function upsertPageView(payload, requestMeta, now) {
 }
 
 async function ensureConnection() {
-  if (pageViewConnection != null && pageViewConnection.readyState === 1) {
-    return pageViewConnection;
-  }
-
   if (conn == null) {
     pageViewConnection = mongoose.createConnection(
       process.env.TRACK_MONGODB_CONNECTION_STRING,
@@ -99,19 +94,11 @@ async function ensureConnection() {
       PageView = null;
       throw err;
     });
+
+    conn.model('PageView', pageViewSchema);
   }
 
   return conn;
-}
-
-async function getPageViewModel() {
-  const connection = await ensureConnection();
-
-  if (PageView == null) {
-    PageView = connection.models.PageView || connection.model('PageView', pageViewSchema);
-  }
-
-  return PageView;
 }
 
 function getRequestMeta(req) {
