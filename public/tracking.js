@@ -1,5 +1,5 @@
 (function() {
-  const TRACK_ENDPOINT = '/track';
+  const TRACK_ENDPOINT = '/api/track';
   const SESSION_STORAGE_KEY = 'mongooseStudioTrackerSessionId';
   const PAGE_VIEW_ID = generateId();
   const PAGE_START = Date.now();
