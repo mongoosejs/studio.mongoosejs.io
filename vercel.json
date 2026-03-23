@@ -1,9 +1,14 @@
 {
-  "trailingSlash": true,
   "rewrites": [
     {
       "source": "/track",
       "destination": "/api/track"
+    }
+  ],
+  "redirects": [
+    {
+      "src": "/studio",
+      "destination": "/studio/"
     }
   ]
 }
