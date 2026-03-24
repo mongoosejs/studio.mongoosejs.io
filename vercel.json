@@ -7,7 +7,7 @@
   ],
   "redirects": [
     {
-      "src": "/studio",
+      "source": "/studio",
       "destination": "/studio/"
     }
   ]
