@@ -125,6 +125,11 @@
   function sendPayload(payload, useBeacon) {
     const body = JSON.stringify(payload);
 
+    if (window.location.host !== 'mongoosestudio.app') {
+      console.log('TRACK', payload);
+      return;
+    }
+
     if (useBeacon && navigator.sendBeacon) {
       return navigator.sendBeacon(TRACK_ENDPOINT, new Blob([body], { type: 'application/json' }));
     }
