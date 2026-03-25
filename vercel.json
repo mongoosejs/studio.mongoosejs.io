@@ -9,6 +9,10 @@
     {
       "source": "/studio",
       "destination": "/studio/"
+    },
+    {
+      "source": "/imdb",
+      "destination": "/imdb/"
     }
   ]
 }
