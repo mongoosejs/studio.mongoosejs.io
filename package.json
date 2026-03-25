@@ -1,7 +1,7 @@
 {
   "name": "studio.mongoosejs.io",
   "dependencies": {
-    "@mongoosejs/studio": "^0.3.2",
+    "@mongoosejs/studio": "^0.3.4",
     "cheerio": "1.0.0-rc.12",
     "gray-matter": "4.0.3",
     "marked": "9.1.6",
