@@ -15,6 +15,7 @@
     <script defer src="/_vercel/insights/script.js"></script>
     <script defer src="/tracking.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdrAqcsAAAAAMFXTJd9TJN25KgwiIJl44Z6MdBh"></script>
   </head>
   <body class="min-h-screen bg-slate-50 text-slate-900">
     <header class="bg-white/80 backdrop-blur border-b border-slate-50">
@@ -104,6 +105,11 @@
                   class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-red-berry-800 focus:outline-none focus:ring-1 focus:ring-red-berry-800" />
               </div>
 
+              <div class="absolute opacity-0 pointer-events-none" style="position:absolute;left:-9999px;" aria-hidden="true" tabindex="-1">
+                <label for="website">Website</label>
+                <input type="text" id="website" name="website" autocomplete="off" tabindex="-1" />
+              </div>
+
               <p id="error" class="text-sm font-semibold text-red-700" role="alert"></p>
 
               <button id="submit-button" type="submit"
@@ -129,7 +135,7 @@
           </div>
 
           <!-- Stripe Embedded Checkout (shown after form submitted) -->
-          <div id="checkout-step" class="hidden mt-6">
+          <div id="checkout-step" class="hidden mt-6 pb-2">
             <div id="checkout-mount" class="rounded-2xl overflow-hidden"></div>
           </div>
         </div>
@@ -167,6 +173,7 @@
       (function() {
         var API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
         var STRIPE_PUBLISHABLE_KEY = window.location.hostname === 'localhost' ? 'pk_test_placeholder' : 'pk_live_placeholder';
+        var RECAPTCHA_SITE_KEY = '6LdrAqcsAAAAAMFXTJd9TJN25KgwiIJl44Z6MdBh';
 
         var PRODUCTS = {
           solo: { name: 'Solo', price: '$5', priceLabel: '$5/mo', total: '$5.00' },
@@ -202,6 +209,7 @@
 
           var name = document.getElementById('name').value.trim();
           var email = document.getElementById('email').value.trim();
+          var website = document.getElementById('website').value;
 
           if (!name || !email) {
             errorEl.textContent = 'Please fill in all fields.';
@@ -212,10 +220,12 @@
             submitButton.disabled = true;
             submitButton.textContent = 'Processing...';
 
+            var recaptchaToken = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'checkout' });
+
             var res = await fetch(API_BASE + '/createCheckout', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name: name, email: email, plan: planId })
+              body: JSON.stringify({ name: name, email: email, plan: planId, website: website, response: recaptchaToken })
             });
 
             var text = await res.text();
