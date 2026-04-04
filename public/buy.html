@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Purchase - Mongoose Studio</title>
+    <link rel="stylesheet" href="/tw.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/mongoose-studio.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments) }
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/tracking.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <header class="bg-white/80 backdrop-blur border-b border-slate-50">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-8">
+        <a href="/" class="flex items-center gap-3 text-xl font-semibold text-gray-900">
+          <img class="h-16 w-auto" src="/mongoose-studio.svg" alt="Mongoose Studio">
+          <div>
+            <span class="text-red-berry-900">Mongoose</span>
+            <div>Studio</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-4">
+          <button
+            id="mobile-menu-button"
+            type="button"
+            aria-expanded="false"
+            class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800 lg:hidden"
+          >
+            <svg data-icon="open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg data-icon="close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <nav class="hidden items-center gap-4 text-sm font-semibold text-gray-900 lg:flex">
+            <a href="/" data-nav="home" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Home</a>
+            <a href="/docs" data-nav="docs" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Docs</a>
+            <a href="/changelog" data-nav="changelog" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Changelog</a>
+            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
+              <svg class="h-[1.5em] mr-2" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.51 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
+              Demo
+            </a>
+            <!-- Avatar dropdown (shown after login), hidden by default -->
+            <div id="avatar-menu" class="relative hidden">
+              <button id="avatar-button" type="button" class="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-red-berry-800 focus:ring-offset-2">
+                <img id="avatar-img" class="h-9 w-9 rounded-full border-2 border-gray-200 object-cover" src="" alt="Account">
+              </button>
+              <div id="avatar-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                <a href="/my-account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">My Account</a>
+                <button id="nav-logout-button" type="button" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">Sign Out</button>
+              </div>
+            </div>
+            <!-- Log In button (shown when not logged in) -->
+            <a id="nav-login-link" href="/login.html" class="rounded-md bg-red-berry-800 px-3 py-2 text-sm font-semibold text-white hover:bg-red-berry-700">
+              Log In
+            </a>
+          </nav>
+        </div>
+      </div>
+      <div id="mobile-nav" class="hidden border-t border-gray-200 bg-white/95 px-6 pb-6 shadow-lg backdrop-blur lg:hidden">
+        <div class="mx-auto flex max-w-7xl flex-col gap-3 pt-4 text-sm font-semibold text-gray-900">
+          <a href="/" data-nav="home" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Home</a>
+          <a href="/docs" data-nav="docs" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Docs</a>
+          <a href="/changelog" data-nav="changelog" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Changelog</a>
+          <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">GitHub</a>
+          <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
+          <a id="mobile-login-link" href="/login.html" class="rounded-lg bg-red-berry-800 px-4 py-2 text-white hover:bg-red-berry-700">Log In</a>
+          <button id="mobile-logout-button" type="button" class="hidden rounded-lg border border-gray-200 px-4 py-2 text-left hover:bg-slate-100">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-6 py-12 lg:px-8 border-slate-50">
+      <div class="grid gap-10 lg:grid-cols-5">
+        <!-- Left: Form + Checkout -->
+        <div class="lg:col-span-3">
+          <!-- Step 1: Name & Email -->
+          <div id="info-step" class="rounded-2xl border border-slate-200 bg-white p-8">
+            <h1 id="page-title" class="text-2xl font-bold tracking-tight">Purchase</h1>
+
+            <form id="buy-form" class="mt-8 space-y-5">
+              <div>
+                <label for="name" class="block text-sm font-medium text-slate-600">Your Name</label>
+                <input type="text" id="name" name="name" required autocomplete="name"
+                  class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-red-berry-800 focus:outline-none focus:ring-1 focus:ring-red-berry-800" />
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-slate-600">Email Address</label>
+                <input type="email" id="email" name="email" required autocomplete="email"
+                  class="mt-1 block w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-red-berry-800 focus:outline-none focus:ring-1 focus:ring-red-berry-800" />
+              </div>
+
+              <p id="error" class="text-sm font-semibold text-red-700" role="alert"></p>
+
+              <button id="submit-button" type="submit"
+                class="mt-4 w-full rounded-lg bg-red-berry-800 px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-800 disabled:opacity-60 disabled:cursor-not-allowed">
+                Continue to Payment
+              </button>
+            </form>
+          </div>
+
+          <!-- Collapsed customer details (shown after form submitted) -->
+          <div id="customer-details" class="hidden rounded-2xl border border-slate-200 bg-white p-8">
+            <h2 class="text-lg font-bold tracking-tight">Customer Details</h2>
+            <dl class="mt-4 space-y-2 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Name</dt>
+                <dd id="detail-name" class="font-medium text-slate-900"></dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Email address</dt>
+                <dd id="detail-email" class="font-medium text-slate-900"></dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Stripe Embedded Checkout (shown after form submitted) -->
+          <div id="checkout-step" class="hidden mt-6">
+            <div id="checkout-mount" class="rounded-2xl overflow-hidden"></div>
+          </div>
+        </div>
+
+        <!-- Right: Order summary -->
+        <div class="lg:col-span-2">
+          <div class="rounded-2xl border border-slate-200 bg-white p-8">
+            <dl class="space-y-4 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-slate-500">Billing frequency</dt>
+                <dd class="font-medium text-slate-900">Monthly</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt id="summary-plan-label" class="text-slate-500">Plan</dt>
+                <dd id="summary-plan-price" class="font-medium text-slate-900"></dd>
+              </div>
+              <div class="border-t border-slate-200 pt-4 flex justify-between">
+                <dt class="text-base font-semibold text-slate-900">Total</dt>
+                <dd class="text-right">
+                  <span class="text-xs text-slate-500">USD</span>
+                  <span id="summary-total" class="ml-1 text-xl font-bold text-slate-900"></span>
+                </dd>
+              </div>
+            </dl>
+
+            <div class="mt-8 border-t border-dashed border-slate-200 pt-6 text-center">
+              <p class="text-xs text-slate-400">Questions? Contact <a href="https://discord.gg/P3YCfKYxpy" target="_blank" rel="noopener noreferrer" class="text-slate-500 underline underline-offset-2 hover:text-slate-700">support on Discord</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      (function() {
+        var API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        var STRIPE_PUBLISHABLE_KEY = window.location.hostname === 'localhost' ? 'pk_test_placeholder' : 'pk_live_placeholder';
+
+        var PRODUCTS = {
+          solo: { name: 'Solo', price: '$5', priceLabel: '$5/mo', total: '$5.00' },
+          pro: { name: 'Pro', price: '$19', priceLabel: '$19/mo per user', total: '$19.00' }
+        };
+
+        // Parse product from URL: /buy.html?plan=solo or /buy.html?plan=pro
+        var params = new URLSearchParams(window.location.search);
+        var planId = params.get('plan');
+        var product = PRODUCTS[planId];
+
+        if (!product) {
+          document.getElementById('page-title').textContent = 'Unknown plan';
+          document.getElementById('submit-button').disabled = true;
+          document.getElementById('error').textContent = 'Invalid plan. Please go back to pricing and select a plan.';
+        } else {
+          document.getElementById('page-title').textContent = 'Purchase ' + product.name;
+          document.getElementById('summary-plan-label').textContent = product.name;
+          document.getElementById('summary-plan-price').textContent = product.priceLabel;
+          document.getElementById('summary-total').textContent = product.total;
+        }
+
+        var form = document.getElementById('buy-form');
+        var errorEl = document.getElementById('error');
+        var submitButton = document.getElementById('submit-button');
+        var infoStep = document.getElementById('info-step');
+        var customerDetails = document.getElementById('customer-details');
+        var checkoutStep = document.getElementById('checkout-step');
+
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          errorEl.textContent = '';
+
+          var name = document.getElementById('name').value.trim();
+          var email = document.getElementById('email').value.trim();
+
+          if (!name || !email) {
+            errorEl.textContent = 'Please fill in all fields.';
+            return;
+          }
+
+          try {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+
+            var res = await fetch(API_BASE + '/createCheckout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: name, email: email, plan: planId })
+            });
+
+            var text = await res.text();
+            var data = {};
+            if (text) {
+              try { data = JSON.parse(text); } catch (err) { data = { message: text }; }
+            }
+
+            if (!res.ok) {
+              throw new Error(data.message || 'Request failed');
+            }
+
+            if (!data.clientSecret) {
+              throw new Error('No checkout session returned');
+            }
+
+            // Collapse form into summary, show the embedded checkout
+            infoStep.classList.add('hidden');
+            document.getElementById('detail-name').textContent = name;
+            document.getElementById('detail-email').textContent = email;
+            customerDetails.classList.remove('hidden');
+            checkoutStep.classList.remove('hidden');
+
+            var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+            var checkout = await stripe.initEmbeddedCheckout({
+              clientSecret: data.clientSecret
+            });
+            checkout.mount('#checkout-mount');
+          } catch (err) {
+            errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+            submitButton.disabled = false;
+            submitButton.textContent = 'Continue to Payment';
+          }
+        });
+      })();
+    </script>
+
+    <!-- Mobile menu toggle -->
+    <script>
+      (function() {
+        var menu = document.getElementById('mobile-nav');
+        var button = document.getElementById('mobile-menu-button');
+        if (!menu || !button) return;
+
+        var icons = {
+          open: button.querySelector('[data-icon="open"]'),
+          close: button.querySelector('[data-icon="close"]')
+        };
+
+        function setState(open) {
+          menu.classList.toggle('hidden', !open);
+          button.setAttribute('aria-expanded', open.toString());
+          if (icons.open && icons.close) {
+            icons.open.classList.toggle('hidden', open);
+            icons.close.classList.toggle('hidden', !open);
+          }
+        }
+
+        button.addEventListener('click', function() {
+          var isOpen = menu.classList.contains('hidden');
+          setState(isOpen);
+        });
+
+        menu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() { setState(false); });
+        });
+      })();
+    </script>
+
+    <!-- Avatar navbar -->
+    <script>
+      (function() {
+        var ACCESS_TOKEN_KEY = '_mongooseStudioAccessToken';
+        var token = localStorage.getItem(ACCESS_TOKEN_KEY);
+        if (!token) return;
+
+        var avatarMenu = document.getElementById('avatar-menu');
+        var avatarButton = document.getElementById('avatar-button');
+        var avatarImg = document.getElementById('avatar-img');
+        var avatarDropdown = document.getElementById('avatar-dropdown');
+        var navLoginLink = document.getElementById('nav-login-link');
+        var mobileLoginLink = document.getElementById('mobile-login-link');
+        var mobileLogoutButton = document.getElementById('mobile-logout-button');
+
+        function logout() {
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+          window.location.href = '/login.html';
+        }
+
+        document.getElementById('nav-logout-button').addEventListener('click', logout);
+        mobileLogoutButton.addEventListener('click', logout);
+
+        avatarButton.addEventListener('click', function() {
+          avatarDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function(e) {
+          if (!avatarMenu.contains(e.target)) {
+            avatarDropdown.classList.add('hidden');
+          }
+        });
+
+        var API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        fetch(API_BASE + '/getMyAccount', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', authorization: token },
+          body: '{}'
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+          if (!data || !data.user) return;
+          var user = data.user;
+          if (user.picture) {
+            avatarImg.src = user.picture;
+          } else {
+            avatarImg.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236b7280"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a3 3 0 110 6 3 3 0 010-6zm0 14.2a7.2 7.2 0 01-6-3.22c.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08a7.2 7.2 0 01-6 3.22z"/></svg>');
+          }
+          avatarMenu.classList.remove('hidden');
+          navLoginLink.classList.add('hidden');
+          mobileLoginLink.classList.add('hidden');
+          mobileLogoutButton.classList.remove('hidden');
+
+          // Pre-fill form with user info
+          var nameInput = document.getElementById('name');
+          var emailInput = document.getElementById('email');
+          if (user.name && !nameInput.value) nameInput.value = user.name;
+          if (user.email && !emailInput.value) emailInput.value = user.email;
+        })
+        .catch(function() {
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+        });
+      })();
+    </script>
+  </body>
+</html>
