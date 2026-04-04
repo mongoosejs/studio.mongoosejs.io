@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account - Mongoose Studio</title>
+    <link rel="stylesheet" href="/tw.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/mongoose-studio.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments) }
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/tracking.js"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 text-slate-900">
+    <header class="absolute inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-50">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-8">
+        <a href="/" class="flex items-center gap-3 text-xl font-semibold text-gray-900">
+          <img class="h-16 w-auto" src="/mongoose-studio.svg" alt="Mongoose Studio">
+          <div>
+            <span class="text-red-berry-900">Mongoose</span>
+            <div>Studio</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-4">
+          <button
+            id="mobile-menu-button"
+            type="button"
+            aria-expanded="false"
+            class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800 lg:hidden"
+          >
+            <svg data-icon="open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg data-icon="close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <nav class="hidden items-center gap-4 text-sm font-semibold text-gray-900 lg:flex">
+            <a href="/" data-nav="home" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Home</a>
+            <a href="/docs" data-nav="docs" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Docs</a>
+            <a href="/changelog" data-nav="changelog" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Changelog</a>
+            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
+              <svg class="h-[1.5em] mr-2" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.51 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
+              Demo
+            </a>
+            <!-- Avatar dropdown (shown after login), hidden by default -->
+            <div id="avatar-menu" class="relative hidden">
+              <button id="avatar-button" type="button" class="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-red-berry-800 focus:ring-offset-2">
+                <img id="avatar-img" class="h-9 w-9 rounded-full border-2 border-gray-200 object-cover" src="" alt="Account">
+              </button>
+              <div id="avatar-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                <a href="/my-account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">My Account</a>
+                <button id="nav-logout-button" type="button" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">Sign Out</button>
+              </div>
+            </div>
+            <!-- Log In button (shown when not logged in) -->
+            <a id="nav-login-link" href="/login.html" class="rounded-md bg-red-berry-800 px-3 py-2 text-sm font-semibold text-white hover:bg-red-berry-700">
+              Log In
+            </a>
+          </nav>
+        </div>
+      </div>
+      <div id="mobile-nav" class="hidden border-t border-gray-200 bg-white/95 px-6 pb-6 shadow-lg backdrop-blur lg:hidden">
+        <div class="mx-auto flex max-w-7xl flex-col gap-3 pt-4 text-sm font-semibold text-gray-900">
+          <a href="/" data-nav="home" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Home</a>
+          <a href="/docs" data-nav="docs" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Docs</a>
+          <a href="/changelog" data-nav="changelog" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Changelog</a>
+          <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">GitHub</a>
+          <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
+          <a id="mobile-login-link" href="/login.html" class="rounded-lg bg-red-berry-800 px-4 py-2 text-white hover:bg-red-berry-700">Log In</a>
+          <button id="mobile-logout-button" type="button" class="hidden rounded-lg border border-gray-200 px-4 py-2 text-left hover:bg-slate-100">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto w-full max-w-5xl px-4 pt-28 py-8 md:py-10 md:pt-28">
+      <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70 md:p-8">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight">My Account</h1>
+          <p id="userSummary" class="mt-1 text-slate-600">Loading account...</p>
+        </div>
+
+        <div class="mt-4">
+          <a href="https://discord.gg/P3YCfKYxpy" target="_blank" rel="noopener noreferrer" class="inline-flex rounded-lg bg-[#880000] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#6d0000]">Get Help on Discord</a>
+        </div>
+
+        <p id="error" class="mt-4 text-sm font-semibold text-red-700" role="alert"></p>
+        <div id="workspaceList" class="mt-5 space-y-4"></div>
+        <a id="loginLink" class="mt-4 hidden text-sm font-semibold text-[#880000] underline decoration-[#880000]/40 underline-offset-2" href="/login.html">Go to login</a>
+      </section>
+    </main>
+
+    <template id="emptyStateTemplate">
+      <div class="rounded-lg border border-dashed border-slate-300 p-4 text-slate-600">No workspaces found for this account.</div>
+    </template>
+
+    <template id="workspaceTemplate">
+      <section class="rounded-xl border border-slate-200 p-4">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div class="inline-flex items-center gap-2">
+              <div class="text-lg font-semibold" data-workspace-name></div>
+              <button type="button" class="inline-flex items-center rounded-md border border-slate-300 bg-white p-1 text-slate-700 hover:bg-slate-50" data-edit-name aria-label="Edit workspace name">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.41l-1.34-1.34a1 1 0 0 0-1.41 0l-1.18 1.18 3.75 3.75L21 5.75Z"/></svg>
+              </button>
+            </div>
+            <div class="text-sm text-slate-600">Workspace ID: <span data-workspace-id-label></span></div>
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full border border-slate-300 px-2 py-1 text-slate-700">Tier: <span data-tier-label></span></span>
+            <span class="rounded-full border border-slate-300 px-2 py-1 text-slate-700">Roles: <span data-roles-label></span></span>
+          </div>
+        </div>
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <code class="max-w-full break-all rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs sm:text-sm" data-key-view></code>
+          <button type="button" class="inline-flex items-center rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-50" data-toggle-key data-visible="false" aria-label="Show API key">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4"><path d="M12 5c-5.5 0-9.5 4.5-10.8 6.2a1.3 1.3 0 0 0 0 1.6C2.5 14.5 6.5 19 12 19s9.5-4.5 10.8-6.2a1.3 1.3 0 0 0 0-1.6C21.5 9.5 17.5 5 12 5Zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"/></svg>
+          </button>
+          <button type="button" class="rounded-lg bg-[#880000] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#6d0000]" data-copy-key>Copy API Key</button>
+        </div>
+      </section>
+    </template>
+
+    <script>
+      (function() {
+        const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        const ACCESS_TOKEN_KEY = '_mongooseStudioAccessToken';
+
+        const userSummary = document.getElementById('userSummary');
+        const errorEl = document.getElementById('error');
+        const workspaceList = document.getElementById('workspaceList');
+        const loginLink = document.getElementById('loginLink');
+
+        // Nav avatar elements
+        const avatarMenu = document.getElementById('avatar-menu');
+        const avatarButton = document.getElementById('avatar-button');
+        const avatarImg = document.getElementById('avatar-img');
+        const avatarDropdown = document.getElementById('avatar-dropdown');
+        const navLoginLink = document.getElementById('nav-login-link');
+        const mobileLoginLink = document.getElementById('mobile-login-link');
+        const mobileLogoutButton = document.getElementById('mobile-logout-button');
+
+        function logout() {
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+          window.location.href = '/login.html';
+        }
+
+        document.getElementById('nav-logout-button').addEventListener('click', logout);
+        mobileLogoutButton.addEventListener('click', logout);
+
+        // Toggle avatar dropdown
+        avatarButton.addEventListener('click', function() {
+          avatarDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function(e) {
+          if (!avatarMenu.contains(e.target)) {
+            avatarDropdown.classList.add('hidden');
+          }
+        });
+
+        loadAccount();
+
+        async function loadAccount() {
+          const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+          if (!token) {
+            userSummary.textContent = 'You are not signed in.';
+            loginLink.classList.remove('hidden');
+            return;
+          }
+
+          try {
+            const data = await postJson(API_BASE + '/getMyAccount', {}, token);
+            renderAccount(data);
+          } catch (err) {
+            showError(err.message || 'Failed to load account');
+            if (/access token|authorization|expired|invalid/i.test(err.message || '')) {
+              localStorage.removeItem(ACCESS_TOKEN_KEY);
+              loginLink.classList.remove('hidden');
+            }
+          }
+        }
+
+        function renderAccount(data) {
+          const user = data.user || {};
+          const workspaces = data.workspaces || [];
+
+          userSummary.textContent = user.email ? user.email : 'Signed in';
+          workspaceList.innerHTML = '';
+
+          // Show avatar in navbar, hide login links
+          if (user.picture) {
+            avatarImg.src = user.picture;
+          } else {
+            avatarImg.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236b7280"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a3 3 0 110 6 3 3 0 010-6zm0 14.2a7.2 7.2 0 01-6-3.22c.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08a7.2 7.2 0 01-6 3.22z"/></svg>');
+          }
+          avatarMenu.classList.remove('hidden');
+          navLoginLink.classList.add('hidden');
+          mobileLoginLink.classList.add('hidden');
+          mobileLogoutButton.classList.remove('hidden');
+
+          if (workspaces.length === 0) {
+            workspaceList.appendChild(createElementFromTemplate('emptyStateTemplate'));
+            return;
+          }
+
+          for (const workspace of workspaces) {
+            const item = createElementFromTemplate('workspaceTemplate');
+            item.setAttribute('data-workspace-id', String(workspace._id));
+
+            const roles = Array.isArray(workspace.roles) && workspace.roles.length ? workspace.roles.join(', ') : 'none';
+            const apiKey = String(workspace.apiKey || '');
+            const maskedApiKey = apiKey ? '\u2022'.repeat(Math.max(8, apiKey.length)) : '';
+            const canEditName = Array.isArray(workspace.roles) && (workspace.roles.includes('owner') || workspace.roles.includes('admin'));
+
+            item.querySelector('[data-workspace-name]').textContent = workspace.name || 'Unnamed Workspace';
+            item.querySelector('[data-workspace-id-label]').textContent = String(workspace._id);
+            item.querySelector('[data-tier-label]').textContent = workspace.subscriptionTier || 'unknown';
+            item.querySelector('[data-roles-label]').textContent = roles;
+
+            const editButton = item.querySelector('[data-edit-name]');
+            if (!canEditName) {
+              editButton.remove();
+            }
+
+            const keyView = item.querySelector('[data-key-view]');
+            keyView.textContent = maskedApiKey;
+
+            const toggleButton = item.querySelector('[data-toggle-key]');
+            toggleButton.setAttribute('data-key', apiKey);
+            toggleButton.setAttribute('data-masked', maskedApiKey);
+
+            const copyButton = item.querySelector('[data-copy-key]');
+            copyButton.setAttribute('data-copy-key', apiKey);
+
+            workspaceList.appendChild(item);
+
+            copyButton.addEventListener('click', async function() {
+              const key = copyButton.getAttribute('data-copy-key') || '';
+              if (!key) {
+                return;
+              }
+              await navigator.clipboard.writeText(key);
+              const prev = copyButton.textContent;
+              copyButton.textContent = 'Copied';
+              setTimeout(function() {
+                copyButton.textContent = prev;
+              }, 1200);
+            });
+
+            toggleButton.addEventListener('click', function() {
+              const visible = toggleButton.getAttribute('data-visible') === 'true';
+              if (!keyView) {
+                return;
+              }
+              if (visible) {
+                keyView.textContent = toggleButton.getAttribute('data-masked') || '';
+                toggleButton.setAttribute('data-visible', 'false');
+                toggleButton.setAttribute('aria-label', 'Show API key');
+              } else {
+                keyView.textContent = toggleButton.getAttribute('data-key') || '';
+                toggleButton.setAttribute('data-visible', 'true');
+                toggleButton.setAttribute('aria-label', 'Hide API key');
+              }
+            });
+
+            if (editButton) {
+              editButton.addEventListener('click', async function() {
+                const section = editButton.closest('section');
+                if (!section) {
+                  return;
+                }
+                const workspaceId = section.getAttribute('data-workspace-id');
+                const nameEl = section.querySelector('[data-workspace-name]');
+                if (!workspaceId || !nameEl) {
+                  return;
+                }
+                const currentName = nameEl.textContent || '';
+                const nextName = window.prompt('Update workspace name', currentName);
+                if (nextName == null || nextName.trim() === '' || nextName.trim() === currentName) {
+                  return;
+                }
+
+                try {
+                  const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+                  const { workspace: updatedWorkspace } = await postJson(API_BASE + '/updateWorkspace', {
+                    workspaceId: workspaceId.trim(),
+                    name: nextName.trim()
+                  }, token);
+                  nameEl.textContent = updatedWorkspace.name || nextName.trim();
+                } catch (err) {
+                  showError(err.message || 'Failed to update workspace name');
+                }
+              });
+            }
+          }
+        }
+
+        function createElementFromTemplate(templateId) {
+          const template = document.getElementById(templateId);
+          if (!template) {
+            throw new Error('Missing template: ' + templateId);
+          }
+          const container = document.createElement('div');
+          container.innerHTML = template.innerHTML.trim();
+          const element = container.firstElementChild;
+          if (!element) {
+            throw new Error('Template produced no element: ' + templateId);
+          }
+          return element;
+        }
+
+        async function postJson(url, body, token) {
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) {
+            headers.authorization = token;
+          }
+
+          const res = await fetch(url, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(body || {})
+          });
+
+          const text = await res.text();
+          var data = {};
+          if (text) {
+            try {
+              data = JSON.parse(text);
+            } catch (err) {
+              data = { message: text };
+            }
+          }
+
+          if (!res.ok) {
+            throw new Error(data.message || 'Request failed');
+          }
+
+          return data;
+        }
+
+        function showError(message) {
+          errorEl.textContent = message;
+        }
+      })();
+    </script>
+    <script>
+      (function() {
+        const menu = document.getElementById('mobile-nav');
+        const button = document.getElementById('mobile-menu-button');
+        if (!menu || !button) return;
+
+        const icons = {
+          open: button.querySelector('[data-icon="open"]'),
+          close: button.querySelector('[data-icon="close"]')
+        };
+
+        function setState(open) {
+          menu.classList.toggle('hidden', !open);
+          button.setAttribute('aria-expanded', open.toString());
+          if (icons.open && icons.close) {
+            icons.open.classList.toggle('hidden', open);
+            icons.close.classList.toggle('hidden', !open);
+          }
+        }
+
+        button.addEventListener('click', () => {
+          const isOpen = menu.classList.contains('hidden');
+          setState(isOpen);
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => setState(false));
+        });
+      })();
+    </script>
+  </body>
+</html>

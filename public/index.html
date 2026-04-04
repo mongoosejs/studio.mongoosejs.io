@@ -67,6 +67,20 @@
               <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
                 Demo
               </a>
+              <!-- Avatar dropdown (shown after login), hidden by default -->
+              <div id="avatar-menu" class="relative hidden">
+                <button id="avatar-button" type="button" class="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-red-berry-800 focus:ring-offset-2">
+                  <img id="avatar-img" class="h-9 w-9 rounded-full border-2 border-gray-200 object-cover" src="" alt="Account">
+                </button>
+                <div id="avatar-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                  <a href="/my-account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">My Account</a>
+                  <button id="nav-logout-button" type="button" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">Sign Out</button>
+                </div>
+              </div>
+              <!-- Log In button (shown when not logged in) -->
+              <a id="nav-login-link" href="/login.html" class="rounded-md bg-red-berry-800 px-3 py-2 text-sm font-semibold text-white hover:bg-red-berry-700">
+                Log In
+              </a>
             </nav>
           </div>
         </div>
@@ -77,6 +91,8 @@
             <a href="/changelog" data-nav="changelog" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Changelog</a>
             <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">GitHub</a>
             <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
+            <a id="mobile-login-link" href="/login.html" class="rounded-lg bg-red-berry-800 px-4 py-2 text-white hover:bg-red-berry-700">Log In</a>
+            <button id="mobile-logout-button" type="button" class="hidden rounded-lg border border-gray-200 px-4 py-2 text-left hover:bg-slate-100">Sign Out</button>
           </div>
         </div>
       </header>
@@ -1161,7 +1177,7 @@
               Email support
             </li>
           </ul>
-          <a href="https://buy.stripe.com/dRmbJ28zN5ev54y6fo2ZO07" target="_blank" aria-describedby="tier-solo" data-track-buy-button data-plan="solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
+          <a href="/login.html" aria-describedby="tier-solo" data-track-buy-button data-plan="solo" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
         <div class="relative rounded-3xl bg-gray-200 p-8 shadow-2xl ring-1 ring-gray-900/10 sm:p-10">
           <h3 id="tier-enterprise" class="text-base/7 font-semibold text-red-berry-800">Pro</h3>
@@ -1209,7 +1225,7 @@
               Dedicated support via Slack or Discord
             </li>
           </ul>
-          <a href="https://buy.stripe.com/3csaFg8XTdd0d6U7sy" target="_blank" aria-describedby="tier-enterprise" data-track-buy-button data-plan="enterprise" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
+          <a href="/login.html" aria-describedby="tier-enterprise" data-track-buy-button data-plan="enterprise" class="mt-8 block rounded-md bg-red-berry-800 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-berry-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-berry-700 sm:mt-10">Get started today</a>
         </div>
       </div>
     </div>
@@ -1501,6 +1517,64 @@
       });
     })();
   </script>
+      <script>
+      (function() {
+        const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        const ACCESS_TOKEN_KEY = '_mongooseStudioAccessToken';
+        const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+        if (!token) return;
+
+        const avatarMenu = document.getElementById('avatar-menu');
+        const avatarButton = document.getElementById('avatar-button');
+        const avatarImg = document.getElementById('avatar-img');
+        const avatarDropdown = document.getElementById('avatar-dropdown');
+        const navLoginLink = document.getElementById('nav-login-link');
+        const mobileLoginLink = document.getElementById('mobile-login-link');
+        const mobileLogoutButton = document.getElementById('mobile-logout-button');
+
+        function logout() {
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+          window.location.href = '/login.html';
+        }
+
+        document.getElementById('nav-logout-button').addEventListener('click', logout);
+        mobileLogoutButton.addEventListener('click', logout);
+
+        avatarButton.addEventListener('click', function() {
+          avatarDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function(e) {
+          if (!avatarMenu.contains(e.target)) {
+            avatarDropdown.classList.add('hidden');
+          }
+        });
+
+        // Fetch account to get avatar
+        fetch(API_BASE + '/getMyAccount', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', authorization: token },
+          body: '{}'
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+          if (!data || !data.user) return;
+          var user = data.user;
+          if (user.picture) {
+            avatarImg.src = user.picture;
+          } else {
+            avatarImg.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236b7280"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a3 3 0 110 6 3 3 0 010-6zm0 14.2a7.2 7.2 0 01-6-3.22c.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08a7.2 7.2 0 01-6 3.22z"/></svg>');
+          }
+          avatarMenu.classList.remove('hidden');
+          navLoginLink.classList.add('hidden');
+          mobileLoginLink.classList.add('hidden');
+          mobileLogoutButton.classList.remove('hidden');
+        })
+        .catch(function() {
+          // Token invalid/expired, clean up
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+        });
+      })();
+    </script>
       <script id="nav-active-state">
       (() => {
         const path = window.location.pathname;

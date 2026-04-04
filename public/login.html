@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In - Mongoose Studio</title>
+    <link rel="stylesheet" href="/tw.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/mongoose-studio.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments) }
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/tracking.js"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 text-slate-900">
+    <header class="absolute inset-x-0 top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-50">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:px-8">
+        <a href="/" class="flex items-center gap-3 text-xl font-semibold text-gray-900">
+          <img class="h-16 w-auto" src="/mongoose-studio.svg" alt="Mongoose Studio">
+          <div>
+            <span class="text-red-berry-900">Mongoose</span>
+            <div>Studio</div>
+          </div>
+        </a>
+        <div class="flex items-center gap-4">
+          <button
+            id="mobile-menu-button"
+            type="button"
+            aria-expanded="false"
+            class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-900 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800 lg:hidden"
+          >
+            <svg data-icon="open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg data-icon="close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <nav class="hidden items-center gap-4 text-sm font-semibold text-gray-900 lg:flex">
+            <a href="/" data-nav="home" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Home</a>
+            <a href="/docs" data-nav="docs" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Docs</a>
+            <a href="/changelog" data-nav="changelog" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Changelog</a>
+            <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
+              <svg class="h-[1.5em] mr-2" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.51 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)" fill="#1B1F23"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
+              Demo
+            </a>
+            <!-- Avatar dropdown (shown after login), hidden by default -->
+            <div id="avatar-menu" class="relative hidden">
+              <button id="avatar-button" type="button" class="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-red-berry-800 focus:ring-offset-2">
+                <img id="avatar-img" class="h-9 w-9 rounded-full border-2 border-gray-200 object-cover" src="" alt="Account">
+              </button>
+              <div id="avatar-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                <a href="/my-account.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">My Account</a>
+                <button id="nav-logout-button" type="button" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">Sign Out</button>
+              </div>
+            </div>
+            <!-- Log In button (shown when not logged in) -->
+            <a id="nav-login-link" href="/login.html" class="rounded-md bg-red-berry-800 px-3 py-2 text-sm font-semibold text-white hover:bg-red-berry-700">
+              Log In
+            </a>
+          </nav>
+        </div>
+      </div>
+      <div id="mobile-nav" class="hidden border-t border-gray-200 bg-white/95 px-6 pb-6 shadow-lg backdrop-blur lg:hidden">
+        <div class="mx-auto flex max-w-7xl flex-col gap-3 pt-4 text-sm font-semibold text-gray-900">
+          <a href="/" data-nav="home" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Home</a>
+          <a href="/docs" data-nav="docs" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Docs</a>
+          <a href="/changelog" data-nav="changelog" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Changelog</a>
+          <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">GitHub</a>
+          <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
+          <a id="mobile-login-link" href="/login.html" class="rounded-lg bg-red-berry-800 px-4 py-2 text-white hover:bg-red-berry-700">Log In</a>
+          <button id="mobile-logout-button" type="button" class="hidden rounded-lg border border-gray-200 px-4 py-2 text-left hover:bg-slate-100">Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto flex min-h-screen w-full max-w-xl items-center px-4">
+      <section class="w-full rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70">
+        <h1 class="text-3xl font-bold tracking-tight">Log in to Mongoose Studio</h1>
+        <p id="message" class="mt-2 text-slate-600">Sign in to access your workspaces and API keys.</p>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button id="githubButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60">
+            <svg viewBox="0 0 98 98" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#111827"/></svg>
+            Continue with GitHub
+          </button>
+          <button id="googleButton" type="button" class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60">
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path fill="#EA4335" d="M256 212v88h146c-6 38-22 66-47 85l76 59c44-40 69-99 69-169 0-16-1-28-4-40z"/><path fill="#34A853" d="M256 512c68 0 126-22 168-59l-76-59c-21 14-49 24-92 24-70 0-129-47-150-111l-79 61c41 81 125 144 229 144z"/><path fill="#4A90E2" d="M106 307c-5-14-8-30-8-47s3-33 8-47l-79-61C10 185 0 221 0 260s10 75 27 108z"/><path fill="#FBBC05" d="M256 102c37 0 70 13 96 38l72-72C382 28 324 0 256 0 152 0 68 63 27 152l79 61c21-64 80-111 150-111z"/></svg>
+            Continue with Google
+          </button>
+        </div>
+
+        <p class="mt-4">
+          <a href="https://discord.gg/P3YCfKYxpy" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-[#880000] underline decoration-[#880000]/40 underline-offset-2">Get Help on Discord</a>
+        </p>
+
+        <p id="error" class="mt-4 text-sm font-semibold text-red-700" role="alert"></p>
+        <p class="mt-4 text-sm text-slate-600">Already signed in? <a href="/my-account.html" class="font-semibold text-[#880000] underline decoration-[#880000]/40 underline-offset-2">Go to My Account</a></p>
+      </section>
+    </main>
+
+    <script>
+      (function() {
+        const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        const ACCESS_TOKEN_KEY = '_mongooseStudioAccessToken';
+        const WORKSPACE_KEY = '_mongooseStudioSetupWorkspaceId';
+
+        const githubButton = document.getElementById('githubButton');
+        const googleButton = document.getElementById('googleButton');
+        const errorEl = document.getElementById('error');
+        const messageEl = document.getElementById('message');
+
+        const params = new URLSearchParams(window.location.search);
+        const workspaceIdFromQuery = params.get('workspaceId');
+        const provider = params.get('provider');
+        const code = params.get('code');
+
+        if (workspaceIdFromQuery) {
+          sessionStorage.setItem(WORKSPACE_KEY, workspaceIdFromQuery);
+        }
+
+        const workspaceId = workspaceIdFromQuery || sessionStorage.getItem(WORKSPACE_KEY);
+
+        if (provider && code) {
+          exchangeOAuthCode(provider, code, workspaceId);
+        }
+
+        githubButton.addEventListener('click', function() {
+          beginLogin('githubLogin');
+        });
+
+        googleButton.addEventListener('click', function() {
+          beginLogin('googleLogin');
+        });
+
+        async function beginLogin(endpoint) {
+          try {
+            setLoading(true);
+            const state = window.location.origin + window.location.pathname;
+            const response = await postJson(API_BASE + '/' + endpoint, { state });
+            if (!response.url) {
+              throw new Error('Login URL not returned');
+            }
+            window.location.href = response.url;
+          } catch (err) {
+            showError(err.message || 'Failed to start login');
+          } finally {
+            setLoading(false);
+          }
+        }
+
+        async function exchangeOAuthCode(provider, oauthCode, savedWorkspaceId) {
+          try {
+            setLoading(true);
+            messageEl.textContent = 'Finishing sign in...';
+            const endpoint = provider === 'google' ? 'google' : 'github';
+            const body = { code: oauthCode };
+            if (savedWorkspaceId) {
+              body.workspaceId = savedWorkspaceId;
+            }
+            const data = await postJson(API_BASE + '/' + endpoint, body);
+
+            if (!data || !data.accessToken || !data.accessToken._id) {
+              throw new Error('Login did not return an access token');
+            }
+
+            localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken._id);
+            window.location.replace('/my-account.html');
+          } catch (err) {
+            showError(err.message || 'Login failed');
+          } finally {
+            setLoading(false);
+          }
+        }
+
+        async function postJson(url, body) {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body || {})
+          });
+
+          const text = await res.text();
+          var data = {};
+          if (text) {
+            try {
+              data = JSON.parse(text);
+            } catch (err) {
+              data = { message: text };
+            }
+          }
+
+          if (!res.ok) {
+            throw new Error(data.message || 'Request failed');
+          }
+
+          return data;
+        }
+
+        function setLoading(loading) {
+          githubButton.disabled = loading;
+          googleButton.disabled = loading;
+        }
+
+        function showError(message) {
+          errorEl.textContent = message;
+        }
+      })();
+    </script>
+    <script>
+      (function() {
+        const menu = document.getElementById('mobile-nav');
+        const button = document.getElementById('mobile-menu-button');
+        if (!menu || !button) return;
+
+        const icons = {
+          open: button.querySelector('[data-icon="open"]'),
+          close: button.querySelector('[data-icon="close"]')
+        };
+
+        function setState(open) {
+          menu.classList.toggle('hidden', !open);
+          button.setAttribute('aria-expanded', open.toString());
+          if (icons.open && icons.close) {
+            icons.open.classList.toggle('hidden', open);
+            icons.close.classList.toggle('hidden', !open);
+          }
+        }
+
+        button.addEventListener('click', () => {
+          const isOpen = menu.classList.contains('hidden');
+          setState(isOpen);
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => setState(false));
+        });
+      })();
+    </script>
+    <script>
+      (function() {
+        var ACCESS_TOKEN_KEY = '_mongooseStudioAccessToken';
+        var token = localStorage.getItem(ACCESS_TOKEN_KEY);
+        if (!token) return;
+
+        var avatarMenu = document.getElementById('avatar-menu');
+        var avatarButton = document.getElementById('avatar-button');
+        var avatarImg = document.getElementById('avatar-img');
+        var avatarDropdown = document.getElementById('avatar-dropdown');
+        var navLoginLink = document.getElementById('nav-login-link');
+        var mobileLoginLink = document.getElementById('mobile-login-link');
+        var mobileLogoutButton = document.getElementById('mobile-logout-button');
+
+        function logout() {
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+          window.location.href = '/login.html';
+        }
+
+        document.getElementById('nav-logout-button').addEventListener('click', logout);
+        mobileLogoutButton.addEventListener('click', logout);
+
+        avatarButton.addEventListener('click', function() {
+          avatarDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function(e) {
+          if (!avatarMenu.contains(e.target)) {
+            avatarDropdown.classList.add('hidden');
+          }
+        });
+
+        var API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        fetch(API_BASE + '/getMyAccount', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', authorization: token },
+          body: '{}'
+        })
+        .then(function(res) { return res.ok ? res.json() : null; })
+        .then(function(data) {
+          if (!data || !data.user) return;
+          var user = data.user;
+          if (user.picture) {
+            avatarImg.src = user.picture;
+          } else {
+            avatarImg.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236b7280"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a3 3 0 110 6 3 3 0 010-6zm0 14.2a7.2 7.2 0 01-6-3.22c.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08a7.2 7.2 0 01-6 3.22z"/></svg>');
+          }
+          avatarMenu.classList.remove('hidden');
+          navLoginLink.classList.add('hidden');
+          mobileLoginLink.classList.add('hidden');
+          mobileLogoutButton.classList.remove('hidden');
+        })
+        .catch(function() {
+          localStorage.removeItem(ACCESS_TOKEN_KEY);
+        });
+      })();
+    </script>
+  </body>
+</html>
