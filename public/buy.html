@@ -171,8 +171,12 @@
 
     <script>
       (function() {
-        var API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
-        var STRIPE_PUBLISHABLE_KEY = window.location.hostname === 'localhost' ? 'pk_test_placeholder' : 'pk_live_placeholder';
+        var API_BASE = window.location.hostname === 'localhost' ?
+          'http://localhost:7777/.netlify/functions' :
+          'https://mongoose-js.netlify.app/.netlify/functions';
+        var STRIPE_PUBLISHABLE_KEY = window.location.hostname === 'localhost' ?
+          'pk_test_51JWAUiIIV4Jx8vgx7RurJpRi0mAvrSTNZIXbjotsLLI42I3Odw92ib0WEINFUVpPPxaUCM88NoEKQjlOOVn7jcMk00UcnVvzmS' :
+          'pk_live_51JWAUiIIV4Jx8vgxSuJvGMwe4Gey91zl7IB2z1WF4JR4jf4Xtt0RwrKD7dsjIWb6IN63RdSVX2Fa2TRUksTqfoWR00zm5oeevg';
         var RECAPTCHA_SITE_KEY = '6LdrAqcsAAAAAMFXTJd9TJN25KgwiIJl44Z6MdBh';
 
         var PRODUCTS = {
