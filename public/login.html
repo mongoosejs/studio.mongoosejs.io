@@ -110,7 +110,9 @@
 
     <script>
       (function() {
-        const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        const API_BASE = window.location.hostname === 'localhost' ?
+          'http://localhost:7777/.netlify/functions' :
+          'https://mothership.mongoosestudio.app/.netlify/functions';
         const ACCESS_TOKEN_KEY = '_mongooseStudioAccessToken';
         const WORKSPACE_KEY = '_mongooseStudioSetupWorkspaceId';
 
@@ -277,7 +279,9 @@
           }
         });
 
-        var API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:7777/.netlify/functions' : 'https://mongoose-js.netlify.app/.netlify/functions';
+        var API_BASE = window.location.hostname === 'localhost' ?
+          'http://localhost:7777/.netlify/functions' :
+          'https://mothership.mongoosestudio.app/.netlify/functions';
         fetch(API_BASE + '/getMyAccount', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', authorization: token },
