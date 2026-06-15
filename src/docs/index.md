@@ -7,6 +7,7 @@ Mongoose Studio is an integrated platform designed to help you visualize, manage
 
 - [Express Quick Start Guide](/docs/express-quick-start.html)
 - [Vercel Quick Start Guide](/docs/vercel-quick-start.html)
+- [Nest.js Quick Start Guide](/docs/nestjs-quick-start.html)
 - [Dashboards](/docs/dashboards.html)
 
 Content is still in progress, but we'll be sharing setup guides, feature overviews, and workflows here soon.
