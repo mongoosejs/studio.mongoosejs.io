@@ -47,19 +47,20 @@ if (!layout) {
   console.warn('Missing layout at src/layout.html, static page builds will be skipped.');
 }
 
-require('@mongoosejs/studio/frontend')(`/api/studio`, true, opts)
+buildStudioFrontendDemo('/api/studio', 'imdb')
   .then(() => {
     execSync(
       `
-      mkdir -p ./public/imdb
-      cp -r ./node_modules/@mongoosejs/studio/frontend/public/* ./public/imdb/
       mkdir -p ./public/demo-embed
       cp -r ./node_modules/@mongoosejs/studio/frontend/public/app.js ./node_modules/@mongoosejs/studio/frontend/public/style.css ./node_modules/@mongoosejs/studio/frontend/public/tw.css ./node_modules/@mongoosejs/studio/frontend/public/dark-theme.css ./public/demo-embed/
       cp -rn ./node_modules/@mongoosejs/studio/frontend/public/theme-variables.css ./public/demo-embed/ 2>/dev/null || true
       cp -r ./node_modules/@mongoosejs/studio/frontend/public/vanillatoasts ./node_modules/@mongoosejs/studio/frontend/public/images ./public/demo-embed/
       `
     );
-    console.log('Built Mongoose Studio frontend');
+    return buildStudioFrontendDemo('/api/stratz', 'stratz');
+  })
+  .then(() => {
+    console.log('Built Mongoose Studio frontends');
     buildChangelog();
     buildDocs();
   })
@@ -67,6 +68,17 @@ require('@mongoosejs/studio/frontend')(`/api/studio`, true, opts)
     console.error('Failed to build Mongoose Studio frontend', err);
     process.exit(1);
   });
+
+async function buildStudioFrontendDemo(apiUrl, demoName) {
+  await require('@mongoosejs/studio/frontend')(apiUrl, true, opts);
+  execSync(
+    `
+    mkdir -p ./public/${demoName}
+    cp -r ./node_modules/@mongoosejs/studio/frontend/public/* ./public/${demoName}/
+    `
+  );
+  console.log(`Built ${demoName} demo frontend at /${demoName}`);
+}
 
 function buildChangelog() {
   const changelogDir = path.join(__dirname, 'src', 'changelog');

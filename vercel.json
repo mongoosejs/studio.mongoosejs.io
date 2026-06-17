@@ -13,6 +13,10 @@
     {
       "source": "/imdb",
       "destination": "/imdb/"
+    },
+    {
+      "source": "/stratz",
+      "destination": "/stratz/"
     }
   ]
 }
