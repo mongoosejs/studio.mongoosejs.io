@@ -9,7 +9,8 @@ register(stratzMongoose);
 
 const handler = studio(stratzMongoose, {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY,
-  openAIAPIKey: process.env.OPENAI_API_KEY
+  googleGeminiAPIKey: process.env.GEMINI_API_KEY,
+  model: 'gemini-3.1-pro-preview'
 });
 
 let conn = null;
