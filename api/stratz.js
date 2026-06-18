@@ -13,6 +13,8 @@ const handler = studio(stratzMongoose, {
   model: 'gemini-3.1-pro-preview'
 });
 
+console.log('Gemini API Key:', process.env.GEMINI_API_KEY?.slice(0, 5));
+
 let conn = null;
 
 async function handlerWrapper(req, res) {
