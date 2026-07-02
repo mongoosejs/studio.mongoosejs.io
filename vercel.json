@@ -17,6 +17,10 @@
     {
       "source": "/stratz",
       "destination": "/stratz/"
+    },
+    {
+      "source": "/worldcup",
+      "destination": "/worldcup/"
     }
   ]
 }

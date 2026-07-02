@@ -17,6 +17,7 @@
   "scripts": {
     "build": "node ./build",
     "copy:stratz": "node ./scripts/copy-stratz-data.js",
+    "import:worldcup": "node ./scripts/importWorldCupData.js",
     "postinstall": "npm run tailwind",
     "start": "serve -p 5559 ./public",
     "test": "mocha test/*.test.js",

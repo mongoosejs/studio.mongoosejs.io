@@ -60,6 +60,9 @@ buildStudioFrontendDemo('/api/studio', 'imdb')
     return buildStudioFrontendDemo('/api/stratz', 'stratz');
   })
   .then(() => {
+    return buildStudioFrontendDemo('/api/worldcup', 'worldcup');
+  })
+  .then(() => {
     console.log('Built Mongoose Studio frontends');
     buildChangelog();
     buildDocs();
