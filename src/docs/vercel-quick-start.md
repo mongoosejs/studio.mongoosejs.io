@@ -90,7 +90,7 @@ const handler = studio(db, {
 ## 5. Next Steps
 
 - **Auth:** By default, authentication is not enabled and Mongoose Studio only accepts localhost connections without an API key. For production access and role management, check out [Mongoose Studio Pro](https://studio.mongoosejs.io/#pricing).
-- **Demo:** Test drive with the [IMDB demo](https://studio.mongoosejs.io/imdb/#/).
+- **Demo:** Test drive with the [IMDB demo](https://studio.mongoosejs.io/imdb/#/) or the [World Cup demo](https://studio.mongoosejs.io/worldcup/#/).
 - **Source:** Check out the [GitHub repo](https://github.com/mongoosejs/studio) for examples and advanced setup.
 - **Request a Feature (or Report a Bug):** Open an issue on [GitHub Issues](https://github.com/mongoosejs/studio/issues).
 - **Get Help:** Join our [Discord server](https://discord.gg/P3YCfKYxpy) or open an issue on [GitHub Issues](https://github.com/mongoosejs/studio/issues).

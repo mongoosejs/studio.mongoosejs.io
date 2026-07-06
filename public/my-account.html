@@ -50,9 +50,24 @@
               </svg>
               GitHub
             </a>
-            <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
-              Demo
-            </a>
+            <div class="relative" id="demo-menu">
+              <button
+                type="button"
+                id="demo-menu-button"
+                data-nav="demo"
+                aria-expanded="false"
+                class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1"
+              >
+                Demo
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div id="demo-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg z-50">
+                <a href="/imdb" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">IMDB</a>
+                <a href="/worldcup" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">World Cup</a>
+              </div>
+            </div>
             <!-- Avatar dropdown (shown after login), hidden by default -->
             <div id="avatar-menu" class="relative hidden">
               <button id="avatar-button" type="button" class="flex items-center rounded-full focus:outline-none focus:ring-2 focus:ring-red-berry-800 focus:ring-offset-2">
@@ -76,7 +91,8 @@
           <a href="/docs" data-nav="docs" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Docs</a>
           <a href="/changelog" data-nav="changelog" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Changelog</a>
           <a href="https://github.com/mongoosejs/studio" target="_blank" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">GitHub</a>
-          <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
+          <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">IMDB Demo</a>
+          <a href="/worldcup" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">World Cup Demo</a>
           <a id="mobile-login-link" href="/login.html" class="rounded-lg bg-red-berry-800 px-4 py-2 text-white hover:bg-red-berry-700">Log In</a>
           <button id="mobile-logout-button" type="button" class="hidden rounded-lg border border-gray-200 px-4 py-2 text-left hover:bg-slate-100">Sign Out</button>
         </div>
