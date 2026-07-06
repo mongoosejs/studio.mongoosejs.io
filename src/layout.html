@@ -89,7 +89,23 @@
               <a id="nav-start" href="/start" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 dark:text-white">Start</a>
               <a id="nav-docs" href="/docs" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Docs</a>
               <a id="nav-pricing" href="/pricing.html" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Pricing</a>
-              <a id="nav-demo" href="/imdb" class="h-full inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Demo</a>
+              <div class="relative h-full" id="demo-menu">
+                <button
+                  type="button"
+                  id="nav-demo"
+                  aria-expanded="false"
+                  class="h-full inline-flex items-center gap-1 border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white"
+                >
+                  Demo
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <div id="demo-dropdown" class="hidden absolute right-0 top-full mt-1 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg z-50 dark:border-gray-700 dark:bg-gray-800">
+                  <a href="/imdb" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 dark:text-gray-300 dark:hover:bg-gray-700">IMDB</a>
+                  <a href="/worldcup" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 dark:text-gray-300 dark:hover:bg-gray-700">World Cup</a>
+                </div>
+              </div>
               <script>
                 (function() {
                   const path = window.location.pathname;
@@ -105,7 +121,7 @@
                     activateTab("nav-docs");
                   } else if (path.startsWith("/pricing") || path === "/pricing.html") {
                     activateTab("nav-pricing");
-                  } else if (path.startsWith("/imdb")) {
+                  } else if (path.startsWith("/imdb") || path.startsWith("/worldcup")) {
                     activateTab("nav-demo");
                   } else {
                     activateTab("nav-start");
@@ -122,7 +138,8 @@
             <a href="/start" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 dark:text-white">Start</a>
             <a href="/docs" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Docs</a>
             <a href="/pricing.html" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Pricing</a>
-            <a href="/imdb" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">Demo</a>
+            <a href="/imdb" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">IMDB Demo</a>
+            <a href="/worldcup" class="block border-b-2 border-transparent px-1 pt-1 text-base font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:border-white/20 dark:hover:text-white">World Cup Demo</a>
           </div>
         </el-disclosure>
       </nav>
