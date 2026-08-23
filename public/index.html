@@ -58,9 +58,24 @@
               <a href="/start" data-nav="start" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Start</a>
               <a href="/docs" data-nav="docs" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Docs</a>
               <a href="/pricing.html" data-nav="pricing" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100">Pricing</a>
-              <a href="/imdb" data-nav="demo" class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1">
-                Demo
-              </a>
+              <div class="relative" id="demo-menu">
+                <button
+                  type="button"
+                  id="demo-menu-button"
+                  data-nav="demo"
+                  aria-expanded="false"
+                  class="rounded-md border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 hover:bg-slate-100 flex items-center gap-1"
+                >
+                  Demo
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <div id="demo-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg z-50">
+                  <a href="/imdb" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">IMDB</a>
+                  <a href="/worldcup" class="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-100">World Cup</a>
+                </div>
+              </div>
             </nav>
           </div>
         </div>
@@ -69,7 +84,8 @@
             <a href="/start" data-nav="start" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Start</a>
             <a href="/docs" data-nav="docs" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Docs</a>
             <a href="/pricing.html" data-nav="pricing" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Pricing</a>
-            <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">Demo</a>
+            <a href="/imdb" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">IMDB Demo</a>
+            <a href="/worldcup" data-nav="demo" class="rounded-lg border border-gray-200 px-4 py-2 hover:bg-slate-100">World Cup Demo</a>
           </div>
         </div>
       </header>
@@ -105,7 +121,13 @@
                 href="/imdb"
                 target="_blank"
                 class="font-semibold text-gray-900 flex items-center border-2 rounded-md border-gray-300 bg-white hover:bg-gray-100 px-5 py-3 text-sm shadow-sm">
-                View Live Demo
+                IMDB Demo
+              </a>
+              <a
+                href="/worldcup"
+                target="_blank"
+                class="font-semibold text-gray-900 flex items-center border-2 rounded-md border-gray-300 bg-white hover:bg-gray-100 px-5 py-3 text-sm shadow-sm">
+                World Cup Demo
               </a>
             </div>
             <div class="mt-4 inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm">
@@ -1458,7 +1480,7 @@
         else if (path.startsWith("/docs")) key = "docs";
         else if (path.startsWith("/pricing")) key = "pricing";
         else if (path === "/pricing.html") key = "pricing";
-        else if (path.startsWith("/imdb")) key = "demo";
+        else if (path.startsWith("/imdb") || path.startsWith("/worldcup")) key = "demo";
 
         if (!key) return;
         document.querySelectorAll('[data-nav="' + key + '"]').forEach(link => {

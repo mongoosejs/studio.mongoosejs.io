@@ -236,3 +236,23 @@
     }
   }
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menu = document.getElementById('demo-menu');
+  const button = document.getElementById('demo-menu-button') || document.getElementById('nav-demo');
+  const dropdown = document.getElementById('demo-dropdown');
+  if (!menu || !button || !dropdown) return;
+
+  button.addEventListener('click', () => {
+    const open = dropdown.classList.contains('hidden');
+    dropdown.classList.toggle('hidden', !open);
+    button.setAttribute('aria-expanded', open.toString());
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target)) {
+      dropdown.classList.add('hidden');
+      button.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
