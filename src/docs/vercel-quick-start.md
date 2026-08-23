@@ -53,28 +53,24 @@ Importing your app's models module here also ensures the models are registered o
 ```javascript
 // Import your existing database connection
 import db from '../../src/db';
-import studio from '@mongoosejs/studio/backend/vercel';
+import { vercelAPIRouteHandler } from '@mongoosejs/studio/vercel';
 
-const handler = studio(
+export default vercelAPIRouteHandler(
   db, // Mongoose connection or Mongoose global. Pass null to use `import mongoose`.
   {
-    apiKey: process.env.MONGOOSE_STUDIO_API_KEY, // optional, for Mongoose Studio Pro
-    connection: db, // optional: Connection or Mongoose global. If omitted, falls back to `import mongoose`.
-    connectToDB: async () => { /* connection logic here */ } // optional: called before each request if you need to (re)connect
+    apiKey: process.env.MONGOOSE_STUDIO_API_KEY // optional, for Mongoose Studio Pro
   }
 );
-
-export default handler;
 ```
 
-The `connectToDB` hook is particularly useful on Vercel, where serverless functions can run on cold instances that need to re-establish the Mongoose connection.
+The `/vercel` entry point is fully typed, so TypeScript projects need no suppressions.
 
 ### Configuration
 
 If you have a Mongoose Studio Pro API key or want to use advanced features like providing your own OpenAI, Anthropic, or Google Gemini key, pass them in the options object:
 
 ```javascript
-const handler = studio(db, {
+export default vercelAPIRouteHandler(db, {
   apiKey: process.env.MONGOOSE_STUDIO_API_KEY, // optional for Pro
   model: 'gpt-4o-mini',                        // optional ChatGPT model
   openAIAPIKey: process.env.OPENAI_API_KEY,    // optional for chat with your own OpenAI key
