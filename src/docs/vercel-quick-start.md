@@ -42,8 +42,13 @@ export default withMongooseStudio({
 
 ## 3. Add the Studio API Route
 
-Create a serverless API route at `pages/api/studio.js` (or `app/api/studio/route.js` for the App Router) to host the Mongoose Studio API.
+Create a serverless API route at `pages/api/studio.js` to host the Mongoose Studio API.
+Use `pages/api/studio.js` even if the rest of your app uses the Next.js App Router.
+The Studio backend is a Pages Router style `(req, res)` handler, so it is not directly compatible with App Router route handlers (`app/api/studio/route.js`), which use the `NextRequest`/`NextResponse` API instead.
+Pages Router API routes work alongside the App Router in the same Next.js project, and the route is still served at `/api/studio`.
+If your project keeps source files under `src/`, create the route at `src/pages/api/studio.js` instead.
 Make sure to import your existing database connection so Studio uses the same Mongoose models your app does.
+Importing your app's models module here also ensures the models are registered on the connection before Studio handles its first request.
 
 ```javascript
 // Import your existing database connection
