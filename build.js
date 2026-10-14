@@ -346,7 +346,13 @@ function extractFirstParagraph(markdown) {
 
   const firstContentLine = lines.find(line => line && !line.startsWith('#'));
 
-  return firstContentLine ? firstContentLine : '';
+  if (!firstContentLine) {
+    return '';
+  }
+
+  // Changelog cards display a text summary, so convert inline Markdown such as
+  // links and code spans to text before escaping it in renderIndex().
+  return cheerio.load(marked.parseInline(firstContentLine)).text().trim();
 }
 
 function escapeHtml(value) {
